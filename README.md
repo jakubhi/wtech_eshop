@@ -1,2 +1,4 @@
 # wtech_eshop
-Semestral project for subject WTECH by Jakub Hidvégi and Tomáš Harušinec
+Semestrálny projekt pre predmet WTECH.
+Autori : Jakub Hidvégi a Tomáš Harušinec
+Téma : Obchod s elektronikou
