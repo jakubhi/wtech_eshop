@@ -1,4 +1,4 @@
 # wtech_eshop
 Názov : Semestrálny projekt pre predmet WTECH.
 Autori : Jakub Hidvégi a Tomáš Harušinec
-Téma : Obchod s elektronikou
+Téma : Obchod s oblečením
