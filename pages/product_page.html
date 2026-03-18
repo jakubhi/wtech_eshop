@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Shop</title>
+    <title>Product page | E-shop</title>
     <link href="../css/output.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-200">
-    <div class="flex flex-col min-h-screen border-2 border-red-500">
+    <div class="flex flex-col min-h-screen">
     
       <header class="border-2 bg-[#D9D9D9] border-green-600
         flex justify-between items-center flex-row text-md
@@ -16,12 +16,14 @@
         md:py-2
         lg:pr-4
       ">
-        <div class="hidden items-center justify-center bg-[#2D2D2D] text-white rounded-full font-bold
-            sm:flex sm:ml-1 sm:px-3 sm:py-2 sm:mr-1
-            lg:ml-3 lg:px-10
-        ">
-            ShopName 
-        </div>
+        <a href="../index.html">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white rounded-full font-bold
+                sm:flex sm:ml-1 sm:px-3 sm:py-2 sm:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ShopName 
+            </div>
+        </a>
         
         <div class="flex flex-1 justify-center
 
@@ -36,26 +38,31 @@
         </div>
         
         <div class="flex items-center justify-between">
-            <button class=" bg-[#D9D9D9]
-                hidden text-xs rounded-full
-                sm:flex sm:text-lg sm:mr-3 sm:pl-3 sm:pr-2
-                hover:brightness-85 active:brightness-85
-            ">
-                Hosť - Login
-            </button>
+            <a href="login_page.html">
+                <button class=" bg-[#D9D9D9]
+                    hidden text-xs rounded-full
+                    sm:flex sm:text-lg sm:mr-3 sm:pl-3 sm:pr-2
+                    hover:brightness-85 active:brightness-85
+                ">
+                    Hosť - Login
+                </button>
+            </a>
+
             <img src="../images/user.png" alt="profile" class="object-contain
                 bg-[#D9D9D9] hover:brightness-85 active:brightness-85
                 hidden h-10 
                 sm:flex sm:h-12 sm:mr-2
                 
             ">
-            
-            <img src="../images/cart.png" alt="cart" class="object-contain
+            <a href="kosik_page.html">
+                <img src="../images/cart.png" alt="cart" class="object-contain
                 bg-[#D9D9D9] hover:brightness-85 active:brightness-85
                 flex h-10 pr-2
                 sm:h-12 sm:mr-2
                 lg:pr-2
             ">
+            </a>
+            
             <span class="flex items-center pr-3
                 sm:text-2xl
             ">0.00 €</span>
@@ -63,7 +70,7 @@
         
       </header>
 
-      <div class="flex flex-row grow border-2 bg-[#D9D9D9] border-lime-900">
+      <div class="flex flex-row grow border-2 bg-[#D9D9D9]">
 
         <div class="border-2 border-amber-500 justify-center 
             hidden
@@ -72,99 +79,119 @@
         ">
             Výpredaj až -30%
         </div>
-          <div class="flex flex-row grow border-5">
-                     
-            <div class="
-                flex flex-col ml-5 mt-5 w-110
-            ">
-                <div class="flex flex-1 border border-purple-500 mr-2">
-                    <img src="../images/product5.png" alt="product logo" class="">
+
+
+        <div class="flex flex-col grow gap-y-3 pt-10">
+            <div class="flex flex-col md:flex-row items-center md:items-start aspect-auto">
+                <div class="flex flex-col items-center px-10 justify-center">
+                    <img src="/images/product2.png" class="max-w-full object-contain">
                 </div>
 
-                <div class="flex flex-1 border border-black-500">
-
-                </div>
-                
-            </div>
-
-            <div class="
-                flex flex-col w-full mt-5 justify-center
-                border-green-500 border
-                ">
-                <div class="flex flex-col">
-                    <div class="border-red-500 border
-                     flex flex-1 justify-center text-xl font-bold
-                     ">
-                        Jesenná bunda
-                    </div>
-                    <div class="border-green-500 border
-                     flex flex-col flex-1 justify-center">
-                        <p class="mt-2 px-2">
-                            Sed ut perspiciatis unde omnis iste natus
-                             error sit voluptatem  accusantium doloremque
-                              laudantium, totam rem aperiam, eaque ipsa 
-                              quae ab illo inventore
-                        </p>      
-                        <p class="mt-2 px-2 font-light">
-                            Zobraziť viac
-                        </p>                  
-                    </div>    
-                    <div class="flex flex-col">
-                        <select class="bg-white border border-gray-800
-                            rounded-xl py-2 px-4 mt-2 ml-5 mr-5 mb-1 r-10
-                        ">
-                            <option disabled selected>Vyberte veľkosť</option>
-                            <option>Veľkosť: S</option>
-                            <option>Veľkosť: M</option>
-                            <option>Veľkosť: L</option>
-                            <option>Veľkosť: XL</option>
-                        </select>
-                    </div>     
-
-                    <div class="flex flex-col">
-                        <select class="bg-white border border-gray-800
-                            rounded-xl py-2 px-4 ml-5 mr-5 r-10
-                        ">
-                            <option disabled selected>Vyberte farbu</option>
-                            <option>Veľkosť: S</option>
-                            <option>Veľkosť: M</option>
-                            <option>Veľkosť: L</option>
-                            <option>Veľkosť: XL</option>
-                        </select>
-                    </div>   
-                </div>
-
-                <div class="border-10 border-[#87838393] mx-8 my-4"></div>
+                <div class="flex flex-col flex-1 px-4 gap-y-3 self-stretch">
                     
+                    <div class="flex flex-col">
+                        <h1 class="text-2xl mt-10 font-bold">
+                            Pánska mikina značky MTN
+                        </h1>
 
-                <div class="
-                    flex flex-1 border-black-500 border">
+                        <p class="text-md pt-3 text-gray-700">
+                            Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Qui atque quaerat
+                             repudiandae voluptatum animi error
+                            laboriosam nobis distinctio debitis 
+                            veniam. Saepe sunt autem aspernatur
+                            inventore distinctio dolor debitis
+                            ratione odit!
+                        </p>
+                    </div>
+
+                    <select class="w-full rounded-full py-2 pl-5 text-gray-700 border-gray-400 bg-white border">
+                        <option disabled selected>
+                            Vyberte veľkosť
+                        </option>
+
+                        <option value="s">
+                            S
+                        </option>
+
+                        <option value="m">
+                            M
+                        </option>
+
+                        <option value="l">
+                            L
+                        </option>
+
+                        <option value="xl">
+                            XL
+                        </option>
+
+                    </select>
+
+                    <select class="w-full border rounded-full py-2 pl-5 text-gray-700 border-gray-400  bg-white">
+                        <option disabled selected>
+                            Vyberte farbu
+                        </option>
+
+                        <option value="Čierna">
+                            Čierna
+                        </option>
+
+                        <option value="Červená">
+                            Červená
+                        </option>
+
+                    </select>
+                    
+                    
+                    <div class="flex flex-col mt-3 gap-y-2 text-md text-gray-600">
+                        <div class="flex items-center gap-x-3">
+                            <img src="/images/box.png" class="w-5 object-contain">
+                                Na sklade: 10ks
+                        </div>
+
+                        <div class="flex mt-auto items-center gap-x-3">
+                            <img src="/images/delivery.png" class="w-5 object-contain">
+                                Doprava do 24 hodín
+                        </div>
+                        
+                        <div class="flex items-center gap-x-3">
+                            <img src="/images/recycle.png" class="w-5 object-contain">
+                                Jednoduché vrátenie tovaru
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <div class="font-bold text-xl px-4 py-2 rounded-xl bg-white ">
+                            Cena: 40,85 €
+                        </div>
+
+                        <div class="flex items-center mt-5">
+                            <span class="text-md text-gray-700">
+                                Zadajte množstvo:
+                            </span>
+
+                            <div class="flex border mx-4 px-4 border-gray-400 rounded-full items-center gap-x-4 py-1">
+                                <button class="font-bold">
+                                    <img src="/images/minus.png" class="w-3">
+                                </button>
+                                1
+                                 <button class="font-bold">
+                                    <img src="/images/plus_symbol.png" class="w-3">
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <a href="/pages/kosik_page.html">
+                            <button class="font-semibold py-2 px-10 border mt-10 rounded-xl bg-white text-black">
+                                Pridať do košíka
+                            </button>
+                        </a>
+
+                    </div>
                 </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>         
           </div>
 
           <div class="border-2 border-amber-500
@@ -175,7 +202,7 @@
 
       </div>
 
-      <footer class="flex justify-between border-2 border-blue-500 bg-[#D9D9D9]
+      <footer class="flex justify-between bg-[#D9D9D9]
         text-sm items-center py-2 text-center
         sm:text-base sm:px-5
         md:text-lg
