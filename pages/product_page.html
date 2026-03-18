@@ -10,23 +10,25 @@
 <body class="bg-gray-200">
     <div class="flex flex-col min-h-screen">
     
-      <header class="border-2 bg-[#D9D9D9]
+      <header class="border-2 bg-[#D9D9D9] border-green-600
         flex justify-between items-center flex-row text-md
         sm:text-xl
         md:py-2
         lg:pr-4
       ">
-        <div class="hidden items-center justify-center bg-[#2D2D2D] text-white rounded-full font-bold
-            sm:flex sm:ml-1 sm:px-3 sm:py-2 sm:mr-1
-            lg:ml-3 lg:px-10
-        ">
-            ShopName 
-        </div>
+        <a href="../index.html">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white rounded-full font-bold
+                sm:flex sm:ml-1 sm:px-3 sm:py-2 sm:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ShopName 
+            </div>
+        </a>
         
         <div class="flex flex-1 justify-center
 
         ">
-            <input type="text" placeholder="Hľadáte niečo?" class="text-white text-center rounded-full bg-[#2D2D2D]  
+            <input type="text" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
                 p-1 ml-1 mr-3 w-full
                 sm:max-w-md sm:p-2 sm:m-1.5
                 md:max-w-2xl 
@@ -36,26 +38,31 @@
         </div>
         
         <div class="flex items-center justify-between">
-            <button class=" bg-[#D9D9D9]
-                hidden text-xs rounded-full
-                sm:flex sm:text-lg sm:mr-3 sm:pl-3 sm:pr-2
-                hover:brightness-85 active:brightness-85
-            ">
-                Hosť - Login
-            </button>
+            <a href="pages/login_page.html">
+                <button class=" bg-[#D9D9D9]
+                    hidden text-xs rounded-full
+                    sm:flex sm:text-lg sm:mr-3 sm:pl-3 sm:pr-2
+                    hover:brightness-85 active:brightness-85
+                ">
+                    Hosť - Login
+                </button>
+            </a>
+
             <img src="../images/user.png" alt="profile" class="object-contain
                 bg-[#D9D9D9] hover:brightness-85 active:brightness-85
                 hidden h-10 
                 sm:flex sm:h-12 sm:mr-2
                 
             ">
-            
-            <img src="../images/cart.png" alt="cart" class="object-contain
+            <a href="pages/kosik_page.html">
+                <img src="../images/cart.png" alt="cart" class="object-contain
                 bg-[#D9D9D9] hover:brightness-85 active:brightness-85
                 flex h-10 pr-2
                 sm:h-12 sm:mr-2
                 lg:pr-2
             ">
+            </a>
+            
             <span class="flex items-center pr-3
                 sm:text-2xl
             ">0.00 €</span>
@@ -176,9 +183,11 @@
                             </div>
                         </div>
 
-                        <button class="font-semibold py-2 px-10 border mt-10 rounded-xl bg-white text-black">
-                            Pridať do košíka
-                        </button>
+                        <a href="/pages/kosik_page.html">
+                            <button class="font-semibold py-2 px-10 border mt-10 rounded-xl bg-white text-black">
+                                Pridať do košíka
+                            </button>
+                        </a>
 
                     </div>
                 </div>
