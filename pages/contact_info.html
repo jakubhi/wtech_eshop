@@ -7,10 +7,10 @@
     <link href="../css/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-[#D9D9D9]">
     <div class="flex flex-col min-h-screen border-2">
     
-      <header class="border-2 bg-[#D9D9D9] border-green-600
+      <header class="
         flex justify-between items-center flex-row text-md
         sm:text-xl
         md:py-2
@@ -72,17 +72,16 @@
 
       <div class="flex flex-row grow border-2 bg-[#D9D9D9] border-lime-900">
 
-        <div class="border-2 border-amber-500 justify-center 
-            hidden
-            lg:flex lg:w-[10%] lg:text-2xl lg:text-center lg:items-center
-            
+        <div class="
+            hidden items-center
+            lg:flex md:w-[5%]
+            border
         ">
-            Výpredaj až -30%
         </div>
 
           <div class="flex flex-col grow">
                   
-            <div class="border-3 border-blue-400 bg-white
+            <div class="border bg-white
                 grid grid-cols-3 py-2 px-15
             ">
                 <div class="flex flex-col items-center">
@@ -200,16 +199,22 @@
                 </div>
                 <div class="flex flex-1"></div>
 
-                <div class="flex flex-row items-center justify-between w-full p-6">
-    
-                    <div class="flex-1 text-gray-600">
-                        <span>Späť na dopravu</span>
-                    </div>
+                <div class="flex">
+                    <section class="flex flex-1 justify-start">
+                        <a href="delivery.html">
+                            <button class="p-4 mt-6 mr-6 ml-2 mb-6 border rounded-xl bg-[#D9D9D9]">
+                                Späť k voľbe dopravy
+                            </button>
+                        </a>
+                    </section>
 
-                    <button class="font-bold py-4 px-20 pl-20 rounded-2xl border-2 bg-white text-black">
-                        Prejsť k platbe
-                    </button>
-
+                    <section class="flex flex-1 justify-end">
+                        <a href="../index.html">
+                            <button class="p-4 mt-6 mr-6 ml-2 mb-6 border rounded-xl bg-[#D9D9D9]">
+                                Zaplatiť a objednať
+                            </button>
+                        </a>
+                    </section>
                 </div>
             </div>
         </div>
@@ -223,7 +228,7 @@
 
       </div>
 
-        <footer class="flex justify-between border-2 border-blue-500 bg-[#D9D9D9]
+        <footer class="flex justify-between bg-[#D9D9D9]
             text-sm items-center py-2 text-center
             sm:text-base sm:px-5
             md:text-lg
