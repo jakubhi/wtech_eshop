@@ -7,10 +7,10 @@
     <link href="../css/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-200">
+<body class="">
     <div class="flex flex-col min-h-screen">
     
-      <header class="border-2 bg-[#D9D9D9] border-green-600
+      <header class="bg-[#D9D9D9]
         flex justify-between items-center flex-row text-md
         sm:text-xl
         md:py-2
@@ -70,31 +70,30 @@
         
       </header>
 
-      <div class="flex flex-row grow border-2 bg-[#D9D9D9]">
+      <div class="flex flex-row grow border-2">
 
-        <div class="border-2 border-amber-500 justify-center 
-            hidden
-            lg:flex lg:w-[10%] lg:text-2xl lg:text-center lg:items-center
-            
+        <div class="border
+                hidden items-center
+                lg:flex md:w-[5%]
         ">
-            Výpredaj až -30%
         </div>
-
 
         <div class="flex flex-col grow gap-y-3 pt-10">
             <div class="flex flex-col md:flex-row items-center md:items-start aspect-auto">
-                <div class="flex flex-col items-center px-10 justify-center">
-                    <img src="/images/product2.png" class="max-w-full object-contain">
+                <div class="flex flex-col bg-gray-200 w-[20%] m-5 justify-center items-center
+                    
+                ">
+                    <img src="/images/product2.png" class="w-full object-contain">
                 </div>
 
-                <div class="flex flex-col flex-1 px-4 gap-y-3 self-stretch">
+                <div class="flex flex-col flex-1 px-4 ml-5 gap-y-2 self-stretch">
                     
                     <div class="flex flex-col">
-                        <h1 class="text-2xl mt-10 font-bold">
+                        <h1 class="text-3xl font-bold mt-3">
                             Pánska mikina značky MTN
                         </h1>
 
-                        <p class="text-md pt-3 text-gray-700">
+                        <p class="text-lg pt-3 text-gray-700">
                             Lorem ipsum dolor sit amet consectetur
                             adipisicing elit. Qui atque quaerat
                              repudiandae voluptatum animi error
@@ -105,7 +104,7 @@
                         </p>
                     </div>
 
-                    <select class="w-full rounded-full py-2 pl-5 text-gray-700 border-gray-400 bg-white border">
+                    <select class="w-full rounded-xl mt-5 py-2 pl-5 text-gray-700 border-gray-400 bg-white border">
                         <option disabled selected>
                             Vyberte veľkosť
                         </option>
@@ -128,7 +127,7 @@
 
                     </select>
 
-                    <select class="w-full border rounded-full py-2 pl-5 text-gray-700 border-gray-400  bg-white">
+                    <select class="w-full border rounded-xl py-2 pl-5 text-gray-700 border-gray-400  bg-white">
                         <option disabled selected>
                             Vyberte farbu
                         </option>
@@ -144,7 +143,7 @@
                     </select>
                     
                     
-                    <div class="flex flex-col mt-3 gap-y-2 text-md text-gray-600">
+                    <div class="flex flex-col mt-3 gap-y-2 text-lg text-gray-600">
                         <div class="flex items-center gap-x-3">
                             <img src="/images/box.png" class="w-5 object-contain">
                                 Na sklade: 10ks
@@ -161,17 +160,17 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col">
-                        <div class="font-bold text-xl px-4 py-2 rounded-xl bg-white ">
+                    <div class="flex flex-col items-end">
+                        <div class="flex font-bold text-2xl px-4 py-2 rounded-xl border-gray-400 bg-white ">
                             Cena: 40,85 €
                         </div>
 
-                        <div class="flex items-center mt-5">
-                            <span class="text-md text-gray-700">
+                        <div class="flex items-center justify-end mt-5">
+                            <span class="text-md px-4 text-gray-700">
                                 Zadajte množstvo:
                             </span>
 
-                            <div class="flex border mx-4 px-4 border-gray-400 rounded-full items-center gap-x-4 py-1">
+                            <div class="flex border px-4 border-gray-400 rounded-full items-center gap-x-4 py-1">
                                 <button class="font-bold">
                                     <img src="/images/minus.png" class="w-3">
                                 </button>
@@ -183,22 +182,123 @@
                             </div>
                         </div>
 
-                        <a href="/pages/kosik_page.html">
-                            <button class="font-semibold py-2 px-10 border mt-10 rounded-xl bg-white text-black">
+                        <a href="/pages/kosik_page.html" class="flex w-full justify-end">
+                            <button class="font-semibold py-2 px-15 border mt-2 mb-4 rounded-xl bg-white text-black">
                                 Pridať do košíka
                             </button>
                         </a>
-
                     </div>
                 </div>
-            </div>         
-          </div>
+            </div>
+            
+            
+            <div class="flex flex-col gap-6 mx-2 m-7">                
+                <div class="flex gap-x-15">
+                    <div class="flex flex-col flex-1 gap-y-3 text-lg ml-10">
+                        <span class="flex font-semibold justify-center mb-2">Parametre produktu</span>
+                        
+                        <div class="flex p-4 rounded-xl bg-gray-100">
+                            <span class="font-bold px-2">Značka</span>
+                            <span class="flex flex-1 justify-end pr-2">Tretas</span>
+                        </div>
 
-          <div class="border-2 border-amber-500
-                hidden items-center
-                lg:flex md:w-[5%]
+                        <div class="flex p-4 rounded-xl bg-gray-100">
+                            <span class="font-bold px-2">Materiál</span>
+                            <span class="flex flex-1 justify-end pr-2">Bavlna</span>
+                        </div>
+
+                        <div class="flex p-4 rounded-xl bg-gray-100">
+                            <span class="font-bold px-2">Farba</span>
+                            <span class="flex flex-1 justify-end pr-2">Biela</span>
+                        </div>
+
+                        <div class="flex p-4 rounded-xl bg-gray-100">
+                            <span class="font-bold px-2">Obdobie</span>
+                            <span class="flex flex-1 justify-end pr-2">Letné</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col flex-1 gap-y-3 text-lg mr-10">
+                        <span class="flex font-semibold justify-center mb-2">Čo hovoria na tento produkt ľudia, ktorí si ho zakúpili?</span>
+                    
+                        <div class="flex flex-col items-center gap-x-4 gap-y-5 p-2 rounded-xl">
+                            <div class="flex gap-x-4 w-full items-center">
+                                <div class="flex flex-col items-center mt-1">
+                                    <img src="/images/star.png" class="w-7">
+                                    <span class="text-xs">4.5/5</span>
+                                </div>
+
+                                <div class="w-10 h-10 bg-gray-200 rounded-full">
+
+                                </div>
+
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-sm font-bold">Jozef N.</span>
+                                    <div class="h-4 mt-1.5 rounded-xl mb-1 bg-gray-200 "></div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-x-4 w-full items-center">
+                                <div class="flex flex-col items-center mt-1">
+                                    <img src="/images/star.png" class="w-7">
+                                    <span class="text-xs">5/5</span>
+                                </div>
+
+                                <div class="w-10 h-10 bg-gray-200 rounded-full">
+
+                                </div>
+
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-sm font-bold">Tomas H.</span>
+                                    <div class="h-4 mt-1.5 rounded-xl mb-1 bg-gray-200 "></div>
+                                </div>
+                            </div>
+
+
+                            <div class="flex gap-x-4 w-full items-center">
+                                <div class="flex flex-col items-center mt-1">
+                                    <img src="/images/star.png" class="w-7">
+                                    <span class="text-xs">5/5</span>
+                                </div>
+
+                                <div class="w-10 h-10 bg-gray-200 rounded-full">
+
+                                </div>
+
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-sm font-bold">Jakub H.</span>
+                                    <div class="h-4 mt-1.5 rounded-xl mb-1 bg-gray-200 "></div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-x-4 w-full items-center">
+                                <div class="flex flex-col items-center mt-1">
+                                    <img src="/images/star.png" class="w-7">
+                                    <span class="text-xs">4/5</span>
+                                </div>
+
+                                <div class="w-10 h-10 bg-gray-200 rounded-full">
+
+                                </div>
+
+                                <div class="flex flex-col flex-1">
+                                    <span class="text-sm font-bold">Jonatan K.</span>
+                                    <div class="h-4 mt-1.5 rounded-xl mb-1 bg-gray-200 "></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="border
+            hidden items-center
+            lg:flex md:w-[5%]
             ">
-          </div>
+        </div>
 
       </div>
 
