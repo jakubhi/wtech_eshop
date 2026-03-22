@@ -66,24 +66,25 @@
       </header>
 
       <core class="flex grow bg-white flex-col">
-        <section class="bg-whitegrid grid-cols-3 py-2 px-15 flex flex-row justify-center w-screen gap-60">
-                <div class="flex flex-col font-bold  items-center">
-                    <span>Košík</span>
-                    <span class="flex rounded-full items-center justify-center w-10 h-10 text-white bg-black">1</span>
-                </div>
-                
-                <div class="flex flex-col items-center">
-                    <span>Doprava</span>
-                    <span class="flex rounded-full items-center justify-center w-10 h-10 bg-[#D9D9D9]">2</span>
-                </div>
+        <section class="border bg-white
+                grid grid-cols-3 py-2 px-15 items-center gap-x-20
+            ">
+            <div class="flex flex-col font-bold items-center">
+                <span>Košík</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 text-white bg-black">1</span>
+            </div>
+                    
+            <div class="flex flex-col items-center">
+                <span>Doprava</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 bg-[#D9D9D9]">2</span>
+            </div>
 
-                <div class="flex flex-col items-center">
-                    <span>Dodacie údaje</span>
-                    <span class="flex rounded-full items-center justify-center w-10 h-10  bg-[#D9D9D9]">3</span>
-                </div>
-        
-            </section>
-        <section class="bg-white flex flex-row grow">
+            <div class="flex flex-col items-center whitespace-nowrap">
+                <span>Dodacie údaje</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 bg-[#D9D9D9]">3</span>
+            </div>
+        </section>
+        <section class="bg-white flex flex-col md:flex-row">
             <div class="grow grid grid-cols-1">
 
                  <div class="border-2 border-gray-200 rounded m-8 flex flex-row">
@@ -97,13 +98,12 @@
                         </div>
                     </div>
                     
-                    <div class="flex justify-end w-1/5">
-                        <div class="flex flex-col items-end pr-4 pt-1">
+                    <div class="flex flex-col items-end pr-2 pt-3">
                             <span class="text-gray-400 line-through text-sm">28,01 €</span>
                             <span class="text-2xl font-bold">25,99 €</span>
 
                             <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
-                                <button class="px-3 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
                                     <img src="../images/trash.png" class="w-4 h-4 opacity-60" alt="delete">
                                 </button>
         
@@ -131,12 +131,12 @@
                     
                     <div class="flex justify-end w-1/5">
 
-                        <div class="flex flex-col items-end pr-4 pt-1">
+                        <div class="flex flex-col items-end pr-2 pt-3">
                             <span class="text-gray-400 line-through text-sm">28,01 €</span>
                             <span class="text-2xl font-bold">25,99 €</span>
 
                             <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
-                                <button class="px-3 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
                                     <img src="../images/trash.png" class="w-4 h-4 opacity-60" alt="delete">
                                 </button>
         
@@ -161,13 +161,12 @@
                         </div>
                     </div>
                     
-                    <div class="flex justify-end w-1/5">
-                        <div class="flex flex-col items-end pr-4 pt-1">
+                    <div class="flex flex-col items-end pr-2 pt-3">
                             <span class="text-gray-400 line-through text-sm">28,01 €</span>
                             <span class="text-2xl font-bold">25,99 €</span>
 
                             <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
-                                <button class="px-3 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
                                     <img src="../images/trash.png" class="w-4 h-4 opacity-60" alt="delete">
                                 </button>
         
@@ -194,13 +193,16 @@
             </div>
         </section>
 
-        <section class="bg-white w-screen flex justify-end">
-            <a href="delivery.html">
-                <button class="bg-gray-200 rounder p-4 mt-6 mr-6 ml-2 mb-6 rounded-xl">
+        <section class="flex flex-1 justify-end">
+            <a href="/pages/contact_info.html">
+                <button class="border rounded-xl bg-[#D9D9D9]
+                    p-1 mt-6 mb-6 items-center mr-2
+                    md:p-2 md:mb-6
+                    lg:p-4 lg:mr-6 lg:mb-6 
+                ">
                     Prejsť na dopravu a platbu
                 </button>
             </a>
-            
         </section>
 
       </core>
