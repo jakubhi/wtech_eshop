@@ -9,22 +9,48 @@
 
 <body class="bg-gray-200 flex flex-col min-h-screen border-2">
     <header> </header>
-    <div class="bg-white flex flex-col items-center grow justify-center">
-        <div class="mb-2">Registračný formulár</div>
-        <section class="bg-gray-200 border-4 w-[90%] md:w-3/5 flex flex-col items-center px-6 py-12 gap-y-4">
-            <fieldset class="bg-gray-200 rounded-md border-black border-2 md:w-1/2">
+    <div class="flex flex-col items-center grow justify-center">
+        <div class="mb-2 text-lg">Registračný formulár</div>
+        <section class="
+            bg-gray-200 border-4 
+            flex flex-col items-center px-6 py-10 gap-y-1
+            sm:w-[45%]
+            md:w-[40%]
+            lg:w-[35%]
+            xl:w-[30%]
+        ">
+            <fieldset class="bg-gray-200 rounded-md border-black border-2
+                sm:w-[90%]
+                md:w-[80%]
+                lg:w-[70%]
+            ">
                 <legend class="ml-2 px-2">Meno</legend>
                 <input type="text" class="w-full bg-transparent" placeholder=" ">
             </fieldset>
-            <fieldset class="bg-gray-200 rounded-md border-black border-2 w-[90%] md:w-1/2 ">
+            <fieldset class="bg-gray-200 rounded-md border-black border-2
+                sm:w-[90%]
+                md:w-[80%]
+                lg:w-[70%]
+            ">
                 <legend class="ml-2 px-2">Heslo</legend>
                 <input type="text" class="w-full " placeholder=" ">
             </fieldset>
-            <fieldset class="bg-gray-200 rounded-md border-black border-2 w-[90%] md:w-1/2 ">
+            <fieldset class="bg-gray-200 rounded-md border-black border-2
+                sm:w-[90%]
+                md:w-[80%]
+                lg:w-[70%]
+            ">
                 <legend class="ml-2 px-2">Email</legend>
                 <input type="text" class="w-full " placeholder=" ">
             </fieldset>
-            <button class="border-2 border-black rounded mt-3 w-[90%] md:w-1/4">Registrácia</button>
+            <a href="/pages/login_page.html">
+                <button class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                    mb-10 p-[1.1px]
+                    mt-3
+            ">
+                Registrácia
+            </button>
+            </a>
         </section>
     </div>
 
