@@ -73,7 +73,7 @@
       <div class="flex flex-row grow border-2 bg-[#D9D9D9] border-lime-900">
         
         <!-- Side panel-->
-        <div class="border-2 border-amber-500 hidden lg:flex lg:w-1/5 lg:mt-30 flex-col">
+        <div id="mobile-filters" class="border-2 border-amber-500 hidden lg:flex lg:w-1/5 flex-col bg-gray-100 p-4">
             <div class="w-full pl-2 ">
                 <div class="text-xl font-semibold">Kategória</div>
                 <div class="grid-cols-1 lg:w-full ">
@@ -181,6 +181,11 @@
 
         <!--Middle -->
         <div class="flex flex-col grow">
+            <div class="lg:hidden flex justify-center p-4 bg-gray-300">
+                <button onclick="toggleFilters()" class="bg-[#2D2D2D] text-white px-6 py-2 rounded-full font-bold">
+                    Zobraziť filtre +
+                </button>
+            </div>
             <!--top middle-->
             <div class="flex font-semibold justify-center pt-10">
                 <div class="flex justify-center w-4/5 flex-col">
@@ -600,7 +605,18 @@
       </footer>
 
     </div>
-
+<script>
+    function toggleFilters() {
+        const filters = document.getElementById('mobile-filters');
+        if (filters.classList.contains('hidden')) {
+            filters.classList.remove('hidden');
+            filters.classList.add('flex'); // Show it
+        } else {
+            filters.classList.add('hidden');
+            filters.classList.remove('flex'); // Hide it
+        }
+    }
+</script>
 </body>
 
 </html>
