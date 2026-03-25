@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <link href="../css/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200">
+    <div class="flex flex-col min-h-screen 2 ">
+    
+      <header class=" bg-[#D9D9D9] 
+        flex justify-between items-center flex-row text-md
+        sm:text-xl
+        md:py-2
+        lg:pr-4
+      ">
+        <a href="../index.html">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white rounded-full font-bold
+                sm:flex sm:ml-1 sm:px-3 sm:py-2 sm:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ShopName 
+            </div>
+        </a>
+        
+        <div class="flex flex-1 justify-center
+
+        ">
+            <input type="text" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                p-1 ml-1 mr-3 w-full
+                sm:max-w-md sm:p-2 sm:m-1.5
+                md:max-w-2xl 
+                lg:max-w-lg 
+                xl:max-w-4xl 
+            ">
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <a href="login_page.html">
+                <button class=" bg-[#D9D9D9]
+                    hidden text-xs rounded-full
+                    sm:flex sm:text-lg sm:mr-3 sm:pl-3 sm:pr-2
+                    hover:brightness-85 active:brightness-85
+                ">
+                    Hosť - Login
+                </button>
+            </a>
+
+            <img src="../images/user.png" alt="profile" class="object-contain
+                bg-[#D9D9D9] hover:brightness-85 active:brightness-85
+                hidden h-10 
+                sm:flex sm:h-12 sm:mr-2
+                
+            ">
+            <a href="kosik_page.html">
+                <img src="../images/cart.png" alt="cart" class="object-contain
+                bg-[#D9D9D9] hover:brightness-85 active:brightness-85
+                flex h-10 pr-2
+                sm:h-12 sm:mr-2
+                lg:pr-2
+            ">
+            </a>
+            
+            <span class="flex items-center pr-3
+                sm:text-2xl
+            ">0.00 €</span>
+        </div>
+        
+      </header>
+
+      <div class="flex flex-col lg:flex-row grow border-2 bg-[#D9D9D9] ">
+        
+        <!-- Side panel-->
+        <div class="flex-row flex-wrap lg:w-1/5 lg:flex-col border-2">
+            
+        </div>
+
+        <!--Middle -->
+        <div class="flex flex-col grow">
+                
+        </div>
+
+      </div>
+
+      <footer class=" bg-[#D9D9D9]
+        text-sm items-center py-2 text-center
+        sm:text-base sm:px-5
+        md:text-md
+        lg:text-xl lg:px-10
+        xl:text-2xl xl:px-20
+    ">
+        <div class="grid grid-cols-3 h-1/5 justify-between items-center">
+            <div class="
+                w-[10%]
+            ">
+            </div>
+            <div class="col-start-1">
+                <span class="font-bold">Potrebujete pomôcť?</span>
+                <ul class="space-y-1"> <li>Navštívte našu pobočku:</li>
+                    <li>Po-Pia 9:00 - 20:00</li>
+                    <li>alebo</li>
+                    <li>volajte +421 999 999 999</li>
+                </ul>
+            </div>
+            <div class="col-start-2">
+                <span>Copyright 2026, H & H, všetky práva vyhradené</span>
+            </div>
+
+            <div class="flex flex-col justify-center items-center">
+                <span class="font-bold">Sociálne médiá</span>
+                <ul class="space-y-2 flex flex-col items-center"> <li>Navštívte našu pobočku:</li>
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-8 h-8 items-center justify-center">
+                            <img src="/images/facebook.png" class="object-contain">
+                        </div>
+                        <span>Facebook</span>
+                    </li>
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-8 h-8 items-center justify-center">
+                            <img src="/images/instagram.png" class="object-contain">
+                        </div>
+                        <span>Instagram</span>
+                    </li>
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-8 h-8 items-center justify-center">
+                            <img src="/images/youtube.png" class="object-contain">
+                        </div>
+                        <span>YouTube</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="
+                w-[5%]
+            ">
+            </div>
+        </div>
+      </footer>
+
+    </div>
+
+</body>
+
+</html>
