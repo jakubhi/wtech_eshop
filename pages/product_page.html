@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +35,7 @@
                 <div class="flex items-center absolute inset-y-0 pl-2 sm:pl-4 md:pl-5 p-1">
                     <img src="../images/lupa.png" alt="Vyhladat" class="w-5 h-5 sm:w-6 sm:h-6">
                 </div>
-                <input type="text" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                <input type="search" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
                     border
                     p-1 ml-1 mr-3 w-full
                     sm:max-w-md
@@ -76,7 +76,7 @@
         
       </header>
 
-      <div class="flex flex-row grow border-2">
+      <main class="flex flex-row grow border-2">
 
         <div class="
                 hidden items-center
@@ -308,7 +308,7 @@
             ">
         </div>
 
-      </div>
+      </main>
 
       <footer class="flex justify-center bg-[#2D2D2D] text-white 
         h-[10%]
@@ -319,19 +319,20 @@
     ">
         <div class="grid grid-cols-1 space-y-5 sm:grid-cols-3 justify-between items-start text-center">
             <div class="">
-                <span class="font-bold">Potrebujete pomôcť?</span>
-                <ul class="space-y-1"> <li>Navštívte našu pobočku:</li>
+                <p class="font-bold">Potrebujete pomôcť?</p>
+                <ul class="space-y-1">
+                    <li>Navštívte našu pobočku:</li>
                     <li>Po-Pia 9:00 - 20:00</li>
                     <li>alebo</li>
                     <li>volajte +421 999 999 999</li>
                 </ul>
             </div>
             <div class="hidden sm:flex justify-center items-center self-center text-center">
-                <span class="font-semibold hidden sm:flex items-center">Copyright 2026, H & H, všetky práva vyhradené</span>
-            </div>
+                <p class="font-semibold hidden sm:flex items-center">Copyright 2026, H & H, všetky práva vyhradené</p>
+                </div>
 
             <div class="flex flex-col justify-center items-center">
-                <span class="font-bold">Sociálne médiá</span>
+                <p class="font-bold">Sociálne médiá</p>
                 <ul class="space-y-2 flex flex-col items-center">
                     <li class="flex items-center gap-x-3">
                         <div class="flex w-4 h-4 items-center justify-center">
@@ -355,13 +356,10 @@
             </div>
 
             <div class="text-center">
-                <span class="font-semibold sm:hidden ">Copyright 2026, H & H, všetky práva vyhradené</span>
-            </div>
+                <p class="font-semibold sm:hidden ">Copyright 2026, H & H, všetky práva vyhradené</p>
             </div>
         </div>
-      </footer>
-
-    </div>
+    </footer>
 
 </body>
 
