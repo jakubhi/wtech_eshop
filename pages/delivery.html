@@ -103,108 +103,95 @@
                     </div>
                 </section>
 
-                <div class="flex flex-col w-full flex-1 justify-center items-center
-                    md:flex-row
-                ">
-                    <div class="flex flex-col md:w-7/12 px-5">
-                        <span class="font-bold text-xl py-5 mt-10">
-                            Zvoľte spôsob doručenia
-                        </span>
-                        
-                        <div class="flex flex-col gap-y-3">
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="doprava">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Doručiť do Eshop boxu
-                                </span>
-                            </label>
-
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="doprava">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Doručenie domov
-                                </span>
-                            </label>
-
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="doprava">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Osobné vyzdvihnutie na pobočke
-                                </span>
-                            </label>
-                        </div>
-
-                        <hr class="mt-10 mb-5 border-[#D9D9D9]">
-                        
-                        <div class="flex flex-col gap-y-2">
+                <section class="flex flex-col md:flex-row mr-5 ml-5">
+                    <div class="flex flex-col md:flex-row w-full mt-10">
+                        <div class="flex flex-col md:w-7/12 px-5">
                             <span class="font-bold text-xl py-5">
-                                Zvoľte spôsob platby
+                                Zvoľte spôsob doručenia
                             </span>
                             
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="platba">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Kartou online
-                                </span>
-                            </label>
+                            <div class="flex flex-col gap-y-3">
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="doprava">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Doručiť do Eshop boxu
+                                    </span>
+                                </label>
+
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="doprava">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Doručenie domov
+                                    </span>
+                                </label>
+
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="doprava">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Osobné vyzdvihnutie na pobočke
+                                    </span>
+                                </label>
+                            </div>
+
+                            <hr class="mt-10 mb-5 border-[#D9D9D9]">
                             
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="platba">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Platba pri prevzatí
+                            <div class="flex flex-col gap-y-2">
+                                <span class="font-bold text-xl py-5">
+                                    Zvoľte spôsob platby
                                 </span>
-                            </label>
+                                
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="platba">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Kartou online
+                                    </span>
+                                </label>
+                                
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="platba">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Platba pri prevzatí
+                                    </span>
+                                </label>
 
-                            <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                <input type="radio" class="hidden peer" name="platba">
-                                <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
-                                </div>
-                                <span class="text-lg ml-5">
-                                    Platba prevodom na účet
-                                </span>
-                            </label>
-                        </div>                        
-                    </div>
-
-                    <div class="flex flex-col w-full flex-1 gap-x-5 m-5 px-5 md:px-0">
-                        <div class="flex flex-col flex-1 text-lg">
-                            <span class="font-bold text-2xl py-4">
-                                Zhrnutie
-                            </span>
-                            <span>
-                                Počet produktov v košíku: 3
-                            </span>
-                            <span>
-                                Celkom ušetrené: 2,02€
-                            </span>
+                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
+                                    <input type="radio" class="hidden peer" name="platba">
+                                    <div class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
+                                    </div>
+                                    <span class="text-lg ml-5">
+                                        Platba prevodom na účet
+                                    </span>
+                                </label>
+                            </div>                        
                         </div>
 
-                        <div class="flex flex-row justify-between border-t border-[#D9D9D9] items-end">
-                            <span class="flex text-2xl">
-                            Celková suma:
-                            </span>
-                            <span class="flex justify-end font-bold text-2xl mr-10">
-                                14,97€
-                            </span>
+                        <div class="flex flex-col bg-gray-100 md:w-1/3 md:h-fit md:m-8 pb-6 mt-10">
+                            <div class="text-3xl font-bold mt-6 flex justify-center">Zhrnutie</div>
+                            <div class="text-lg font-semibold mt-4 ml-4">Počet produktov v košíku: 3</div>
+                            <div class="text-lg font-semibold mt-1 ml-4">Celkom ušetrené 5,51€</div>
+                            <div class="mt-8 ml-4 flex flex-row mb-2 w-full justify-between">
+                                <div class="text-lg font-semibold">Celková suma:</div>
+                                <div class="flex text-2xl font-semibold mr-10">75,48 €</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="flex">
+                <div class="flex mt-10 mb-5">
                     <section class="flex flex-1 justify-start">
                         <a href="/pages/kosik_page.html">
                             <button class="border rounded-xl border-gray-200 bg-gray-300
-                                p-2 mt-6 mb-6 items-center
+                                p-2 mt-6 mb-6 items-center ml-5
                                 md:p-2 md:mb-6 md:ml-5
                                 lg:p-4 lg:mr-6 lg:mb-10 lg:mt-15
                             ">
@@ -213,26 +200,20 @@
                         </a>
                     </section>
 
-                    <section class="flex flex-1 justify-end">
+                    <section class="flex flex-1 justify-end mr-5">
                         <a href="/pages/contact_info.html">
                             <button class="border rounded-xl border-gray-200 bg-gray-300
-                                p-2 mt-6 mb-6 items-center
+                                p-2 mt-6 mb-6 items-center w-full
                                 md:p-2 md:mb-6 md:mr-5
                                 lg:p-4 lg:mr-6 lg:mb-10 lg:mt-15
 
                             ">
-                                Prejsť k dodacím údajom
+                                Dodacie údaje
                             </button>
                         </a>
                     </section>
                 </div>
           </div>
-
-          <div class="
-            hidden items-center
-            lg:flex md:w-[5%]
-        ">
-        </div>
       </div>
 
       
