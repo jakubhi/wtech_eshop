@@ -62,9 +62,9 @@
         
     </header>
 
-    <main class="items-start w-full p-6 mb-10 flex flex-row gap-x-8">
+    <main class="items-start w-full p-6 mb-10 flex flex-col md:flex-row gap-x-8">
         <!-- Left main column-->
-        <div class="w-1/2 flex flex-col">
+        <div class="w-full md:w-1/2 flex flex-col">
             <form> 
                 <label class="text-2xl font-semibold">Pridať nový produkt</label>
                 <p class="text-gray-500">Vytvorte nový produkt s definovanými vlastnosťami</p>
@@ -122,11 +122,11 @@
         </div>
 
         <!-- Right main column -->
-        <div class="w-1/2 flex flex-col pl">
+        <div class="w-full md:w-1/2 flex flex-col pl">
             <label class="text-lg flex mt-10 mb-1 justify-center ">Obrázky produktu</label>
 
-            <div class="flex flex-row gap-4 justify-center">
-                <label class="w-52 h-72 border-2 border-dashed border-gray-300 bg-gray-100 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <label class="w-52 h-72 border-2 border-dashed border-gray-300 bg-gray-100 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors ">
                     <span class="text-gray-400 text-sm font-medium">Pridať fotku</span>
                     <span class="text-gray-300 text-2xl mt-1">+</span>
                     <input type="file" class="hidden" accept="image/*" />
