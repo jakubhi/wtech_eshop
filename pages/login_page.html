@@ -11,7 +11,7 @@
     <header></header>
     <main class="flex flex-col items-center grow justify-center">
         <div class="text-lg mb-2">Vitajte v našom Eshope!</div>
-        <form action="../index.html" method="get" class="bg-gray-300 border-4 
+        <form action="admin_dashboard.html" method="get" class="bg-gray-300 border-4 
             flex flex-col items-center px-6 py-10 gap-y-1
             sm:w-[45%]
             md:w-[40%]
@@ -35,15 +35,18 @@
                 <input name="heslo" type="password" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="current-password" required>
             </div>
 
-            <button type="submit" class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
-                    p-1
-                    mt-3
-                ">
+            <a href="../index.html" class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                p-1
+                mt-3
+            ">
                 Prihlásenie
-            </button>
-            <a href="admin_dashboard.html" class="items-center px-1 mt-1 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white">
-                Vstup pre administrátora
             </a>
+            <button type="submit" class="items-center px-1 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                p-1
+                mt-3
+            ">
+                Vstup pre administrátora
+            </button>
             <p class="
                 mt-2
                 sm:mt-4
