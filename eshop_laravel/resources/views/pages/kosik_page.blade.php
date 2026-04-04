@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Košík | E-Shop</title>
+    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200">
+    <div class="flex flex-col min-h-screen">
+    
+      <header class="
+      bg-black
+        flex justify-between items-center flex-row text-md
+        p-1
+        m:text-xl
+        lg:pr-4
+      ">
+        <a href="/">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white border border-gray-200 rounded-full font-bold
+                md:flex md:ml-1 md:px-3 md:py-2 md:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ToJa Clothes
+            </div>
+        </a>
+        
+        <a href="/" class="flex md:hidden invert hover:opacity-80">
+            <img src="../images/home.png" alt="Domov" class="w-10 p-1">
+        </a>
+
+        <div class="flex flex-1 justify-center px-4">  
+            <div class="relative w-full sm:max-w-md md:max-w-2xl lg:max-w-lg xl:max-w-4xl">
+                <div class="flex items-center absolute inset-y-0 pl-2 sm:pl-4 md:pl-5 p-1">
+                    <img src="../images/lupa.png" alt="Vyhladat" class="w-5 h-5 sm:w-6 sm:h-6">
+                </div>
+                <input type="search" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                    border
+                    p-1 ml-1 mr-3 w-full
+                    sm:max-w-md
+                    md:max-w-xl lg:p-2 lg:m-1.5
+                    lg:max-w-lg 
+                    xl:max-w-4xl 
+                ">
+            </div>
+            
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <a href="/login">
+                <button class="bg-[#2D2D2D] border border-white text-white
+                    hidden text-xs rounded-full
+                    sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-2 sm:p-1
+                    md:text-lg
+                    hover:brightness-85 active:brightness-85
+                ">
+                    Hosť - Login
+                </button>
+            </a>
+
+            <a href="/login">
+                <img src="../images/user.png" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+            <a href="/cart">
+                <img src="../images/cart.png" alt="cart" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+            
+            <span class="flex items-center pr-3 pl-1
+                text-white
+                sm:text-lg
+                lg:text-xl
+                xl:text-2xl
+            ">0.00 €</span>
+        </div>
+        
+      </header>
+
+      <main class="flex grow bg-white flex-col overflow-hidden">
+        <nav class="
+                grid grid-cols-3 py-2 px-15 items-center gap-x-20
+            ">
+            <div class="flex flex-col font-bold items-center">
+                <span>Košík</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 text-white bg-black">1</span>
+            </div>
+                    
+            <div class="flex flex-col items-center">
+                <span>Doprava</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 bg-[#D9D9D9]">2</span>
+            </div>
+
+            <div class="flex flex-col items-center whitespace-nowrap">
+                <span>Dodacie údaje</span>
+                <span class="flex rounded-full items-center justify-center w-10 h-10 bg-[#D9D9D9]">3</span>
+            </div>
+        </nav>
+        
+        <section class="bg-white flex flex-col md:flex-row">
+            <div class="grow grid grid-cols-1 md:w-2/3">
+                <div class="border-2 border-gray-200 rounded m-8 mb-0 flex flex-row">
+                    <div class="flex flex-row w-4/5">
+                        <div class="ml-4 mb-6 mt-4 w-16 h-20 rounded-lg bg-gray-200">
+                            <img src="../images/product2.png" alt="product icon">
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="text-lg font-semibold ml-4 mt-4">Mikina značky MTN</div>
+                            <div class="ml-4">Skladom</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end pr-2 pt-3">
+                        <span class="text-gray-400 line-through text-md">28,01 €</span>
+                        <span class="text-2xl font-bold">25,99 €</span>
+                        <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
+                            <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <img src="../images/bin.png" class="w-4 h-4 opacity-60" alt="delete">
+                            </button>
+                            <div class="px-4 py-1 font-bold text-lg">1</div>
+                            <button class="px-3 py-1 hover:bg-gray-300 border-l border-gray-400">
+                                <span class="text-xl font-bold">+</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex border-2 rounded m-8 mb-0 border-gray-200 "></div>
+
+
+                <div class="border-2 border-gray-200 rounded m-8 mb-0 flex flex-row">
+                    <div class="flex flex-row w-4/5">
+                        <div class="ml-4 mb-6 mt-4 w-16 h-20 rounded-lg bg-gray-200">
+                            <img src="../images/product4.png" alt="product icon">
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="text-lg font-semibold ml-4 mt-4">Vzorované šaty</div>
+                            <div class="ml-4">Skladom</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end pr-2 pt-3">
+                        <span class="text-gray-400 line-through text-md">19,99 €</span>
+                        <span class="text-2xl font-bold">17,99 €</span>
+                        <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
+                            <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <img src="../images/bin.png" class="w-4 h-4 opacity-60" alt="delete">
+                            </button>
+                            <div class="px-4 py-1 font-bold text-lg">1</div>
+                            <button class="px-3 py-1 hover:bg-gray-300 border-l border-gray-400">
+                                <span class="text-xl font-bold">+</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="flex border-2 rounded m-8 mb-0 border-gray-200"></div>
+
+
+                <div class="border-2 border-gray-200 rounded m-8 flex flex-row">
+                    <div class="flex flex-row w-4/5">
+                        <div class="ml-4 mb-6 mt-4 w-16 h-20 rounded-lg bg-gray-200">
+                            <img src="../images/product3.png" alt="product icon">
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="text-lg font-semibold ml-4 mt-4">Moderné tepláky XL</div>
+                            <div class="ml-4">Skladom</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end pr-2 pt-3">
+                        <span class="text-gray-400 line-through text-md">32,99 €</span>
+                        <span class="text-2xl font-bold">31,50 €</span>
+                        <div class="flex items-center bg-[#D9D9D9] rounded-lg mt-2 overflow-hidden border border-gray-400">
+                            <button class="px-4 py-1 hover:bg-gray-300 border-r border-gray-400">
+                                <img src="../images/bin.png" class="w-4 h-4 opacity-60" alt="delete">
+                            </button>
+                            <div class="px-4 py-1 font-bold text-lg">1</div>
+                            <button class="px-3 py-1 hover:bg-gray-300 border-l border-gray-400">
+                                <span class="text-xl font-bold">+</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="flex flex-col bg-gray-100 md:w-1/3 md:h-fit md:m-8 pb-6">
+                <div class="text-3xl font-bold mt-6 flex justify-center">Zhrnutie</div>
+                <div class="text-lg font-semibold mt-4 ml-4">Počet produktov v košíku: 3</div>
+                <div class="text-lg font-semibold mt-1 ml-4">Celkom ušetrené 5,51€</div>
+                <div class="mt-8 ml-4 flex flex-row mb-2 w-full justify-between">
+                    <div class="text-lg font-semibold">Celková suma:</div>
+                    <div class="flex text-2xl font-semibold mr-10">75,48 €</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-1 justify-end mt-10 mb-5">
+            <a href="/delivery">
+                <button class="border rounded-xl border-gray-200 bg-gray-300
+                    p-2 mt-6 mb-6 items-center mr-5
+                    md:p-2 md:mb-6 md:mr-5
+                    lg:p-4 lg:mr-6 lg:mb-10 lg:mt-15
+                ">
+                    Prejsť na dopravu a platbu
+                </button>
+            </a>
+        </section>
+
+    </main>
+
+      <footer class="flex justify-center bg-[#2D2D2D] text-white 
+        h-[10%]
+        text-sm items-center py-2 text-center
+        sm:text-base sm:px-5
+        md:text-md
+        lg:text-lg lg:px-10
+    ">
+        <div class="grid grid-cols-1 space-y-5 sm:grid-cols-3 justify-between items-start text-center">
+            <div class="">
+                <p class="font-bold">Potrebujete pomôcť?</p>
+                <ul class="space-y-1">
+                    <li>Navštívte našu pobočku:</li>
+                    <li>Po-Pia 9:00 - 20:00</li>
+                    <li>alebo</li>
+                    <li>volajte +421 999 999 999</li>
+                </ul>
+            </div>
+            <div class="hidden sm:flex justify-center items-center self-center text-center">
+                <p class="font-semibold hidden sm:flex items-center">Copyright 2026, H & H, všetky práva vyhradené</p>
+                </div>
+
+            <div class="flex flex-col justify-center items-center">
+                <p class="font-bold">Sociálne médiá</p>
+                <ul class="space-y-2 flex flex-col items-center">
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-4 h-4 items-center justify-center">
+                            <img src="../images/facebook.png" alt="Facebook logo" class="invert object-contain">
+                        </div>
+                        <span>Facebook</span>
+                    </li>
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-4 h-4 items-center justify-center">
+                            <img src="../images/instagram.png" alt="Instagram logo" class="invert object-contain">
+                        </div>
+                        <span>Instagram</span>
+                    </li>
+                    <li class="flex items-center gap-x-3">
+                        <div class="flex w-4 h-4 items-center justify-center">
+                            <img src="../images/youtube.png" alt="YouTube logo" class="invert object-contain">
+                        </div>
+                        <span>YouTube</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="text-center">
+                <p class="font-semibold sm:hidden ">Copyright 2026, H & H, všetky práva vyhradené</p>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+</body>
+
+</html>

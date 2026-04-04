@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prehľad produktov | E-Shop</title>
+    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+    <header class="
+        bg-black
+            flex justify-between items-center flex-row text-md
+            p-1
+            lg:pr-4
+        ">
+        <a href="/admin_dashboard">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white border border-gray-200 rounded-full font-bold
+                md:flex md:ml-1 md:px-3 md:py-2 md:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ToJa Clothes
+            </div>
+        </a>
+        
+        <a href="/admin_dashboard" class="flex md:hidden invert hover:opacity-80">
+            <img src="../images/home.png" alt="Domov" class="w-10 p-1">
+        </a>
+
+        <div class="flex flex-1 justify-center px-4">  
+            <div class="relative w-full sm:max-w-md md:max-w-2xl lg:max-w-lg xl:max-w-4xl">
+                <div class="flex items-center absolute inset-y-0 pl-2 sm:pl-4 md:pl-5 p-1">
+                    <img src="../images/lupa.png" alt="Vyhladat" class="w-5 h-5 sm:w-6 sm:h-6">
+                </div>
+                <input type="search" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                    border
+                    p-1 ml-1 mr-3 w-full
+                    sm:max-w-md
+                    md:max-w-xl lg:p-2 lg:m-1.5
+                    lg:max-w-lg 
+                    xl:max-w-4xl 
+                ">
+            </div>
+            
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <a href="/login" class="bg-[#2D2D2D] border border-white text-white
+                hidden text-xs rounded-full
+                sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-3 sm:p-1
+                md:text-lg
+                hover:brightness-85 active:brightness-85
+            ">
+                Admin - Logout
+            </a>
+
+            <a href="/login">
+                <img src="../images/user.png" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+        </div>
+            
+        </header>
+
+    <div class="p-3 bg-gray-400 rounded-lg text-center mb-10 font-bold mr-5 ml-5 mt-6">
+        <h1 class="text-xl">
+            Prehľad produktov
+        </h1>
+    </div>
+    
+    <main class="flex flex-col lg:flex-row grow">
+        <div class="flex flex-col justify-center flex-1" >
+            <div class="
+                bg-white text-black
+                grid grid-cols-1 justify-items-center items-start h-full mb-10
+                sm:grid-cols-2 gap-5 px-4
+                md:grid-cols-3
+                xl:grid-cols-4
+                2xl:grid-cols-5 xl:gap-x-10
+                ">
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product1.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                           Tričko biele 
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                            
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product2.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                            Mikina sivá
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                            
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product3.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                                Rifle modré
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                            
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product4.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                                Šaty letné
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                            
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product5.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                                Bunda jeseň
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                            
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product6.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                                Sukňa čierna
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                                
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product7.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                            Sveter biely
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                                
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Upraviť
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product8.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                                Košeľa kockovaná
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                            <div class="flex flex-col">
+                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                    23,50 €
+                                </span>
+
+                                <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                    19,99€
+                                </span>
+                            </div>
+                        </div>
+                                                
+                        <a href="admin_edit_product.html" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                            Košela 
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex rounded-2xl mb-3 items-center justify-center bg-[#c2c0c078] hover:brightness-85 active:brightness-85">
+                    <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
+                        <a href="/product_detail">
+                            <img src="../images/product9.png" alt="product icon">
+                        </a>
+                        <span class="flex h-15 justify-center text-center text-black-500 font-bold text-2xl mt-2 wrap-break-word">
+                            Krátke nohavice
+                        </span>
+                        <div class="flex justify-between mt-auto items-center">
+                        <div class="flex flex-col">
+                            <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                23,50 €
+                            </span>
+
+                            <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
+                                19,99€
+                            </span>
+                        </div>
+                    </div>
+                                                
+                    <a href="/edit_product" class="mt-5 border rounded-2xl py-2 text-center text-xl hover:bg-black active:bg-black hover:text-white active:text-white">
+                        Upraviť
+                    </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="flex justify-center gap-x-1 mt-10 mb-5">
+        <a href="#" class="flex items-center p-2 mr-3 rounded-lg border bg-white border-gray-300 hover:bg-gray-100 active:bg-gray-100">
+            <img src="../images/arrow.png" alt="Predchádzajúca strana" class="h-4 w-4 rotate-90"> 
+        </a>
+
+        <a href="#" class="px-4 py-2 font-bold text-white rounded-lg border bg-gray-500 border-gray-400 hover:bg-gray-600 active:bg-gray-600">1</a>
+        <a href="#" class="px-4 py-2 text-black rounded-lg border border-gray-400 hover:bg-gray-100 active:bg-gray-100">2</a>
+        <a href="#" class="px-4 py-2 text-black rounded-lg border border-gray-400 hover:bg-gray-100 active:bg-gray-100">3</a>
+        <a href="#" class="flex items-center p-2 ml-3 rounded-lg border bg-white border-gray-300 hover:bg-gray-100 active:bg-gray-100">
+            <img src="../images/arrow.png" alt="Ďalšia stránka" class="h-4 w-4 rotate-270">
+        </a>
+    </nav>
+
+    <footer></footer>
+
+</body>
+
+</html>

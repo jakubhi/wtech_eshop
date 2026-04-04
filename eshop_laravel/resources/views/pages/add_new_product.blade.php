@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin dashboard | E-Shop</title>
+    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+    <header class="
+      bg-black
+        flex justify-between items-center flex-row text-md
+        p-1
+        md:text-xl
+        lg:pr-4
+      ">
+        <a href="/admin_dashboard">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white border border-gray-200 rounded-full font-bold
+                md:flex md:ml-1 md:px-3 md:py-2 md:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ToJa Clothes
+            </div>
+        </a>
+        
+        <a href="/admin_dashboard" class="flex md:hidden invert hover:opacity-80">
+            <img src="../images/home.png" alt="Domov" class="w-10 p-1">
+        </a>
+
+        <div class="flex flex-1 justify-center px-4">  
+            <div class="relative w-full sm:max-w-md md:max-w-2xl lg:max-w-lg xl:max-w-4xl">
+                <div class="flex items-center absolute inset-y-0 pl-2 sm:pl-4 md:pl-5 p-1">
+                    <img src="../images/lupa.png" alt="Vyhladat" class="w-5 h-5 sm:w-6 sm:h-6">
+                </div>
+                <input type="search" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                    border
+                    p-1 ml-1 mr-3 w-full
+                    sm:max-w-md
+                    md:max-w-xl lg:p-2 lg:m-1.5
+                    lg:max-w-lg 
+                    xl:max-w-4xl 
+                ">
+            </div>
+            
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <a href="/login" class="bg-[#2D2D2D] border border-white text-white
+                hidden text-xs rounded-full
+                sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-3 sm:p-1
+                md:text-lg
+                hover:brightness-85 active:brightness-85
+            ">
+                Admin - Logout
+            </a>
+
+            <a href="/login">
+                <img src="../images/user.png" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+        </div>
+        
+    </header>
+
+    <main class="items-start w-full p-6 mb-10 flex flex-col md:flex-row gap-x-8">
+        <!-- Left main column-->
+        <div class="w-full md:w-1/2 flex flex-col">
+            <form> 
+                <label class="text-2xl font-semibold">Pridať nový produkt</label>
+                <p class="text-gray-500">Vytvorte nový produkt s definovanými vlastnosťami</p>
+                <label class="text-lg block mt-4 mb-1">Názov produktu</label>
+                <input type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full mb-6 pl-2" required>
+                <label class="text-2xl font-semibold">Detailný opis</label>
+                <textarea class="bg-gray-200 w-full p-2 mb-4" rows="5"></textarea>
+                <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
+                    <!-- row1 -->
+                    <div>
+                        <label class="text-lg block mb-1">Kategória</label>
+                        <input type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+                    <div>
+                        <label class="text-lg block mb-1">Cena</label>
+                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+
+                    <!-- row2 -->
+
+                    <div>
+                        <label class="text-lg block mb-1">Kusov na sklade</label>
+                        <input type="number" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+                    <div>
+                        <label class="text-lg block mb-1">Značka</label>
+                        <input  type="text" class="bg-gray-200  rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+
+                    <!-- row3 -->
+
+                    <div>
+                        <label class="text-lg block mb-1">Materiál</label>
+                        <input  type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+                    <div>
+                        <label class="text-lg block mb-1">Obdobie</label>
+                        <input  type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+
+                    <!-- row4 -->
+
+                    <div>
+                        <label class="text-lg block mb-1">Dostupné farby</label>
+                        <input type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+                    <div>
+                        <label class="text-lg block mb-1">Dostupné veľkosti</label>
+                        <input type="text" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2" required>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+
+        <!-- Right main column -->
+        <div class="w-full md:w-1/2 flex flex-col pl">
+            <label class="text-lg flex mt-10 justify-center mb-10">Obrázky produktu</label>
+
+            <div class="flex flex-col sm:flex-row gap-x-20 gap-y-3 md:gap-4 justify-center items-center">
+                <label class="w-52 h-72 border-2 border-dashed border-gray-300 bg-gray-100 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors ">
+                    <span class="text-gray-400 text-sm font-medium">Pridať fotku</span>
+                    <span class="text-gray-300 text-2xl mt-1">+</span>
+                    <input type="file" class="hidden" accept="image/*" />
+                </label>
+
+                <label class="w-52 h-72 border-2 border-dashed border-gray-300 bg-gray-100 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                    <span class="text-gray-400 text-sm font-medium">Pridať fotku</span>
+                    <span class="text-gray-300 text-2xl mt-1">+</span>
+                    <input type="file" class="hidden" accept="image/*" />
+                </label>
+            </div>
+
+            <div class="mt-10 flex justify-center">
+                <a href="/admin_dashboard">
+                    <button type="button" class="text-white bg-green-500 hover:bg-green-700 active:bg-green-700 box-border border border-transparent focus:ring-4 font-semibold rounded-lg px-4 py-2">Pridať produkt</button>
+                </a>
+                
+            </div>
+            
+        </div>
+    </main>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prihlasenie | E-Shop</title>
+    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-linear-to-b from-gray-100 to-[#adadad] flex flex-col min-h-screen border-2">
+    <header></header>
+    <main class="flex flex-col items-center grow justify-center">
+        <div class="text-lg mb-2">Vitajte v našom Eshope!</div>
+        <form action="/admin_dashboard" method="get" class="bg-gray-300 border-4 
+            flex flex-col items-center px-6 py-10 gap-y-1
+            sm:w-[45%]
+            md:w-[40%]
+            lg:w-[35%]
+            xl:w-[30%]
+        ">
+            <div class="bg-[#d7d7d7] rounded-md border-black border-2
+                sm:w-[90%]
+                md:w-[80%]
+                lg:w-[70%]
+            ">
+                <label class="ml-2 px-2 block">Meno</label>
+                <input type="text" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="username" required>
+            </div>
+            <div class="bg-[#d7d7d7] rounded-md border-black border-2
+                sm:w-[90%]
+                md:w-[80%]
+                lg:w-[70%]
+            ">
+                <label class="ml-2 px-2 block">Heslo</label>
+                <input name="heslo" type="password" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="current-password" required>
+            </div>
+
+            <a href="/" class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                p-1
+                mt-3
+            ">
+                Prihlásenie
+            </a>
+            <button type="submit" class="items-center px-1 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                p-1
+                mt-3
+            ">
+                Vstup pre administrátora
+            </button>
+            <p class="
+                mt-2
+                sm:mt-4
+            ">
+                Zabudli ste heslo?
+            </p>
+            <p>Nemáte ešte účet? <a href="/register" class="text-blue-500 hover:text-blue-800 underline">Registrujte sa tu!</a></p>
+            <p class="italic mt-4 text-xs text-gray-600">
+                Ste administrátor? 
+                <a href="/register" class="text-gray-600 hover:text-gray-800 underline">
+                    Registrujte sa tu!
+                </a>
+            </p>
+        </form>
+    </main>
+</body>
+</html>

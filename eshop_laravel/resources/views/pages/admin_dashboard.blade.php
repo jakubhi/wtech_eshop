@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin dashboard | E-Shop</title>
+    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+    <header class="
+      bg-black
+        flex justify-between items-center flex-row text-md
+        p-1
+        lg:pr-4
+      ">
+        <a href="/admin_dashboard">
+            <div class="hidden items-center justify-center bg-[#2D2D2D] text-white border border-gray-200 rounded-full font-bold
+                md:flex md:ml-1 md:px-3 md:py-2 md:mr-1
+                lg:ml-3 lg:px-10
+            ">
+                ToJa Clothes
+            </div>
+        </a>
+        
+        <a href="/admin_dashboard" class="flex md:hidden invert hover:opacity-80">
+            <img src="../images/home.png" alt="Domov" class="w-10 p-1">
+        </a>
+
+        <div class="flex flex-1 justify-center px-4">  
+            <div class="relative w-full sm:max-w-md md:max-w-2xl lg:max-w-lg xl:max-w-4xl">
+                <div class="flex items-center absolute inset-y-0 pl-2 sm:pl-4 md:pl-5 p-1">
+                    <img src="../images/lupa.png" alt="Vyhladat" class="w-5 h-5 sm:w-6 sm:h-6">
+                </div>
+                <input type="search" placeholder="Hľadáte niečo?" class="bg-[#2D2D2D] text-white text-center rounded-full 
+                    border
+                    p-1 ml-1 mr-3 w-full
+                    sm:max-w-md
+                    md:max-w-xl lg:p-2 lg:m-1.5
+                    lg:max-w-lg 
+                    xl:max-w-4xl 
+                ">
+            </div>
+            
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <a href="/login" class="bg-[#2D2D2D] border border-white text-white
+                hidden text-xs rounded-full
+                sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-3 sm:p-1
+                md:text-lg
+                hover:brightness-85 active:brightness-85
+            ">
+                Admin - Logout
+            </a>
+
+            <a href="/login">
+                <img src="../images/user.png" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+        </div>
+        
+    </header>
+
+    <main class="flex flex-col flex-1 items-center w-full p-6 mb-10">
+  
+        <div class="p-3 w-full bg-gray-400 rounded-lg text-center mb-10 font-bold">
+            <h1 class="text-xl">
+                Admin dashboard
+            </h1>
+        </div>
+
+        <div class="flex flex-col w-full gap-y-3 text-center">
+                
+            <a href="/admin_products_review" class="py-4 px-6 w-full bg-gray-100 hover:bg-gray-200 rounded-md">
+                Prehľad a úprava produktov
+            </a>
+
+            <a href="/add_product" class="py-4 px-6 w-full bg-gray-100 hover:bg-gray-200 rounded-md">
+                Pridať nový produkt
+            </a>
+
+            <button class="py-4 px-6 w-full bg-gray-100 hover:bg-gray-200 rounded-md">
+                Štatistiky predaja
+            </button>
+                
+        </div>
+    </main>
+
+    <footer></footer>
+
+</body>
+
+</html>
