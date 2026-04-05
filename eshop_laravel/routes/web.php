@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,7 +41,7 @@ Route::get('/cart', function () {
 
 Route::get('/login', function () {
     return view('pages.login_page');
-});
+})->name('login');
 
 Route::get('/ordered_page', function () {
     return view('pages.ordered_page');
@@ -54,9 +55,8 @@ Route::get('/product_category', function () {
     return view('pages.product_category_page');
 });
 
-Route::get('/register', function () {
-    return view('pages.register_page');
-});
+Route::get('/register', [RegisterController::class, 'create'])->name('register');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('/product_detail', function () {
     return view('pages.product_page');

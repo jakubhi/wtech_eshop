@@ -11,6 +11,11 @@
     <header></header>
     <main class="flex flex-col items-center grow justify-center">
         <div class="text-lg mb-2">Vitajte v našom Eshope!</div>
+        @if (session('status'))
+            <div class="mb-4 w-full max-w-md rounded-md border-2 border-green-700 bg-green-100 px-3 py-2 text-sm text-green-900" role="status">
+                {{ session('status') }}
+            </div>
+        @endif
         <form action="/admin_dashboard" method="get" class="bg-gray-300 border-4 
             flex flex-col items-center px-6 py-10 gap-y-1
             sm:w-[45%]
