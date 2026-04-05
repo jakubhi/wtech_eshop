@@ -18,11 +18,12 @@ class RegisterController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'meno' => ['required', 'string', 'max:255'],
+            'login' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'heslo' => ['required', 'string', 'min:8'],
         ], [
-            'meno.required' => 'Meno je povinné.',
+            'login.required' => 'Login je povinný.',
+            'login.unique' => 'Tento login sa už používa.',
             'email.required' => 'Email je povinný.',
             'email.email' => 'Zadajte platný email.',
             'email.unique' => 'Tento email je už registrovaný.',
@@ -31,9 +32,10 @@ class RegisterController extends Controller
         ]);
 
         User::create([
-            'name' => $validated['meno'],
+            'login' => $validated['login'],
             'email' => $validated['email'],
             'password' => $validated['heslo'],
+            'rola' => 'zakaznik',
         ]);
 
         return redirect()->route('login')->with('status', 'Registrácia prebehla úspešne. Môžete sa prihlásiť.');

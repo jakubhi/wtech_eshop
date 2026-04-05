@@ -33,8 +33,8 @@
                 md:w-[80%]
                 lg:w-[70%]
             ">
-                <label for="meno" class="ml-2 px-2 block">Meno</label>
-                <input id="meno" name="meno" type="text" value="{{ old('meno') }}" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="name" required>
+                <label for="login" class="ml-2 px-2 block">Login</label>
+                <input id="login" name="login" type="text" value="{{ old('login') }}" class="w-full bg-transparent outline-none pl-2 font-bold" required>
             </div>
             <div class="bg-[#d7d7d7] rounded-md border-black border-2
                 sm:w-[90%]

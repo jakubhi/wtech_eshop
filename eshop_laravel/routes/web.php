@@ -39,9 +39,9 @@ Route::get('/cart', function () {
     return view('pages.kosik_page');
 });
 
-Route::get('/login', function () {
-    return view('pages.login_page');
-})->name('login');
+Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::get('/ordered_page', function () {
     return view('pages.ordered_page');
