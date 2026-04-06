@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -34,7 +35,7 @@ class RegisterController extends Controller
         User::create([
             'login' => $validated['login'],
             'email' => $validated['email'],
-            'password' => $validated['heslo'],
+            'password' => Hash::make($validated['heslo']),
             'rola' => 'zakaznik',
         ]);
 
