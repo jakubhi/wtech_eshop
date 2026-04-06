@@ -24,12 +24,22 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            $user = Auth::user();
-            if ($user->rola === 'admin') {
-                return redirect()->intended('/admin_dashboard');
+            #$user = Auth::user();
+            #if ($user->rola === 'admin') {
+            #    return redirect()->intended('/admin_dashboard');
+            #}
+
+            #return redirect()->intended('/');
+
+            if (Auth::user()->rola === 'admin') {
+                return redirect()->intended('admin_dashboard');
+            } 
+            else {
+                return redirect()->intended('/'); 
             }
 
-            return redirect()->intended('/');
+
+            
         }
 
         throw ValidationException::withMessages([

@@ -1,67 +1,67 @@
-<!DOCTYPE html>
-<html lang="sk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registracia | E-Shop</title>
-    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
-</head>
+    <!DOCTYPE html>
+    <html lang="sk">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registracia | E-Shop</title>
+        <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+    </head>
 
-<body class="bg-linear-to-b from-gray-100 to-[#adadad] bg-white flex flex-col min-h-screen border-2">
-    <header></header>
-    <main class="flex flex-col items-center grow justify-center">
-        <div class="mb-2 text-lg">Registračný formulár</div>
-        @if ($errors->any())
-            <div class="mb-4 w-full max-w-md rounded-md border-2 border-red-600 bg-red-100 px-3 py-2 text-sm text-red-800" role="alert">
-                <ul class="list-disc pl-5">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form action="{{ route('register.store') }}" method="post" class="bg-gray-300 border-4 
-            flex flex-col items-center px-6 py-10 gap-y-1
-            sm:w-[45%]
-            md:w-[40%]
-            lg:w-[35%]
-            xl:w-[30%]
-        ">
-            @csrf
-            <div class="bg-[#d7d7d7] rounded-md border-black border-2
-                sm:w-[90%]
-                md:w-[80%]
-                lg:w-[70%]
+    <body class="bg-linear-to-b from-gray-100 to-[#adadad] bg-white flex flex-col min-h-screen border-2">
+        <header></header>
+        <main class="flex flex-col items-center grow justify-center">
+            <div class="mb-2 text-lg">Registračný formulár</div>
+            @if ($errors->any())
+                <div class="mb-4 w-full max-w-md rounded-md border-2 border-red-600 bg-red-100 px-3 py-2 text-sm text-red-800" role="alert">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('register.store', ['type' => request()->query('type')]) }}" method="post" class="bg-gray-300 border-4 
+                flex flex-col items-center px-6 py-10 gap-y-1
+                sm:w-[45%]
+                md:w-[40%]
+                lg:w-[35%]
+                xl:w-[30%]
             ">
-                <label for="login" class="ml-2 px-2 block">Login</label>
-                <input id="login" name="login" type="text" value="{{ old('login') }}" class="w-full bg-transparent outline-none pl-2 font-bold" required>
-            </div>
-            <div class="bg-[#d7d7d7] rounded-md border-black border-2
-                sm:w-[90%]
-                md:w-[80%]
-                lg:w-[70%]
-            ">
-                <label for="heslo" class="ml-2 px-2 block">Heslo</label>
-                <input id="heslo" name="heslo" type="password" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="new-password" required>
-            </div>
-            <div class="bg-[#d7d7d7] rounded-md border-black border-2
-                sm:w-[90%]
-                md:w-[80%]
-                lg:w-[70%]
-            ">
-                <label for="email" class="ml-2 px-2 block">Email</label>
-                <input id="email" name="email" type="email" value="{{ old('email') }}" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="email" required>
-            </div>
-            <button type="submit" class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
-                mb-10 p-1
-                mt-3
-            ">
-                Registrácia
-            </button>
-        </form>
-    </main>
+                @csrf
+                <div class="bg-[#d7d7d7] rounded-md border-black border-2
+                    sm:w-[90%]
+                    md:w-[80%]
+                    lg:w-[70%]
+                ">
+                    <label for="login" class="ml-2 px-2 block">Login</label>
+                    <input id="login" name="login" type="text" value="{{ old('login') }}" class="w-full bg-transparent outline-none pl-2 font-bold" required>
+                </div>
+                <div class="bg-[#d7d7d7] rounded-md border-black border-2
+                    sm:w-[90%]
+                    md:w-[80%]
+                    lg:w-[70%]
+                ">
+                    <label for="heslo" class="ml-2 px-2 block">Heslo</label>
+                    <input id="heslo" name="heslo" type="password" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="new-password" required>
+                </div>
+                <div class="bg-[#d7d7d7] rounded-md border-black border-2
+                    sm:w-[90%]
+                    md:w-[80%]
+                    lg:w-[70%]
+                ">
+                    <label for="email" class="ml-2 px-2 block">Email</label>
+                    <input id="email" name="email" type="email" value="{{ old('email') }}" class="w-full bg-transparent outline-none pl-2 font-bold" autocomplete="email" required>
+                </div>
+                <button type="submit" class="items-center px-6 rounded-md font-bold border-2 border-black hover:bg-gray-300 hover:text-white
+                    mb-10 p-1
+                    mt-3
+                ">
+                    Registrácia
+                </button>
+            </form>
+        </main>
 
-    <footer></footer>
+        <footer></footer>
 
-</body>
-</html>
+    </body>
+    </html>

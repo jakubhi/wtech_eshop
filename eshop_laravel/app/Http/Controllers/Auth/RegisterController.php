@@ -36,7 +36,7 @@ class RegisterController extends Controller
             'login' => $validated['login'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['heslo']),
-            'rola' => 'zakaznik',
+            'rola' => ($request->query('type') === 'admin') ? 'admin' : 'zakaznik',
         ]);
 
         return redirect()->route('login')->with('status', 'Registrácia prebehla úspešne. Môžete sa prihlásiť.');

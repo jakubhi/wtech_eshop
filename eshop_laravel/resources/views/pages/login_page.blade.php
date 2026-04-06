@@ -65,10 +65,10 @@
             ">
                 Zabudli ste heslo?
             </p>
-            <p>Nemáte ešte účet? <a href="/register" class="text-blue-500 hover:text-blue-800 underline">Registrujte sa tu!</a></p>
+            <p>Nemáte ešte účet? <a href="/register?type=zakaznik" class="text-blue-500 hover:text-blue-800 underline">Registrujte sa tu!</a></p>
             <p class="italic mt-4 text-xs text-gray-600">
                 Ste administrátor? 
-                <a href="/register" class="text-gray-600 hover:text-gray-800 underline">
+                <a href="/register?type=admin" class="text-gray-600 hover:text-gray-800 underline">
                     Registrujte sa tu!
                 </a>
             </p>
