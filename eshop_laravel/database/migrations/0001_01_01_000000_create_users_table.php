@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         DB::statement("DROP TYPE IF EXISTS rola_enum CASCADE");
@@ -22,16 +19,15 @@ return new class extends Migration
         DB::statement("CREATE TYPE sposob_dorucenia_enum AS ENUM ('kurier', 'posta', 'osobny_odber')");
         DB::statement("CREATE TYPE sposob_platby_enum AS ENUM ('karta', 'prevod', 'dobierka')");
 
-
-        Schema::create('Pouzivatel', function (Blueprint $table) {
-            $table->increments('pouzivatel_id');
-            $table->string('login', 255)->unique();
-            $table->text('password');
-            $table->string('email', 255)->unique();
-            $table->rememberToken();
-        });
-
-        DB::statement('ALTER TABLE "Pouzivatel" ADD COLUMN rola rola_enum NOT NULL');
+        DB::statement("
+            CREATE TABLE \"Pouzivatel\" (
+                pouzivatel_id SERIAL PRIMARY KEY,
+                login VARCHAR(255) NOT NULL UNIQUE,
+                password TEXT NOT NULL,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                rola rola_enum NOT NULL
+            );
+        ");
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -49,18 +45,15 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('Pouzivatel');
+        DB::statement('DROP TABLE IF EXISTS "Pouzivatel" CASCADE;');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
 
-        DB::statement("DROP TYPE IF EXISTS rola_enum");
-        DB::statement("DROP TYPE IF EXISTS stav_enum");
-        DB::statement("DROP TYPE IF EXISTS sposob_dorucenia_enum");
-        DB::statement("DROP TYPE IF EXISTS sposob_platby_enum");
+        DB::statement("DROP TYPE IF EXISTS rola_enum CASCADE");
+        DB::statement("DROP TYPE IF EXISTS stav_enum CASCADE");
+        DB::statement("DROP TYPE IF EXISTS sposob_dorucenia_enum CASCADE");
+        DB::statement("DROP TYPE IF EXISTS sposob_platby_enum CASCADE");
     }
 };
