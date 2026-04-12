@@ -1,10 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('index');
+    $categories = \App\Models\Kategoria::all();
+    $recommended = \App\Models\Produkt::inRandomOrder()->take(10)->get();
+    return view('index', compact('categories', 'recommended'));
 });
 
 Route::get('/add_product', function () {
@@ -35,9 +39,10 @@ Route::get('/filtering_page', function () {
     return view('pages.filtering_page');
 });
 
-Route::get('/cart', function () {
-    return view('pages.kosik_page');
-});
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
 Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login']);
@@ -49,15 +54,13 @@ Route::get('/ordered_page', function () {
 
 Route::get('/payment', function () {
     return view('pages.platba_page');
-});
+})->name('payment.success');
 
-Route::get('/product_category', function () {
-    return view('pages.product_category_page');
-});
+Route::post('/order/process', [\App\Http\Controllers\OrderController::class, 'store'])->name('order.process');
+
+Route::get('/product_category', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/register', [RegisterController::class, 'create'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-Route::get('/product_detail', function () {
-    return view('pages.product_page');
-});
+Route::get('/product_detail/{id}', [ProductController::class, 'show'])->name('products.show');

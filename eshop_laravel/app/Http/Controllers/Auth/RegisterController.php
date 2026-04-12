@@ -35,7 +35,7 @@ class RegisterController extends Controller
         User::create([
             'login' => $validated['login'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['heslo']),
+            'heslo' => Hash::make($validated['heslo']),
             'rola' => ($request->query('type') === 'admin') ? 'admin' : 'zakaznik',
         ]);
 
