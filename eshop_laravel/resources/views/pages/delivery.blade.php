@@ -146,14 +146,26 @@
                                     Zvoľte spôsob platby
                                 </span>
                                 
-                                <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
-                                    <input type="radio" class="hidden peer" name="platba">
-                                    <span class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300">
-                                    </span>
-                                    <span class="text-lg ml-5">
-                                        Kartou online
-                                    </span>
-                                </label>
+                                <div class="rounded-xl border border-[#D9D9D9] overflow-hidden">
+                                    <label class="flex cursor-pointer items-center p-4" for="platba_online">
+                                        <input type="radio" id="platba_online" name="platba" value="online" class="peer hidden">
+                                        <span class="h-7 w-7 shrink-0 rounded-xl border border-slate-300 bg-gray-300 peer-checked:bg-blue-200 peer-checked:border-slate-400">
+                                        </span>
+                                        <span class="ml-5 text-lg">
+                                            Kartou online
+                                        </span>
+                                    </label>
+                                    <div id="card-details-panel" hidden class="border-t border-slate-200">
+                                        <div class="space-y-3 px-4 pb-4 pt-3 sm:px-5">
+                                            <input type="text" name="card_number" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="Cislo Karty" class="w-full rounded-md border border-slate-400 bg-white px-3 py-2.5 text-slate-600 placeholder:text-slate-400 outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400 mb-2">
+                                            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                                <input type="text" name="card_exp_month" inputmode="numeric" autocomplete="cc-exp-month" maxlength="2" placeholder="Mesiac" aria-label="Mesiac" class="w-full rounded-md border border-slate-400 bg-white px-3 py-2.5 text-slate-600 placeholder:text-slate-400 outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400">
+                                                <input type="text" name="card_exp_year" inputmode="numeric" autocomplete="cc-exp-year" maxlength="4" placeholder="Rok" aria-label="Rok" class="w-full rounded-md border border-slate-400 bg-white px-3 py-2.5 text-slate-600 placeholder:text-slate-400 outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400">
+                                            </div>
+                                            <input type="text" name="card_cvv" inputmode="numeric"  maxlength="4" placeholder="cvv" class="box-border h-10 w-20 shrink-0 rounded-md border border-slate-400 bg-white px-2 text-center text-sm text-slate-600 placeholder:text-slate-400 outline-none focus:border-slate-500 focus:ring-1 focus:ring-slate-400 sm:w-24 mt-2">
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9]">
                                     <input type="radio" class="hidden peer" name="platba">
@@ -270,6 +282,20 @@
     </footer>
       
 
+    <script>
+        (function () {
+            var online = document.getElementById('platba_online');
+            var panel = document.getElementById('card-details-panel');
+            if (!online || !panel) return;
+            function syncCardPanel() {
+                panel.hidden = !online.checked;
+            }
+            document.querySelectorAll('input[name="platba"]').forEach(function (el) {
+                el.addEventListener('change', syncCardPanel);
+            });
+            syncCardPanel();
+        })();
+    </script>
 </body>
 
 </html>
