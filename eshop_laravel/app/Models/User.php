@@ -27,7 +27,7 @@ class User extends Authenticatable
         'login',
         'email',
         'rola',
-        'password',
+        'heslo', // Correcting to 'heslo' to match DB
     ];
 
     /**
@@ -36,7 +36,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
+        'heslo',
         'remember_token',
     ];
 
@@ -48,7 +48,22 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
+            'heslo' => 'hashed',
         ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->heslo;
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(PolozkaKosika::class, 'pouzivatel_id', 'pouzivatel_id');
+    }
+
+    public function username()
+    {
+        return 'login';
     }
 }

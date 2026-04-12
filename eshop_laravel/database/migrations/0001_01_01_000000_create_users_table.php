@@ -23,7 +23,7 @@ return new class extends Migration
             CREATE TABLE \"Pouzivatel\" (
                 pouzivatel_id SERIAL PRIMARY KEY,
                 login VARCHAR(255) NOT NULL UNIQUE,
-                password TEXT NOT NULL,
+                heslo TEXT NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 rola rola_enum NOT NULL
             );
