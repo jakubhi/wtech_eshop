@@ -9,18 +9,24 @@
             @if(request('search'))
                 <input type="hidden" name="search" value="{{ request('search') }}">
             @endif
-            @if(request('category_id'))
-                <input type="hidden" name="category_id" value="{{ request('category_id') }}">
-            @endif
 
             <div class="w-full flex flex-col items-center">
                 <div class="w-full text-xl font-semibold text-center lg:text-left lg:pl-5 mb-3">Kategória</div>
                 <div class="flex flex-col gap-2 pl-5 lg:w-full items-start text-left">
+                    <label class="flex p-1 justify-start items-center lg:w-full rounded-x1 cursor-pointer">
+                        <input type="radio" name="category_id" value="" 
+                            class="hidden peer category-radio" 
+                            onclick="toggleRadio(this)"
+                            {{ !request('category_id') ? 'checked' : '' }}>
+                        <div class="rounded-xl border border-gray-400 peer-checked:bg-green-300 bg-gray-200 w-6 h-6 shrink-0"></div>
+                        <span class="pl-2">Všetky kategórie</span>
+                    </label>
+
                     @foreach($categories as $cat)
                     <label class="flex p-1 justify-start items-center lg:w-full rounded-x1 cursor-pointer">
                         <input type="radio" name="category_id" value="{{ $cat->id }}" 
-                            class="hidden peer" 
-                            onchange="this.form.submit()"
+                            class="hidden peer category-radio" 
+                            onclick="toggleRadio(this)"
                             {{ request('category_id') == $cat->id ? 'checked' : '' }}>
                         <div class="rounded-xl border border-gray-400 peer-checked:bg-green-300 bg-gray-200 w-6 h-6 shrink-0"></div>
                         <span class="pl-2">{{ $cat->nazov }}</span>
@@ -172,4 +178,31 @@
     <nav class="flex justify-center gap-x-1 mt-10 mb-5">
         {{ $products->links('vendor.pagination.eshop') }}
     </nav>
+
+    <script>
+        function toggleRadio(radio) {
+            if (radio.getAttribute('data-was-checked') === 'true') {
+                const allRadio = document.querySelector('.category-radio[value=""]');
+                if (allRadio && radio !== allRadio) {
+                    allRadio.checked = true;
+                    document.querySelectorAll('.category-radio').forEach(r => r.setAttribute('data-was-checked', 'false'));
+                    allRadio.setAttribute('data-was-checked', 'true');
+                } else {
+                    return;
+                }
+            } else {
+                document.querySelectorAll('.category-radio').forEach(r => r.setAttribute('data-was-checked', 'false'));
+                radio.setAttribute('data-was-checked', 'true');
+            }
+            radio.form.submit();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.category-radio').forEach(radio => {
+                if (radio.checked) {
+                    radio.setAttribute('data-was-checked', 'true');
+                }
+            });
+        });
+    </script>
 @endsection

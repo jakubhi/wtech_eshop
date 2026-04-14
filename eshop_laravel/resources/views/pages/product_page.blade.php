@@ -7,11 +7,7 @@
         <div class="hidden items-center lg:flex md:w-[5%]"></div>
 
         <div class="flex flex-col grow gap-y-3 lg:mt-10">
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                    <span class="block sm:inline">{{ session('success') }}</span>
-                </div>
-            @endif
+            
             
             <div class="flex flex-col lg:flex-row items-center lg:items-start aspect-auto">
                 <div class="flex flex-col bg-gray-200 w-[70%] sm:w-[50%] md:w-[35%] lg:w-[30%] m-5 justify-center items-center">
@@ -33,8 +29,30 @@
                     <div class="flex flex-col mt-3 gap-y-2 text-lg text-gray-600">
                         <div class="flex items-center gap-x-3">
                             <img src="{{ asset('images/box.png') }}" alt="Ikona boxu" class="w-5 object-contain">
+                            @if($product->skladom > 0)
                                 Na sklade: {{ $product->skladom }}ks
+                            @else
+                                <span class="text-red-500 font-semibold">Momentálne nedostupné</span>
+                            @endif
                         </div>
+
+                        @if($product->na_predajni)
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+                                <span class="text-white text-[10px]">✓</span>
+                            </div>
+                            Na predajni (možný osobný odber)
+                        </div>
+                        @endif
+
+                        @if($product->na_objednavku)
+                        <div class="flex items-center gap-x-3">
+                            <div class="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center shrink-0">
+                                <span class="text-white text-[10px]">!</span>
+                            </div>
+                            Na objednávku (dodanie do 7-14 dní)
+                        </div>
+                        @endif
 
                         <div class="flex mt-auto items-center gap-x-3">
                             <img src="{{ asset('images/delivery.png') }}" alt="Ikona dopravy" class="w-5 object-contain">
@@ -62,7 +80,7 @@
                                 <button type="button" onclick="decrementQuantity()" class="font-bold">
                                     <img src="{{ asset('images/minus.png') }}" alt="Zmenšiť množstvo" class="w-3">
                                 </button>
-                                <input type="number" id="quantity_input" name="quantity" value="1" min="1" max="{{ $product->skladom }}" class="w-10 text-center bg-transparent border-none focus:ring-0">
+                                <input type="number" id="quantity_input" name="quantity" value="1" min="1" class="w-10 text-center bg-transparent border-none focus:ring-0">
                                 <button type="button" onclick="incrementQuantity()" class="font-bold">
                                     <img src="{{ asset('images/plus_symbol.png') }}" alt="Zväčšiť množstvo" class="w-3">
                                 </button>
@@ -76,10 +94,7 @@
                     <script>
                         function incrementQuantity() {
                             const input = document.getElementById('quantity_input');
-                            const max = parseInt(input.getAttribute('max'));
-                            if (parseInt(input.value) < max) {
-                                input.value = parseInt(input.value) + 1;
-                            }
+                            input.value = parseInt(input.value) + 1;
                         }
                         function decrementQuantity() {
                             const input = document.getElementById('quantity_input');

@@ -52,7 +52,7 @@ class CartController extends Controller
     public function add(Request $request, $id)
     {
         $product = Produkt::findOrFail($id);
-        $quantity = $request->input('quantity', 1);
+        $quantity = max((int) $request->input('quantity', 1), 1);
 
         if (Auth::check()) {
             $cartItem = PolozkaKosika::where('pouzivatel_id', Auth::id())
@@ -124,9 +124,29 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Položka bola upravená!');
     }
 
+    public function delete($id)
+    {
+        if (Auth::check()) {
+            PolozkaKosika::where('pouzivatel_id', Auth::id())
+                ->where('produkt_id', $id)
+                ->delete();
+        } else {
+            $cart = session()->get('cart', []);
+            if (isset($cart[$id])) {
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            }
+        }
+
+        $total = $this->calculateTotal($this->getCart());
+        session()->put('total', $total);
+
+        return redirect()->back()->with('success', 'Položka bola odstránená z košíka!');
+    }
+
     public function update(Request $request, $id)
     {
-        $quantity = $request->quantity;
+        $quantity = max((int) $request->quantity, 1);
 
         if (Auth::check()) {
             PolozkaKosika::where('pouzivatel_id', Auth::id())

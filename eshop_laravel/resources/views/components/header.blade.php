@@ -32,7 +32,7 @@
                 sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-2 sm:p-1
                 md:text-lg
             ">
-                {{ Auth::user()->login }} ({{ Auth::user()->rola }})
+                {{ Auth::user()->login }}
             </div>
             <form action="{{ route('logout') }}" method="POST" class="inline">
                 @csrf

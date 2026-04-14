@@ -6,7 +6,7 @@
     <main class="flex flex-col items-center grow justify-center py-10">
         <div class="text-lg mb-2">Vitajte v našom Eshope!</div>
         @if (session('status'))
-            <div class="mb-4 w-full max-w-md rounded-md border-2 border-green-700 bg-green-100 px-3 py-2 text-sm text-green-900" role="status">
+            <div class="mb-4 w-full max-w-md flex items-center justify-center rounded-md border-2 border-green-700 bg-green-100 px-3 py-2 text-sm text-green-900 text-center font-semibold" role="status">
                 {{ session('status') }}
             </div>
         @endif

@@ -49,16 +49,16 @@ class DatabaseSeeder extends Seeder
         }
 
         $products = [
-            ['nazov' => 'Biele tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10],
-            ['nazov' => 'Čierna mikina', 'cena' => 29.99, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 5],
-            ['nazov' => 'Modré rifle', 'cena' => 39.99, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 15],
-            ['nazov' => 'Letné šaty', 'cena' => 24.99, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 8],
-            ['nazov' => 'Jesenná bunda', 'cena' => 59.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 3],
-            ['nazov' => 'Rifľová sukňa', 'cena' => 14.99, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 12],
-            ['nazov' => 'Biela košeľa', 'cena' => 19.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 20],
-            ['nazov' => 'Károvaná košeľa', 'cena' => 34.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 7],
-            ['nazov' => 'Hnedé kraťasy', 'cena' => 22.99, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 11],
-            ['nazov' => 'Dámske tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 9],
+            ['nazov' => 'Biele tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10, 'na_predajni' => true, 'na_objednavku' => false],
+            ['nazov' => 'Čierna mikina', 'cena' => 29.99, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 5, 'na_predajni' => true, 'na_objednavku' => false],
+            ['nazov' => 'Modré rifle', 'cena' => 39.99, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 15, 'na_predajni' => false, 'na_objednavku' => false],
+            ['nazov' => 'Letné šaty', 'cena' => 24.99, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 8, 'na_predajni' => true, 'na_objednavku' => true],
+            ['nazov' => 'Jesenná bunda', 'cena' => 59.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 3, 'na_predajni' => false, 'na_objednavku' => true],
+            ['nazov' => 'Rifľová sukňa', 'cena' => 14.99, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 12, 'na_predajni' => true, 'na_objednavku' => false],
+            ['nazov' => 'Biela košeľa', 'cena' => 19.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 20, 'na_predajni' => false, 'na_objednavku' => false],
+            ['nazov' => 'Károvaná košeľa', 'cena' => 34.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 7, 'na_predajni' => true, 'na_objednavku' => false],
+            ['nazov' => 'Hnedé kraťasy', 'cena' => 22.99, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 11, 'na_predajni' => true, 'na_objednavku' => true],
+            ['nazov' => 'Dámske tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 9, 'na_predajni' => false, 'na_objednavku' => true],
             
             ['nazov' => 'Nike tričko', 'cena' => 25.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 15],
             ['nazov' => 'Adidas mikina', 'cena' => 45.00, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8],
@@ -100,6 +100,8 @@ class DatabaseSeeder extends Seeder
                 'kategoria_id' => $p['kategoria_id'],
                 'znacka_id' => $p['znacka_id'],
                 'skladom' => $p['skladom'],
+                'na_predajni' => $p['na_predajni'] ?? false,
+                'na_objednavku' => $p['na_objednavku'] ?? false,
             ]);
         }
     }

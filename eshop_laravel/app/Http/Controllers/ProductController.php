@@ -27,9 +27,15 @@ class ProductController extends Controller
         }
 
         if ($request->filled('availability')) {
-            if ($request->input('availability') === 'in_stock') {
-                $query->where('skladom', '>', 0);
-            }
+            $query->where('skladom', '>', 0);
+        }
+
+        if ($request->filled('availability_order')) {
+            $query->where('na_objednavku', true);
+        }
+
+        if ($request->filled('availability_store')) {
+            $query->where('na_predajni', true);
         }
 
         if ($request->filled('price_from')) {

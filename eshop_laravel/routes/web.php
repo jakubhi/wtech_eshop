@@ -42,6 +42,7 @@ Route::get('/filtering_page', function () {
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
 Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
 Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
