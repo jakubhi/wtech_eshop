@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $categories = \App\Models\Kategoria::all();
-    $recommended = \App\Models\Produkt::inRandomOrder()->take(10)->get();
+    $recommended = \App\Models\Produkt::orderBy('produkt_id', 'asc')->take(10)->get();
     return view('index', compact('categories', 'recommended'));
 });
 
@@ -20,20 +20,24 @@ Route::get('/admin_dashboard', function () {
 });
 
 Route::get('/edit_product', function () {
-    return view('pages.edit_product');
+    return view('pages.admin_edit_product');
 });
 
 Route::get('/admin_products_review', function () {
-    return view('pages.admin_products_review');
+    $products = \App\Models\Produkt::orderBy('produkt_id', 'asc')->paginate(12);
+    return view('pages.admin_products_review', compact('products'));
 });
 
 Route::get('/contact_info', function () {
-    return view('pages.contact_info');
+    $checkoutPayment = session('checkout_payment', []);
+    return view('pages.contact_info', compact('checkoutPayment'));
 });
 
 Route::get('/delivery', function () {
     return view('pages.delivery');
 });
+
+Route::post('/delivery/continue', [\App\Http\Controllers\OrderController::class, 'continueToContact'])->name('delivery.continue');
 
 Route::get('/filtering_page', function () {
     return view('pages.filtering_page');

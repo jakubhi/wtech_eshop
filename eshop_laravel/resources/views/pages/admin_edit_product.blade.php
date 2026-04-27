@@ -7,7 +7,7 @@
     <link href="{{ asset('css/output.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-white">
+<body class="bg-gray-100">
     <header class="
       bg-black
         flex justify-between items-center flex-row text-md
@@ -62,58 +62,63 @@
         
     </header>
 
-    <main class="items-start w-full p-6 mb-10 flex flex-col md:flex-row gap-x-8">
+    <main class="items-start w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 mb-10 flex flex-col md:flex-row gap-8">
         <!-- Left main column-->
-        <div class="w-full md:w-1/2 flex flex-col">
+        <div class="w-full md:w-1/2 flex flex-col bg-white rounded-xl shadow-sm p-6">
             <form> 
                 <label class="text-2xl font-semibold">Upraviť produkt</label>
                 <p class="text-gray-500">Upravte vlastnosti existujúceho produktu</p>
                 <label class="text-lg block mt-4 mb-1">Názov produktu</label>
-                <input type="text" class="bg-gray-200 border focus:ring-brand block w-full mb-6 rounded-full pl-2" required>
+                <input type="text" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
                 <label class="text-2xl font-semibold">Detailný opis</label>
-                <textarea class="bg-gray-200 w-full p-2 mb-4" rows="5"></textarea>
+                <textarea class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5"></textarea>
                 <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                     <!-- row1 -->
                     <div>
                         <label class="text-lg block mb-1">Kategória</label>
-                        <input type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
-                        <label class="text-lg block mb-1">Cena</label>
-                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <label class="text-lg block mb-1">Cena bez zľavy</label>
+                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                    </div>
+
+                    <div>
+                        <label class="text-lg block mb-1">Akciová cena</label>
+                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
                     </div>
 
                     <!-- row2 -->
 
                     <div>
                         <label class="text-lg block mb-1">Kusov na sklade</label>
-                        <input type="number" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input type="number" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Značka</label>
-                        <input  type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
 
                     <!-- row3 -->
 
                     <div>
                         <label class="text-lg block mb-1">Materiál</label>
-                        <input  type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Obdobie</label>
-                        <input  type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
 
                     <!-- row4 -->
 
                     <div>
                         <label class="text-lg block mb-1">Dostupné farby</label>
-                        <input type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Dostupné veľkosti</label>
-                        <input type="text" class="bg-gray-200 border focus:ring-brand block w-full rounded-full pl-2" required>
+                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
 
 
@@ -122,7 +127,7 @@
         </div>
 
         <!-- Right main column -->
-        <div class="w-full md:w-1/2 flex flex-col pl items-center self-stretch">
+        <div class="w-full md:w-1/2 flex flex-col items-center self-stretch bg-white rounded-xl shadow-sm p-6">
             <label class="text-lg flex mt-10 mb-10 justify-center">Obrázky produktu</label>
 
             <div class="w-fit gap-y-5 h-auto rounded-xl flex flex-col sm:flex-row items-center justify-center cursor-pointer gap-x-20">
@@ -137,7 +142,7 @@
 
             <div class="mt-10 flex justify-center">
                 <a href="/admin_products_review">
-                    <button type="button" class="text-white bg-green-500 hover:bg-green-700 active:bg-green-700 box-border border border-transparent focus:ring-4 font-semibold rounded-lg px-4 py-2">Upraviť   produkt </button>
+                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">Upraviť produkt</button>
                 </a>
                 
             </div>
@@ -146,7 +151,7 @@
 
             <div class="mt-2 flex justify-center ">
                 <a href="/admin_products_review">
-                    <button type="button" class="text-white bg-red-500 hover:bg-red-700  active:bg-red-700box-border border border-transparent focus:ring-4 font-semibold rounded-lg px-4 py-2">Vymazať produkt</button>
+                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">Vymazať produkt</button>
                 </a>
                 
             </div>
