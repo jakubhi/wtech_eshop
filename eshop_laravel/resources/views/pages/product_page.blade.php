@@ -10,8 +10,29 @@
             
             
             <div class="flex flex-col lg:flex-row items-center lg:items-start aspect-auto">
-                <div class="flex flex-col bg-gray-200 w-[70%] sm:w-[50%] md:w-[35%] lg:w-[30%] m-5 justify-center items-center">
-                    <img src="{{ $product->image_path }}" alt="{{ $product->nazov }}" class="w-full object-contain">
+                @php
+                    $galleryImages = $product->product_gallery;
+                @endphp
+                <div class="flex flex-row w-[90%] md:w-[65%] lg:w-[38%] m-5 gap-3">
+                    <div class="flex flex-col gap-2 w-20">
+                        @foreach($galleryImages as $index => $image)
+                            <button
+                                type="button"
+                                onclick="setMainProductImage('{{ $image['path'] }}', {{ $image['is_grayscale'] ? 'true' : 'false' }}, this)"
+                                class="product-thumb-btn bg-white border-2 {{ $index === 0 ? 'border-gray-900' : 'border-transparent' }} rounded-md p-1 hover:border-gray-400 transition"
+                            >
+                                <img src="{{ $image['path'] }}" alt="{{ $product->nazov }} - náhľad {{ $index + 1 }}" class="w-14 h-14 object-contain {{ $image['is_grayscale'] ? 'grayscale' : '' }}">
+                            </button>
+                        @endforeach
+                    </div>
+                    <div class="flex-1 flex flex-col bg-gray-200 justify-center items-center p-2 min-h-[18rem]">
+                        <img
+                            id="main_product_image"
+                            src="{{ $galleryImages[0]['path'] ?? $product->image_path }}"
+                            alt="{{ $product->nazov }} - hlavný obrázok"
+                            class="w-full max-h-[28rem] object-contain {{ !empty($galleryImages[0]['is_grayscale']) ? 'grayscale' : '' }}"
+                        >
+                    </div>
                 </div>
 
                 <div class="flex flex-col flex-1 px-4 ml-5 gap-y-2 self-stretch">
@@ -101,6 +122,26 @@
                             if (parseInt(input.value) > 1) {
                                 input.value = parseInt(input.value) - 1;
                             }
+                        }
+
+                        function setMainProductImage(imageSrc, isGrayscale, clickedButton) {
+                            const mainImage = document.getElementById('main_product_image');
+                            if (mainImage) {
+                                mainImage.src = imageSrc;
+                                if (isGrayscale) {
+                                    mainImage.classList.add('grayscale');
+                                } else {
+                                    mainImage.classList.remove('grayscale');
+                                }
+                            }
+
+                            document.querySelectorAll('.product-thumb-btn').forEach((button) => {
+                                button.classList.remove('border-gray-900');
+                                button.classList.add('border-transparent');
+                            });
+
+                            clickedButton.classList.remove('border-transparent');
+                            clickedButton.classList.add('border-gray-900');
                         }
                     </script>
                 </div>
