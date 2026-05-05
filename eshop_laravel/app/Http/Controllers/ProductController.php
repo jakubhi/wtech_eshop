@@ -75,4 +75,12 @@ class ProductController extends Controller
         $product = Produkt::with(['kategoria', 'znacka'])->findOrFail($id);
         return view('pages.product_page', compact('product'));
     }
+
+    public function destroy($id)
+    {
+        $product = Produkt::findOrFail($id);
+        $product->delete();
+        
+        return redirect()->back()->with('success', 'Produkt bol úspešne vymazaný!');
+    }
 }
