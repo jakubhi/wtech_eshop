@@ -8,6 +8,13 @@
 </head>
 
 <body class="bg-gray-100">
+@if(!$product)
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <strong>Chyba:</strong> Produkt nebol nájdený. <a href="/admin_products_review" class="underline">Späť na zoznam produktov</a>
+        </div>
+    </div>
+@else
     <header class="
       bg-black
         flex justify-between items-center flex-row text-md
@@ -65,63 +72,81 @@
     <main class="items-start w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 mb-10 flex flex-col md:flex-row gap-8">
         <!-- Left main column-->
         <div class="w-full md:w-1/2 flex flex-col bg-white rounded-xl shadow-sm p-6">
-            <form> 
+            <form id="edit-form" action="/admin/products/{{ $product ? $product->produkt_id : '' }}" method="POST">
+                @csrf
+                @method('PUT')
+                
                 <label class="text-2xl font-semibold">Upraviť produkt</label>
                 <p class="text-gray-500">Upravte vlastnosti existujúceho produktu</p>
+                
                 <label class="text-lg block mt-4 mb-1">Názov produktu</label>
-                <input type="text" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
+                <input type="text" name="nazov" value="{{ $product->nazov ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
+                
                 <label class="text-2xl font-semibold">Detailný opis</label>
-                <textarea class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5"></textarea>
+                <textarea name="popis" class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5">{{ $product->popis ?? '' }}</textarea>
+                
                 <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                     <!-- row1 -->
                     <div>
                         <label class="text-lg block mb-1">Kategória</label>
-                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <select name="kategoria_id" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                            <option value="">Vyberte kategóriu</option>
+                            <option value="1" {{ ($product && $product->kategoria_id == 1) ? 'selected' : '' }}>Tričká</option>
+                            <option value="2" {{ ($product && $product->kategoria_id == 2) ? 'selected' : '' }}>Mikiny</option>
+                            <option value="3" {{ ($product && $product->kategoria_id == 3) ? 'selected' : '' }}>Sukne</option>
+                            <option value="4" {{ ($product && $product->kategoria_id == 4) ? 'selected' : '' }}>Topánky</option>
+                            <option value="5" {{ ($product && $product->kategoria_id == 5) ? 'selected' : '' }}>Tenisky</option>
+                            <option value="6" {{ ($product && $product->kategoria_id == 6) ? 'selected' : '' }}>Vysoké podpätky</option>
+                            <option value="7" {{ ($product && $product->kategoria_id == 7) ? 'selected' : '' }}>Nohavice</option>
+                            <option value="8" {{ ($product && $product->kategoria_id == 8) ? 'selected' : '' }}>Kraťasy</option>
+                            <option value="9" {{ ($product && $product->kategoria_id == 9) ? 'selected' : '' }}>Spodné prádlo</option>
+                            <option value="10" {{ ($product && $product->kategoria_id == 10) ? 'selected' : '' }}>Ponožky</option>
+                            <option value="11" {{ ($product && $product->kategoria_id == 11) ? 'selected' : '' }}>Šiltovky</option>
+                            <option value="12" {{ ($product && $product->kategoria_id == 12) ? 'selected' : '' }}>Tielka</option>
+                            <option value="13" {{ ($product && $product->kategoria_id == 13) ? 'selected' : '' }}>Bundy</option>
+                            <option value="14" {{ ($product && $product->kategoria_id == 14) ? 'selected' : '' }}>Košele</option>
+                            <option value="15" {{ ($product && $product->kategoria_id == 15) ? 'selected' : '' }}>Doplnky</option>
+                            <option value="16" {{ ($product && $product->kategoria_id == 16) ? 'selected' : '' }}>Šaty</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="text-lg block mb-1">Cena bez zľavy</label>
-                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <label class="text-lg block mb-1">Cena</label>
+                        <input type="number" name="cena" step="0.01" value="{{ $product->cena ?? '' }}" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
-
-                    <div>
-                        <label class="text-lg block mb-1">Akciová cena</label>
-                        <input type="number" step="0.01" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
-                    </div>
-
-                    <!-- row2 -->
 
                     <div>
                         <label class="text-lg block mb-1">Kusov na sklade</label>
-                        <input type="number" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <input type="number" name="skladom" value="{{ $product->skladom ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Značka</label>
-                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <select name="znacka_id" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                            <option value="">Vyberte značku</option>
+                            <option value="1" {{ ($product && $product->znacka_id == 1) ? 'selected' : '' }}>Nike</option>
+                            <option value="2" {{ ($product && $product->znacka_id == 2) ? 'selected' : '' }}>Adidas</option>
+                            <option value="3" {{ ($product && $product->znacka_id == 3) ? 'selected' : '' }}>Puma</option>
+                            <option value="4" {{ ($product && $product->znacka_id == 4) ? 'selected' : '' }}>Zara</option>
+                            <option value="5" {{ ($product && $product->znacka_id == 5) ? 'selected' : '' }}>H&M</option>
+                            <option value="6" {{ ($product && $product->znacka_id == 6) ? 'selected' : '' }}>Levis</option>
+                        </select>
                     </div>
 
                     <!-- row3 -->
-
                     <div>
                         <label class="text-lg block mb-1">Materiál</label>
-                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <input type="text" name="material" value="{{ $product->material ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
                     </div>
                     <div>
-                        <label class="text-lg block mb-1">Obdobie</label>
-                        <input  type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <label class="text-lg block mb-1">Farba</label>
+                        <select name="farba" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                            <option value="">Vyberte farbu</option>
+                            <option value="blue" {{ ($product && $product->farba == 'blue') ? 'selected' : '' }}>Modrá</option>
+                            <option value="black" {{ ($product && $product->farba == 'black') ? 'selected' : '' }}>Čierna</option>
+                            <option value="white" {{ ($product && $product->farba == 'white') ? 'selected' : '' }}>Biela</option>
+                            <option value="red" {{ ($product && $product->farba == 'red') ? 'selected' : '' }}>Červená</option>
+                            <option value="green" {{ ($product && $product->farba == 'green') ? 'selected' : '' }}>Zelená</option>
+                        </select>
                     </div>
-
-                    <!-- row4 -->
-
-                    <div>
-                        <label class="text-lg block mb-1">Dostupné farby</label>
-                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
-                    </div>
-                    <div>
-                        <label class="text-lg block mb-1">Dostupné veľkosti</label>
-                        <input type="text" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
-                    </div>
-
-
                 </div>
             </form>
         </div>
@@ -130,25 +155,63 @@
         <div class="w-full md:w-1/2 flex flex-col items-center self-stretch bg-white rounded-xl shadow-sm p-6">
             <label class="text-lg flex mt-10 mb-10 justify-center">Obrázky produktu</label>
 
-            <div class="w-fit gap-y-5 h-auto rounded-xl flex flex-col sm:flex-row items-center justify-center cursor-pointer gap-x-20">
-                <div class= "flex flex-col md:flex-row gap-4 justify-center overflow-hidden border"> 
-                    <img src="../images/jacket1.png" alt="Kožená bunda" class="w-52 h-70">
+            <div class="w-full gap-y-5 h-auto rounded-xl flex flex-col items-center justify-center gap-x-20">
+                <!-- First Image -->
+                <div class="flex flex-col items-center">
+                    <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
+                        <img id="current-image-1" src="{{ $product->image_path1 ?: asset('images/product' . (($product->produkt_id - 1) % 9 + 1) . '.png') }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 1" class="w-52 h-70 object-cover">
+                    </div>
+                    <div class="mt-2">
+                        <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*" onchange="previewImage(1, this)">
+                        <button type="button" onclick="document.getElementById('image-upload-1').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
+                            Nahrať nový obrázok 1
+                        </button>
+                    </div>
                 </div>
 
-                <div class= "flex flex-col md:flex-row gap-4 justify-center overflow-hidden border"> 
-                    <img src="../images/jacket2.png" alt="Kožená bunda" class="w-52 h-70">
+                <!-- Second Image -->
+                <div class="flex flex-col items-center">
+                    <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
+                        <img id="current-image-2" src="{{ $product->image_path2 ?: asset('images/placeholder.png') }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 2" class="w-52 h-70 object-cover">
+                    </div>
+                    <div class="mt-2">
+                        <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*" onchange="previewImage(2, this)">
+                        <button type="button" onclick="document.getElementById('image-upload-2').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
+                            Nahrať nový obrázok 2
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-10 flex justify-center">
+            <div class="mt-10 flex justify-center gap-4">
+                <button type="submit" form="edit-form" class="border rounded-xl border-gray-200 bg-green-500 text-white p-3 px-6 hover:bg-green-600 transition font-semibold">
+                    Uložiť zmeny
+                </button>
                 <a href="/admin_products_review">
-                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">Upraviť produkt</button>
+                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">
+                        Späť
+                    </button>
                 </a>
-                
             </div>
 
             <div class="flex-1"></div>
-
-            
         </div>
     </main>
+
+    <script>
+    function previewImage(imageNumber, input) {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const currentImage = document.getElementById('current-image-' + imageNumber);
+                currentImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    </script>
+@endif
+    </main>
+</body>
+</html>
