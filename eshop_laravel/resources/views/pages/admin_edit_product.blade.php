@@ -149,12 +149,6 @@
 
             <div class="flex-1"></div>
 
-            <div class="mt-2 flex justify-center ">
-                <a href="/admin_products_review">
-                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">Vymazať produkt</button>
-                </a>
-                
-            </div>
-
+            
         </div>
     </main>

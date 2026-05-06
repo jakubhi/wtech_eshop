@@ -31,7 +31,7 @@
                         </div>
                         <div class="flex flex-col gap-2 p-2 pt-3">
                             <a href="/edit_product" class="border rounded-xl border-gray-200 bg-gray-300 p-2 text-center hover:bg-gray-400 transition font-semibold block w-full">Upraviť</a>
-                            <form action="{{ route('admin.products.destroy', $p->produkt_id) }}" method="POST" onsubmit="return confirm('Naozaj chcete vymazať tento produkt?');" class="m-0">
+                            <form action="{{ route('admin.products.destroy', $p->produkt_id) }}" method="POST" onsubmit="return confirm('Naozaj chcete vymazať produkt?');" class="m-0">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="border rounded-xl border-gray-200 bg-red-500 text-white p-2 text-center hover:bg-red-600 transition font-semibold w-full">Vymazať</button>

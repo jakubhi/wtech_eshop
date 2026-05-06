@@ -20,7 +20,12 @@ Route::get('/admin_dashboard', function () {
 });
 
 Route::get('/edit_product', function () {
-    return view('pages.admin_edit_product');
+    $id = request('id');
+    $product = null;
+    if ($id) {
+        $product = \App\Models\Produkt::findOrFail($id);
+    }
+    return view('pages.admin_edit_product', compact('product'));
 });
 
 Route::get('/admin_products_review', function () {
@@ -70,3 +75,4 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 
 Route::get('/product_detail/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::delete('/admin/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
