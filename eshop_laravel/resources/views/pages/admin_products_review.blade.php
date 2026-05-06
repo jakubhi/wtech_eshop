@@ -15,7 +15,7 @@
             @forelse($products as $p)
                 <div class="bg-[#c2c0c078] rounded-2xl mb-3 flex items-center justify-center hover:brightness-85 active:brightness-85">
                     <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
-                        <img src="{{ $p->image_path }}" alt="{{ $p->nazov }}">
+                        <img src="{{ $p->image_path1 ?: asset('images/product' . (($p->produkt_id - 1) % 9 + 1) . '.png') }}" alt="{{ $p->nazov }}">
                         <span class="flex h-20 justify-center text-center text-black-500 font-bold text-2xl mb-2 mt-2 wrap-break-word">
                            {{ $p->nazov }}
                         </span>

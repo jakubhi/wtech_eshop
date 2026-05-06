@@ -34,7 +34,7 @@
                     <div class="bg-[#c2c0c078] rounded-2xl mb-3 flex items-center justify-center hover:brightness-85 active:brightness-85">
                         <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
                             <a href="{{ route('products.show', $product->produkt_id) }}">
-                                <img src="{{ $product->image_path }}" alt="{{ $product->nazov }}">
+                                <img src="{{ $product->image_path1 ?: asset('images/product' . (($product->produkt_id - 1) % 9 + 1) . '.png') }}" alt="{{ $product->nazov }}">
                             </a>
                             <span class="flex h-20 justify-center text-center text-black-500 font-bold text-2xl mb-2 mt-2 wrap-break-word">
                                 {{ $product->nazov }}

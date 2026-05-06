@@ -28,7 +28,7 @@
                     <div class="flex-1 flex flex-col bg-gray-200 justify-center items-center p-2 min-h-[18rem]">
                         <img
                             id="main_product_image"
-                            src="{{ $galleryImages[0]['path'] ?? $product->image_path }}"
+                            src="{{ $product->image_path1 ?: (asset('images/product' . (($product->produkt_id - 1) % 9 + 1) . '.png') ?: ($galleryImages[0]['path'] ?? asset('images/placeholder.png'))) }}"
                             alt="{{ $product->nazov }} - hlavný obrázok"
                             class="w-full max-h-[28rem] object-contain {{ !empty($galleryImages[0]['is_grayscale']) ? 'grayscale' : '' }}"
                         >

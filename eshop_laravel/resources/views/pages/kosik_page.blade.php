@@ -30,7 +30,7 @@
                 <div class="border border-gray-200 rounded-lg p-4 flex flex-row items-start bg-white shadow-md hover:shadow-lg transition">
                     <div class="flex flex-row flex-1 items-start">
                         <div class="rounded-md bg-gray-50 overflow-hidden flex items-center justify-center shrink-0" style="width: 10.5rem; height: 11.5rem;">
-                            <img src="{{ $details['image_path'] ?? asset('images/product' . (($id - 1) % 9 + 1) . '.png') }}" alt="{{ $details['nazov'] }}" class="w-full h-full object-contain">
+                            <img src="{{ $details['image_path1'] ?: ($details['image_path'] ?: asset('images/product' . (($id - 1) % 9 + 1) . '.png'))) }}" alt="{{ $details['nazov'] }}" class="w-full h-full object-contain">
                         </div>
                         <div class="flex flex-col ml-8 flex-1 pt-1">
                             <div class="text-xl sm:text-2xl font-bold leading-tight text-gray-900">{{ $details['nazov'] }}</div>

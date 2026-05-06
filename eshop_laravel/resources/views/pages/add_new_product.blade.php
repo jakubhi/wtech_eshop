@@ -37,11 +37,22 @@
                     <label class="text-lg block mb-1">Kategória</label>
                     <select name="kategoria_id" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
                         <option value="">Vyberte kategóriu</option>
-                        <option value="1">Elektronika</option>
-                        <option value="2">Oblečenie</option>
-                        <option value="3">Šport</option>
-                        <option value="4">Domácnosť</option>
-                        <option value="5">Knihy</option>
+                        <option value="1">Tričká</option>
+                        <option value="2">Mikiny</option>
+                        <option value="3">Sukne</option>
+                        <option value="4">Topánky</option>
+                        <option value="5">Tenisky</option>
+                        <option value="6">Vysoké podpätky</option>
+                        <option value="7">Nohavice</option>
+                        <option value="8">Kraťasy</option>
+                        <option value="9">Spodné prádlo</option>
+                        <option value="10">Ponožky</option>
+                        <option value="11">Šiltovky</option>
+                        <option value="12">Tielka</option>
+                        <option value="13">Bundy</option>
+                        <option value="14">Košele</option>
+                        <option value="15">Doplnky</option>
+                        <option value="16">Šaty</option>
                     </select>
                 </div>
                 <div>
@@ -60,8 +71,9 @@
                         <option value="1">Nike</option>
                         <option value="2">Adidas</option>
                         <option value="3">Puma</option>
-                        <option value="4">Reebok</option>
-                        <option value="5">New Balance</option>
+                        <option value="4">Zara</option>
+                        <option value="5">H&M</option>
+                        <option value="6">Levis</option>
                     </select>
                 </div>
 
