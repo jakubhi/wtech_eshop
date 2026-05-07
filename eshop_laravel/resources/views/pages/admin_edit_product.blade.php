@@ -8,6 +8,15 @@
 </head>
 
 <body class="bg-gray-100">
+@if($errors->any())
+    <div class="max-w-[1400px] mx-auto mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(!$product)
     <div class="flex justify-center items-center min-h-screen">
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -53,16 +62,19 @@
         </div>
         
         <div class="flex items-center justify-between">
-            <a href="/login_page" class="bg-[#2D2D2D] border border-white text-white
-                hidden text-xs rounded-full
-                sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-3 sm:p-1
-                md:text-lg
-                hover:brightness-85 active:brightness-85
-            ">
-                Admin - Logout
-            </a>
+            <form action="{{ route('logout') }}" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="bg-[#2D2D2D] border border-white text-white
+                    hidden text-xs rounded-full
+                    sm:flex sm:text-base sm:mr-3 sm:pl-3 sm:pr-3 sm:p-1
+                    md:text-lg
+                    hover:brightness-85 active:brightness-85
+                ">
+                    Admin - Logout
+                </button>
+            </form>
 
-            <a href="/login_page">
+            <a href="{{ route('login') }}">
                 <img src="../images/user.png" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
             </a>
         </div>
@@ -72,7 +84,7 @@
     <main class="items-start w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 mb-10 flex flex-col md:flex-row gap-8">
         <!-- Left main column-->
         <div class="w-full md:w-1/2 flex flex-col bg-white rounded-xl shadow-sm p-6">
-            <form id="edit-form" action="/admin/products/{{ $product ? $product->produkt_id : '' }}" method="POST">
+            <form id="edit-form" action="/admin/products/{{ $product ? $product->produkt_id : '' }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
@@ -80,10 +92,10 @@
                 <p class="text-gray-500">Upravte vlastnosti existujúceho produktu</p>
                 
                 <label class="text-lg block mt-4 mb-1">Názov produktu</label>
-                <input type="text" name="nazov" value="{{ $product->nazov ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
+                <input type="text" name="nazov" maxlength="25" value="{{ $product->nazov ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
                 
                 <label class="text-2xl font-semibold">Detailný opis</label>
-                <textarea name="popis" class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5">{{ $product->popis ?? '' }}</textarea>
+                <textarea name="popis" maxlength="1000" class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5">{{ $product->popis ?? '' }}</textarea>
                 
                 <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                     <!-- row1 -->
@@ -110,13 +122,17 @@
                         </select>
                     </div>
                     <div>
-                        <label class="text-lg block mb-1">Cena</label>
-                        <input type="number" name="cena" step="0.01" value="{{ $product->cena ?? '' }}" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <label class="text-lg block mb-1">Cena bez zľavy</label>
+                        <input type="number" name="cena" min="0.01" max="9999.99" step="0.01" value="{{ $product->cena ?? '' }}" placeholder="0.00 €" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
 
                     <div>
+                        <label class="text-lg block mb-1">Cena so zľavou (voliteľná)</label>
+                        <input type="number" name="cena_bez_zlavy" min="0.01" max="9999.99" step="0.01" value="{{ $product->cena_bez_zlavy ?? '' }}" placeholder="Voliteľné" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
+                    </div>
+                    <div>
                         <label class="text-lg block mb-1">Kusov na sklade</label>
-                        <input type="number" name="skladom" value="{{ $product->skladom ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        <input type="number" name="skladom" min="1" step="1" value="{{ $product->skladom ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Značka</label>
@@ -134,17 +150,34 @@
                     <!-- row3 -->
                     <div>
                         <label class="text-lg block mb-1">Materiál</label>
-                        <input type="text" name="material" value="{{ $product->material ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
+                        @php
+                            $materialOptions = ['Bavlna', 'Polyester', 'Elastan', 'Vlna', 'Denim', 'Koža', 'Viskóza', 'Linen'];
+                            $currentMaterial = old('material', $product->material ?? '');
+                            $normalizedCurrentMaterial = mb_strtolower(trim((string) $currentMaterial));
+                        @endphp
+                        <select name="material" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
+                            <option value="">Vyberte materiál</option>
+                            @if($normalizedCurrentMaterial !== '' && !in_array($normalizedCurrentMaterial, array_map(fn($option) => mb_strtolower($option), $materialOptions), true))
+                                <option value="{{ $currentMaterial }}" selected>{{ $currentMaterial }}</option>
+                            @endif
+                            @foreach($materialOptions as $option)
+                                <option value="{{ $option }}" {{ $normalizedCurrentMaterial === mb_strtolower($option) ? 'selected' : '' }}>{{ $option }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label class="text-lg block mb-1">Farba</label>
-                        <select name="farba" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2" required>
+                        @php
+                            $currentColor = old('farba', $product->farba ?? '');
+                            $normalizedCurrentColor = strtolower(trim((string) $currentColor));
+                        @endphp
+                        <select name="farba" class="bg-gray-200 border border-gray-300 block w-full rounded-xl px-3 py-2">
                             <option value="">Vyberte farbu</option>
-                            <option value="blue" {{ ($product && $product->farba == 'blue') ? 'selected' : '' }}>Modrá</option>
-                            <option value="black" {{ ($product && $product->farba == 'black') ? 'selected' : '' }}>Čierna</option>
-                            <option value="white" {{ ($product && $product->farba == 'white') ? 'selected' : '' }}>Biela</option>
-                            <option value="red" {{ ($product && $product->farba == 'red') ? 'selected' : '' }}>Červená</option>
-                            <option value="green" {{ ($product && $product->farba == 'green') ? 'selected' : '' }}>Zelená</option>
+                            <option value="modra" {{ $normalizedCurrentColor === 'modra' ? 'selected' : '' }}>Modrá</option>
+                            <option value="cierna" {{ $normalizedCurrentColor === 'cierna' ? 'selected' : '' }}>Čierna</option>
+                            <option value="biela" {{ $normalizedCurrentColor === 'biela' ? 'selected' : '' }}>Biela</option>
+                            <option value="cervena" {{ $normalizedCurrentColor === 'cervena' ? 'selected' : '' }}>Červená</option>
+                            <option value="zelena" {{ $normalizedCurrentColor === 'zelena' ? 'selected' : '' }}>Zelená</option>
                         </select>
                     </div>
                 </div>
@@ -159,10 +192,10 @@
                 <!-- First Image -->
                 <div class="flex flex-col items-center">
                     <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
-                        <img id="current-image-1" src="{{ $product->image_path1 ?: asset('images/product' . (($product->produkt_id - 1) % 9 + 1) . '.png') }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 1" class="w-52 h-70 object-cover">
+                        <img id="current-image-1" src="{{ $product->image_path }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 1" class="w-52 h-70 object-cover">
                     </div>
                     <div class="mt-2">
-                        <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*" onchange="previewImage(1, this)">
+                        <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*" form="edit-form" onchange="previewImage(1, this)">
                         <button type="button" onclick="document.getElementById('image-upload-1').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
                             Nahrať nový obrázok 1
                         </button>
@@ -172,10 +205,10 @@
                 <!-- Second Image -->
                 <div class="flex flex-col items-center">
                     <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
-                        <img id="current-image-2" src="{{ $product->image_path2 ?: asset('images/placeholder.png') }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 2" class="w-52 h-70 object-cover">
+                        <img id="current-image-2" src="{{ $product->second_image_path }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 2" class="w-52 h-70 object-cover">
                     </div>
                     <div class="mt-2">
-                        <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*" onchange="previewImage(2, this)">
+                        <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*" form="edit-form" onchange="previewImage(2, this)">
                         <button type="button" onclick="document.getElementById('image-upload-2').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
                             Nahrať nový obrázok 2
                         </button>

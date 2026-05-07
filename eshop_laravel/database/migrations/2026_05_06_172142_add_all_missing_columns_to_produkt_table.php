@@ -12,11 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('Produkt', function (Blueprint $table) {
-            $table->text('popis')->nullable();
-            $table->string('farba')->nullable();
-            $table->string('material')->nullable();
-            $table->string('image_path1')->nullable();
-            $table->string('image_path2')->nullable();
+            if (!Schema::hasColumn('Produkt', 'popis')) {
+                $table->text('popis')->nullable();
+            }
+            if (!Schema::hasColumn('Produkt', 'farba')) {
+                $table->string('farba')->nullable();
+            }
+            if (!Schema::hasColumn('Produkt', 'material')) {
+                $table->string('material')->nullable();
+            }
+            if (!Schema::hasColumn('Produkt', 'image_path1')) {
+                $table->string('image_path1')->nullable();
+            }
+            if (!Schema::hasColumn('Produkt', 'image_path2')) {
+                $table->string('image_path2')->nullable();
+            }
         });
     }
 
@@ -26,7 +36,17 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('Produkt', function (Blueprint $table) {
-            $table->dropColumn(['popis', 'farba', 'material', 'image_path1', 'image_path2']);
+            $columnsToDrop = [];
+
+            foreach (['popis', 'farba', 'material', 'image_path1', 'image_path2'] as $column) {
+                if (Schema::hasColumn('Produkt', $column)) {
+                    $columnsToDrop[] = $column;
+                }
+            }
+
+            if (!empty($columnsToDrop)) {
+                $table->dropColumn($columnsToDrop);
+            }
         });
     }
 };

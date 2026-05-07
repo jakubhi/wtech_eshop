@@ -22,15 +22,15 @@
 <main class="items-start w-full p-6 mb-10 flex flex-col md:flex-row gap-x-8">
     <!-- Left main column-->
     <div class="w-full md:w-1/2 flex flex-col">
-        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"> 
+        <form id="product-create-form" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data"> 
             @csrf
             <label class="text-2xl font-semibold">Pridať nový produkt</label>
             <p class="text-gray-500">Vytvorte nový produkt s definovanými vlastnosťami</p>
             <label class="text-lg block mt-4 mb-1">Názov produktu</label>
-            <input type="text" name="nazov" class="bg-gray-200 rounded-md border focus:ring-brand block w-full mb-6 pl-2 p-2" required>
+            <input type="text" name="nazov" maxlength="25" class="bg-gray-200 rounded-md border focus:ring-brand block w-full mb-6 pl-2 p-2" required>
             
             <label class="text-2xl font-semibold">Detailný opis</label>
-            <textarea name="popis" class="bg-gray-200 w-full p-2 mb-4 rounded-md" rows="5"></textarea>
+            <textarea name="popis" maxlength="1000" class="bg-gray-200 w-full p-2 mb-4 rounded-md" rows="5"></textarea>
             
             <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                 <div>
@@ -56,13 +56,18 @@
                     </select>
                 </div>
                 <div>
-                    <label class="text-lg block mb-1">Cena</label>
-                    <input type="number" name="cena" step="0.01" placeholder="0.00 €" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
+                    <label class="text-lg block mb-1">Cena bez zľavy</label>
+                    <input type="number" name="cena" step="0.01" min="0.01" max="9999.99" placeholder="0.00 €" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
+                </div>
+
+                <div>
+                    <label class="text-lg block mb-1">Cena so zľavou (voliteľná)</label>
+                    <input type="number" name="cena_bez_zlavy" step="0.01" min="0.01" max="9999.99" placeholder="Voliteľné" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2">
                 </div>
 
                 <div>
                     <label class="text-lg block mb-1">Kusov na sklade</label>
-                    <input type="number" name="skladom" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
+                    <input type="number" name="skladom" min="1" step="1" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
                 </div>
                 <div>
                     <label class="text-lg block mb-1">Značka</label>
@@ -79,17 +84,27 @@
 
                 <div>
                     <label class="text-lg block mb-1">Materiál</label>
-                    <input type="text" name="material" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2">
+                    <select name="material" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2">
+                        <option value="">Vyberte materiál</option>
+                        <option value="Bavlna">Bavlna</option>
+                        <option value="Polyester">Polyester</option>
+                        <option value="Elastan">Elastan</option>
+                        <option value="Vlna">Vlna</option>
+                        <option value="Denim">Denim</option>
+                        <option value="Koža">Koža</option>
+                        <option value="Viskóza">Viskóza</option>
+                        <option value="Linen">Linen</option>
+                    </select>
                 </div>
                 <div>
                     <label class="text-lg block mb-1">Farba</label>
                     <select name="farba" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
                         <option value="">Vyberte farbu</option>
-                        <option value="blue">Modrá</option>
-                        <option value="black">Čierna</option>
-                        <option value="white">Biela</option>
-                        <option value="red">Červená</option>
-                        <option value="green">Zelená</option>
+                        <option value="modra">Modrá</option>
+                        <option value="cierna">Čierna</option>
+                        <option value="biela">Biela</option>
+                        <option value="cervena">Červená</option>
+                        <option value="zelena">Zelená</option>
                     </select>
                 </div>
             </div>
@@ -112,7 +127,7 @@
         <!-- First Image Upload -->
         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50 mb-4">
             <p class="text-gray-600 font-medium mb-3">Prvý obrázok</p>
-            <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*">
+            <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*" form="product-create-form">
             <button type="button" onclick="document.getElementById('image-upload-1').click()" class="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition"> Nahrať prvý obrázok</button>
             <div id="image-preview-1" class="mt-4 hidden">
                 <img src="" alt="Preview 1" class="max-h-32 rounded">
@@ -123,7 +138,7 @@
         <!-- Second Image Upload -->
         <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center bg-gray-50">
             <p class="text-gray-600 font-medium mb-3">Druhý obrázok</p>
-            <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*">
+            <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*" form="product-create-form">
             <button type="button" onclick="document.getElementById('image-upload-2').click()" class="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300 transition"> Nahrať druhý obrázok</button>
             <div id="image-preview-2" class="mt-4 hidden">
                 <img src="" alt="Preview 2" class="max-h-32 rounded">

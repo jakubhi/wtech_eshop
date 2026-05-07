@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\PolozkaKosika;
+use App\Models\Produkt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -69,6 +71,33 @@ class OrderController extends Controller
                 'payment_method' => 'Vyberte spôsob platby pred pokračovaním.',
             ]);
         }
+
+        DB::transaction(function () {
+            if (Auth::check()) {
+                $cartItems = PolozkaKosika::where('pouzivatel_id', Auth::id())->get();
+
+                foreach ($cartItems as $item) {
+                    Produkt::where('produkt_id', $item->produkt_id)
+                        ->update([
+                            'skladom' => DB::raw('GREATEST(skladom - ' . (int) $item->mnozstvo . ', 0)')
+                        ]);
+                }
+            } else {
+                $sessionCart = session('cart', []);
+
+                foreach ($sessionCart as $item) {
+                    $produktId = (int) ($item['produkt_id'] ?? 0);
+                    $quantity = max((int) ($item['quantity'] ?? 0), 0);
+
+                    if ($produktId > 0 && $quantity > 0) {
+                        Produkt::where('produkt_id', $produktId)
+                            ->update([
+                                'skladom' => DB::raw('GREATEST(skladom - ' . $quantity . ', 0)')
+                            ]);
+                    }
+                }
+            }
+        });
 
         if (Auth::check()) {
             PolozkaKosika::where('pouzivatel_id', Auth::id())->delete();

@@ -15,11 +15,17 @@ class Produkt extends Model
         'nazov',
         'pouzivatel_id',
         'cena',
+        'cena_bez_zlavy',
         'kategoria_id',
         'znacka_id',
         'skladom',
+        'material',
+        'farba',
+        'sezona',
         'na_predajni',
         'na_objednavku',
+        'image_path1',
+        'image_path2',
         'obrazok_hlavny',
         'obrazok_druhy'
     ];
@@ -52,18 +58,39 @@ class Produkt extends Model
         return $this->product_gallery[1]['path'];
     }
 
+    public function getFinalPriceAttribute(): float
+    {
+        if (!is_null($this->cena_bez_zlavy) && $this->cena_bez_zlavy > 0 && $this->cena_bez_zlavy < $this->cena) {
+            return (float) $this->cena_bez_zlavy;
+        }
+
+        return (float) $this->cena;
+    }
+
+    public function getOriginalPriceAttribute(): ?float
+    {
+        if (!is_null($this->cena_bez_zlavy) && $this->cena_bez_zlavy > 0 && $this->cena_bez_zlavy < $this->cena) {
+            return (float) $this->cena;
+        }
+
+        return null;
+    }
+
     public function getProductGalleryAttribute(): array
     {
-        $primaryPath = !empty($this->obrazok_hlavny)
-            ? asset($this->obrazok_hlavny)
+        $primarySource = $this->image_path1 ?: $this->obrazok_hlavny;
+        $secondarySource = $this->image_path2 ?: $this->obrazok_druhy;
+
+        $primaryPath = !empty($primarySource)
+            ? asset($primarySource)
             : $this->getFallbackImagePath();
 
-        $hasSecondImage = !empty($this->obrazok_druhy);
+        $hasSecondImage = !empty($secondarySource);
         $secondaryFallbackPath = str_ends_with($primaryPath, '/images/product1.png')
             ? asset('images/product1_2.png')
             : $primaryPath;
         $secondPath = $hasSecondImage
-            ? asset($this->obrazok_druhy)
+            ? asset($secondarySource)
             : $secondaryFallbackPath;
 
         return [

@@ -15,17 +15,23 @@
             @forelse($products as $p)
                 <div class="bg-[#c2c0c078] rounded-2xl mb-3 flex items-center justify-center hover:brightness-85 active:brightness-85">
                     <div class="flex flex-col bg-gray-300 rounded-lg overflow-hidden">
-                        <img src="{{ $p->image_path1 ?: asset('images/product' . (($p->produkt_id - 1) % 9 + 1) . '.png') }}" alt="{{ $p->nazov }}">
+                        <img src="{{ $p->image_path }}" alt="{{ $p->nazov }}" class="w-[256px] h-[357px] object-cover">
                         <span class="flex h-20 justify-center text-center text-black-500 font-bold text-2xl mb-2 mt-2 wrap-break-word">
                            {{ $p->nazov }}
                         </span>
                         <div class="flex justify-between mt-auto items-center">
                             <div class="flex flex-col">
-                                <span class="flex justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
-                                    {{ number_format($p->cena * 1.2, 2) }} €
-                                </span>
+                                @if(!is_null($p->original_price) && $p->original_price > 0)
+                                    <span class="flex h-7 justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2">
+                                        {{ number_format($p->original_price, 2) }} €
+                                    </span>
+                                @else
+                                    <span class="flex h-7 justify-left line-through items-center flex-1 text-gray-600 text-xl rounded-full ml-2 mr-2" style="visibility: hidden;">
+                                        00.00 €
+                                    </span>
+                                @endif
                                 <span class="flex justify-center flex-1 items-center text-black-500 text-3xl rounded-full mr-2">
-                                    {{ number_format($p->cena, 2) }} €
+                                    {{ number_format($p->final_price, 2) }} €
                                 </span>
                             </div>
                         </div>

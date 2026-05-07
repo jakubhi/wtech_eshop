@@ -6,9 +6,14 @@ use App\Models\Produkt;
 use App\Models\Kategoria;
 use App\Models\Znacka;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ProductController extends Controller
 {
+    private const IMAGE_WIDTH = 256;
+    private const IMAGE_HEIGHT = 357;
+    private const IMAGE_CROP_ZOOM = 1.12;
+
     public function index(Request $request)
     {
         $query = Produkt::query();
@@ -87,25 +92,32 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nazov' => 'required|string|max:255',
-            'popis' => 'nullable|string',
+            'nazov' => 'required|string|max:25',
+            'popis' => 'nullable|string|max:1000',
             'kategoria_id' => 'required|integer|min:1',
-            'cena' => 'required|numeric|min:0',
-            'skladom' => 'required|integer|min:0',
+            'cena' => ['required', 'numeric', 'gt:0', 'regex:/^\d{1,4}(\.\d{1,2})?$/'],
+            'cena_bez_zlavy' => ['nullable', 'numeric', 'gt:0', 'lt:cena', 'regex:/^\d{1,4}(\.\d{1,2})?$/'],
+            'skladom' => 'required|integer|min:1',
             'znacka_id' => 'required|integer|min:1',
             'material' => 'nullable|string|max:255',
-            'farba' => 'required|in:blue,black,white,red,green',
+            'farba' => 'nullable|in:modra,cierna,biela,cervena,zelena',
             'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
             'nazov.required' => 'Názov produktu je povinný.',
+            'popis.max' => 'Detailný opis môže mať maximálne 1000 znakov.',
             'cena.required' => 'Cena je povinná.',
             'cena.numeric' => 'Cena musí byť číslo.',
+            'cena.gt' => 'Cena bez zľavy musí byť väčšia ako 0.',
+            'cena.regex' => 'Cena bez zľavy môže byť maximálne 9999.99.',
+            'cena_bez_zlavy.numeric' => 'Cena so zľavou musí byť číslo.',
+            'cena_bez_zlavy.gt' => 'Cena so zľavou musí byť väčšia ako 0.',
+            'cena_bez_zlavy.lt' => 'Cena so zľavou musí byť menšia ako cena bez zľavy.',
+            'cena_bez_zlavy.regex' => 'Cena so zľavou môže byť maximálne 9999.99.',
             'kategoria_id.required' => 'Kategória je povinná.',
             'kategoria_id.integer' => 'ID kategórie musí byť číslo.',
             'znacka_id.required' => 'Značka je povinná.',
             'znacka_id.integer' => 'ID značky musí byť číslo.',
-            'farba.required' => 'Farba je povinná.',
             'farba.in' => 'Zvolte platnú farbu.',
             'image1.image' => 'Prvý súbor musí byť obrázok.',
             'image1.mimes' => 'Prvý obrázok musí byť formátu: jpeg, png, jpg, gif.',
@@ -115,78 +127,22 @@ class ProductController extends Controller
             'image2.max' => 'Maximálna veľkosť druhého obrázka je 2MB.'
         ]);
 
-        // Handle image uploads with comprehensive error handling
         $imagePath1 = null;
         $imagePath2 = null;
         $timestamp = time();
-        
-                
-        // Ensure upload directory exists
-        $uploadPath = public_path('images/products');
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
-        
-        // Process first image
+
         if ($request->hasFile('image1')) {
             try {
-                $image = $request->file('image1');
-                
-                // Validate file
-                if ($image->isValid()) {
-                    $extension = $image->getClientOriginalExtension();
-                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    
-                    if (!in_array(strtolower($extension), $allowedExtensions)) {
-                        throw new \Exception('Nepodporovaný formát obrázka: ' . $extension);
-                    }
-                    
-                    // Create unique filename
-                    $imageName = $timestamp . '_1_' . str_replace(' ', '_', pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
-                    
-                    // Move file with error handling
-                    if ($image->move($uploadPath, $imageName)) {
-                        $imagePath1 = 'images/products/' . $imageName;
-                    } else {
-                        throw new \Exception('Chyba pri nahrávaní prvého obrázka');
-                    }
-                } else {
-                    throw new \Exception('Neplatný súbor prvého obrázka');
-                }
+                $imagePath1 = $this->storeUploadedImage($request->file('image1'), $timestamp, '1');
             } catch (\Exception $e) {
-                // Log error but continue processing
                 \Log::error('Image1 upload error: ' . $e->getMessage());
             }
         }
-        
-        // Process second image
+
         if ($request->hasFile('image2')) {
             try {
-                $image = $request->file('image2');
-                
-                // Validate file
-                if ($image->isValid()) {
-                    $extension = $image->getClientOriginalExtension();
-                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    
-                    if (!in_array(strtolower($extension), $allowedExtensions)) {
-                        throw new \Exception('Nepodporovaný formát obrázka: ' . $extension);
-                    }
-                    
-                    // Create unique filename with different timestamp
-                    $imageName = ($timestamp + 1) . '_2_' . str_replace(' ', '_', pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
-                    
-                    // Move file with error handling
-                    if ($image->move($uploadPath, $imageName)) {
-                        $imagePath2 = 'images/products/' . $imageName;
-                    } else {
-                        throw new \Exception('Chyba pri nahrávaní druhého obrázka');
-                    }
-                } else {
-                    throw new \Exception('Neplatný súbor druhého obrázka');
-                }
+                $imagePath2 = $this->storeUploadedImage($request->file('image2'), $timestamp + 1, '2');
             } catch (\Exception $e) {
-                // Log error but continue processing
                 \Log::error('Image2 upload error: ' . $e->getMessage());
             }
         }
@@ -196,11 +152,14 @@ class ProductController extends Controller
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
         $product->cena = $validated['cena'];
+        $product->cena_bez_zlavy = $validated['cena_bez_zlavy'] ?? null;
         $product->skladom = $validated['skladom'];
-        $product->farba = $validated['farba'];
+        $product->farba = $validated['farba'] ?? $product->farba;
         $product->material = $validated['material'];
         $product->image_path1 = $imagePath1;
         $product->image_path2 = $imagePath2;
+        $product->obrazok_hlavny = $imagePath1 ?? $product->obrazok_hlavny;
+        $product->obrazok_druhy = $imagePath2 ?? $product->obrazok_druhy;
         $product->kategoria_id = $validated['kategoria_id'];
         $product->znacka_id = $validated['znacka_id'];
         
@@ -215,20 +174,28 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nazov' => 'required|string|max:255',
-            'popis' => 'nullable|string',
+            'nazov' => 'required|string|max:25',
+            'popis' => 'nullable|string|max:1000',
             'kategoria_id' => 'required|integer|min:1',
-            'cena' => 'required|numeric|min:0',
-            'skladom' => 'required|integer|min:0',
+            'cena' => ['required', 'numeric', 'gt:0', 'regex:/^\d{1,4}(\.\d{1,2})?$/'],
+            'cena_bez_zlavy' => ['nullable', 'numeric', 'gt:0', 'lt:cena', 'regex:/^\d{1,4}(\.\d{1,2})?$/'],
+            'skladom' => 'required|integer|min:1',
             'znacka_id' => 'required|integer|min:1',
             'material' => 'nullable|string|max:255',
-            'farba' => 'required|in:blue,black,white,red,green',
+            'farba' => 'required|in:modra,cierna,biela,cervena,zelena',
             'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
             'nazov.required' => 'Názov produktu je povinný.',
+            'popis.max' => 'Detailný opis môže mať maximálne 1000 znakov.',
             'cena.required' => 'Cena je povinná.',
             'cena.numeric' => 'Cena musí byť číslo.',
+            'cena.gt' => 'Cena bez zľavy musí byť väčšia ako 0.',
+            'cena.regex' => 'Cena bez zľavy môže byť maximálne 9999.99.',
+            'cena_bez_zlavy.numeric' => 'Cena so zľavou musí byť číslo.',
+            'cena_bez_zlavy.gt' => 'Cena so zľavou musí byť väčšia ako 0.',
+            'cena_bez_zlavy.lt' => 'Cena so zľavou musí byť menšia ako cena bez zľavy.',
+            'cena_bez_zlavy.regex' => 'Cena so zľavou môže byť maximálne 9999.99.',
             'kategoria_id.required' => 'Kategória je povinná.',
             'kategoria_id.integer' => 'ID kategórie musí byť číslo.',
             'znacka_id.required' => 'Značka je povinná.',
@@ -245,75 +212,22 @@ class ProductController extends Controller
 
         $product = Produkt::findOrFail($id);
 
-        // Handle image uploads with comprehensive error handling
         $timestamp = time();
-        
-        // Ensure upload directory exists
-        $uploadPath = public_path('images/products');
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
-        
-        // Process first image
+
         if ($request->hasFile('image1')) {
             try {
-                $image = $request->file('image1');
-                
-                // Validate file
-                if ($image->isValid()) {
-                    $extension = $image->getClientOriginalExtension();
-                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    
-                    if (!in_array(strtolower($extension), $allowedExtensions)) {
-                        throw new \Exception('Nepodporovaný formát obrázka: ' . $extension);
-                    }
-                    
-                    // Create unique filename
-                    $imageName = $timestamp . '_1_' . str_replace(' ', '_', pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
-                    
-                    // Move file with error handling
-                    if ($image->move($uploadPath, $imageName)) {
-                        $product->image_path1 = 'images/products/' . $imageName;
-                    } else {
-                        throw new \Exception('Chyba pri nahrávaní prvého obrázka');
-                    }
-                } else {
-                    throw new \Exception('Neplatný súbor prvého obrázka');
-                }
+                $product->image_path1 = $this->storeUploadedImage($request->file('image1'), $timestamp, '1');
+                $product->obrazok_hlavny = $product->image_path1;
             } catch (\Exception $e) {
-                // Log error but continue processing
                 \Log::error('Image1 upload error: ' . $e->getMessage());
             }
         }
-        
-        // Process second image
+
         if ($request->hasFile('image2')) {
             try {
-                $image = $request->file('image2');
-                
-                // Validate file
-                if ($image->isValid()) {
-                    $extension = $image->getClientOriginalExtension();
-                    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    
-                    if (!in_array(strtolower($extension), $allowedExtensions)) {
-                        throw new \Exception('Nepodporovaný formát obrázka: ' . $extension);
-                    }
-                    
-                    // Create unique filename with different timestamp
-                    $imageName = ($timestamp + 1) . '_2_' . str_replace(' ', '_', pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $extension;
-                    
-                    // Move file with error handling
-                    if ($image->move($uploadPath, $imageName)) {
-                        $product->image_path2 = 'images/products/' . $imageName;
-                    } else {
-                        throw new \Exception('Chyba pri nahrávaní druhého obrázka');
-                    }
-                } else {
-                    throw new \Exception('Neplatný súbor druhého obrázka');
-                }
+                $product->image_path2 = $this->storeUploadedImage($request->file('image2'), $timestamp + 1, '2');
+                $product->obrazok_druhy = $product->image_path2;
             } catch (\Exception $e) {
-                // Log error but continue processing
                 \Log::error('Image2 upload error: ' . $e->getMessage());
             }
         }
@@ -322,6 +236,7 @@ class ProductController extends Controller
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
         $product->cena = $validated['cena'];
+        $product->cena_bez_zlavy = $validated['cena_bez_zlavy'] ?? null;
         $product->skladom = $validated['skladom'];
         $product->farba = $validated['farba'];
         $product->material = $validated['material'];
@@ -331,5 +246,104 @@ class ProductController extends Controller
         $product->save();
 
         return redirect('/admin_products_review')->with('success', 'Produkt bol úspešne aktualizovaný!');
+    }
+
+    private function storeUploadedImage(UploadedFile $image, int $timestamp, string $suffix): string
+    {
+        if (!$image->isValid()) {
+            throw new \RuntimeException('Neplatný obrázkový súbor.');
+        }
+
+        $extension = strtolower($image->getClientOriginalExtension());
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array($extension, $allowedExtensions, true)) {
+            throw new \RuntimeException('Nepodporovaný formát obrázka: ' . $extension);
+        }
+
+        $uploadPath = public_path('images/products');
+        if (!file_exists($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        $safeName = str_replace(' ', '_', pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME));
+        $imageName = $timestamp . '_' . $suffix . '_' . $safeName . '.' . $extension;
+        $destinationPath = $uploadPath . DIRECTORY_SEPARATOR . $imageName;
+        $this->resizeAndCropToExactSize($image->getPathname(), $destinationPath, $extension);
+
+        return 'images/products/' . $imageName;
+    }
+
+    private function resizeAndCropToExactSize(string $sourcePath, string $destinationPath, string $extension): void
+    {
+        $sourceImageData = @file_get_contents($sourcePath);
+        if ($sourceImageData === false) {
+            throw new \RuntimeException('Nepodarilo sa načítať obrázok.');
+        }
+
+        $sourceImage = @imagecreatefromstring($sourceImageData);
+        if ($sourceImage === false) {
+            throw new \RuntimeException('Nepodarilo sa spracovať obrázok.');
+        }
+
+        $sourceWidth = imagesx($sourceImage);
+        $sourceHeight = imagesy($sourceImage);
+        $targetRatio = self::IMAGE_WIDTH / self::IMAGE_HEIGHT;
+        $sourceRatio = $sourceWidth / $sourceHeight;
+
+        if ($sourceRatio > $targetRatio) {
+            $cropHeight = $sourceHeight;
+            $cropWidth = (int) round($sourceHeight * $targetRatio);
+            $srcX = (int) floor(($sourceWidth - $cropWidth) / 2);
+            $srcY = 0;
+        } else {
+            $cropWidth = $sourceWidth;
+            $cropHeight = (int) round($sourceWidth / $targetRatio);
+            $srcX = 0;
+            $srcY = (int) floor(($sourceHeight - $cropHeight) / 2);
+        }
+
+        // Slight zoom-in removes inner borders from screenshot-like uploads.
+        $zoomedCropWidth = max(1, (int) floor($cropWidth / self::IMAGE_CROP_ZOOM));
+        $zoomedCropHeight = max(1, (int) floor($cropHeight / self::IMAGE_CROP_ZOOM));
+        $srcX += (int) floor(($cropWidth - $zoomedCropWidth) / 2);
+        $srcY += (int) floor(($cropHeight - $zoomedCropHeight) / 2);
+        $cropWidth = $zoomedCropWidth;
+        $cropHeight = $zoomedCropHeight;
+
+        $targetImage = imagecreatetruecolor(self::IMAGE_WIDTH, self::IMAGE_HEIGHT);
+
+        if (in_array($extension, ['png', 'gif'], true)) {
+            imagealphablending($targetImage, false);
+            imagesavealpha($targetImage, true);
+            $transparent = imagecolorallocatealpha($targetImage, 0, 0, 0, 127);
+            imagefilledrectangle($targetImage, 0, 0, self::IMAGE_WIDTH, self::IMAGE_HEIGHT, $transparent);
+        }
+
+        imagecopyresampled(
+            $targetImage,
+            $sourceImage,
+            0,
+            0,
+            $srcX,
+            $srcY,
+            self::IMAGE_WIDTH,
+            self::IMAGE_HEIGHT,
+            $cropWidth,
+            $cropHeight
+        );
+
+        $saved = match ($extension) {
+            'png' => imagepng($targetImage, $destinationPath),
+            'gif' => imagegif($targetImage, $destinationPath),
+            default => imagejpeg($targetImage, $destinationPath, 90),
+        };
+
+        imagedestroy($sourceImage);
+        imagedestroy($targetImage);
+
+        if (!$saved) {
+            throw new \RuntimeException('Nepodarilo sa uložiť upravený obrázok.');
+        }
     }
 }

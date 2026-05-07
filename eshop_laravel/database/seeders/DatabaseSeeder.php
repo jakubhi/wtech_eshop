@@ -44,8 +44,11 @@ class DatabaseSeeder extends Seeder
             'Bundy', 'Košele', 'Doplnky', 'Šaty'
         ];
         $categoryModels = [];
+        $categoryNameById = [];
         foreach ($categories as $catName) {
-            $categoryModels[] = Kategoria::create(['nazov' => $catName]);
+            $category = Kategoria::create(['nazov' => $catName]);
+            $categoryModels[] = $category;
+            $categoryNameById[$category->id] = $category->nazov;
         }
 
         $products = [
@@ -92,17 +95,105 @@ class DatabaseSeeder extends Seeder
             ['nazov' => 'Tričko Zara', 'cena' => 22.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 12],
         ];
 
-        foreach ($products as $p) {
+        foreach ($products as $index => $p) {
+            $mainIconPath = 'images/product' . (($index % 9) + 1) . '.png';
+            $categoryName = $categoryNameById[$p['kategoria_id']] ?? '';
+            $material = $this->inferMaterial($p['nazov'], $categoryName);
+            $farba = $this->inferColor($p['nazov'], $categoryName);
+            $sezona = $this->inferSeason($p['nazov'], $categoryName);
+
             Produkt::create([
                 'nazov' => $p['nazov'],
                 'pouzivatel_id' => $admin->pouzivatel_id,
                 'cena' => $p['cena'],
+                'cena_bez_zlavy' => null,
                 'kategoria_id' => $p['kategoria_id'],
                 'znacka_id' => $p['znacka_id'],
                 'skladom' => $p['skladom'],
+                'material' => $material,
+                'farba' => $farba,
+                'sezona' => $sezona,
                 'na_predajni' => $p['na_predajni'] ?? false,
                 'na_objednavku' => $p['na_objednavku'] ?? false,
+                // Keep seed icon deterministic across fresh migrations.
+                'image_path1' => $mainIconPath,
+                'obrazok_hlavny' => $mainIconPath,
             ]);
         }
+    }
+
+    private function inferColor(string $productName, string $categoryName): string
+    {
+        $name = mb_strtolower($productName);
+        $category = mb_strtolower($categoryName);
+
+        if (str_contains($name, 'biele') || str_contains($name, 'biela')) return 'biela';
+        if (str_contains($name, 'čierne') || str_contains($name, 'čierna')) return 'cierna';
+        if (str_contains($name, 'modré') || str_contains($name, 'modrá')) return 'modra';
+        if (str_contains($name, 'červené') || str_contains($name, 'červená')) return 'cervena';
+        if (str_contains($name, 'zelené') || str_contains($name, 'zelená')) return 'zelena';
+        if (str_contains($name, 'hnedé') || str_contains($name, 'hnedá')) return 'cervena';
+        if (str_contains($name, 'sivé') || str_contains($name, 'sivá')) return 'cierna';
+        if (str_contains($name, 'žlté') || str_contains($name, 'žltá')) return 'biela';
+
+        // Deterministic palette by category for realistic defaults.
+        if (str_contains($category, 'tričká') || str_contains($category, 'košele') || str_contains($category, 'mikiny')) {
+            $palette = ['cierna', 'biela', 'modra', 'cervena', 'zelena'];
+        } elseif (str_contains($category, 'šaty') || str_contains($category, 'sukne')) {
+            $palette = ['cierna', 'cervena', 'modra'];
+        } elseif (str_contains($category, 'nohavice') || str_contains($category, 'kraťasy')) {
+            $palette = ['cierna', 'modra', 'biela'];
+        } elseif (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) {
+            $palette = ['cierna', 'biela', 'cervena'];
+        } else {
+            $palette = ['cierna', 'biela', 'modra'];
+        }
+
+        return $palette[crc32($productName) % count($palette)];
+    }
+
+    private function inferMaterial(string $productName, string $categoryName): string
+    {
+        $name = mb_strtolower($productName);
+        $category = mb_strtolower($categoryName);
+
+        if (str_contains($name, 'rif') || str_contains($name, 'denim')) return 'Denim';
+        if (str_contains($name, 'kožen')) return 'Koža';
+
+        // Deterministic "random" material pools by category.
+        if (str_contains($category, 'tričká') || str_contains($category, 'košele') || str_contains($category, 'tielka')) {
+            $pool = ['Bavlna', 'Viskóza', 'Polyester'];
+        } elseif (str_contains($category, 'mikiny') || str_contains($category, 'bundy')) {
+            $pool = ['Polyester', 'Bavlna', 'Vlna'];
+        } elseif (str_contains($category, 'sukne') || str_contains($category, 'šaty')) {
+            $pool = ['Viskóza', 'Bavlna', 'Elastan'];
+        } elseif (str_contains($category, 'nohavice') || str_contains($category, 'kraťasy')) {
+            $pool = ['Denim', 'Bavlna', 'Elastan'];
+        } elseif (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) {
+            $pool = ['Koža', 'Polyester'];
+        } elseif (str_contains($category, 'spodné prádlo') || str_contains($category, 'ponožky')) {
+            $pool = ['Elastan', 'Bavlna'];
+        } elseif (str_contains($category, 'šiltovky') || str_contains($category, 'doplnky')) {
+            $pool = ['Polyester', 'Bavlna'];
+        } else {
+            $pool = ['Bavlna', 'Polyester'];
+        }
+
+        return $pool[crc32($productName . '|' . $categoryName) % count($pool)];
+    }
+
+    private function inferSeason(string $productName, string $categoryName): string
+    {
+        $name = mb_strtolower($productName);
+        $category = mb_strtolower($categoryName);
+
+        if (str_contains($name, 'zimná') || str_contains($name, 'jesenn')) return 'Jeseň/Zima';
+        if (str_contains($name, 'letn')) return 'Jar/Leto';
+
+        if (str_contains($category, 'bundy') || str_contains($category, 'mikiny')) return 'Jeseň/Zima';
+        if (str_contains($category, 'kraťasy') || str_contains($category, 'tielka') || str_contains($category, 'šaty') || str_contains($category, 'sukne')) return 'Jar/Leto';
+        if (str_contains($category, 'ponožky') || str_contains($category, 'spodné prádlo')) return 'Celoročné';
+        if (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) return 'Celoročné';
+        return 'Celoročné';
     }
 }

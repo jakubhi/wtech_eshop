@@ -21,7 +21,7 @@ class CartController extends Controller
                 $cart[$item->produkt_id] = [
                     "nazov" => $item->produkt->nazov,
                     "quantity" => $item->mnozstvo,
-                    "cena" => $item->produkt->cena,
+                    "cena" => $item->produkt->final_price,
                     "produkt_id" => $item->produkt_id,
                     "image_path" => $item->produkt->image_path
                 ];
@@ -44,9 +44,12 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->getCart();
-        $total = $this->calculateTotal($cart);
-        session()->put('total', $total);
-        return view('pages.kosik_page', compact('cart', 'total'));
+        $cartTotal = $this->calculateTotal($cart);
+        $cartCount = array_sum(array_column($cart, 'quantity'));
+
+        session()->put('total', $cartTotal);
+
+        return view('pages.kosik_page', compact('cart', 'cartTotal', 'cartCount'));
     }
 
     public function add(Request $request, $id)
@@ -77,7 +80,7 @@ class CartController extends Controller
                 $cart[$id] = [
                     "nazov" => $product->nazov,
                     "quantity" => $quantity,
-                    "cena" => $product->cena,
+                    "cena" => $product->final_price,
                     "produkt_id" => $product->produkt_id,
                     "image_path" => $product->image_path
                 ];

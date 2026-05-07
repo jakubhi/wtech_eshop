@@ -28,7 +28,7 @@
                     <div class="flex-1 flex flex-col bg-gray-200 justify-center items-center p-2 min-h-[18rem]">
                         <img
                             id="main_product_image"
-                            src="{{ $product->image_path1 ?: (asset('images/product' . (($product->produkt_id - 1) % 9 + 1) . '.png') ?: ($galleryImages[0]['path'] ?? asset('images/placeholder.png'))) }}"
+                            src="{{ $product->image_path }}"
                             alt="{{ $product->nazov }} - hlavný obrázok"
                             class="w-full max-h-[28rem] object-contain {{ !empty($galleryImages[0]['is_grayscale']) ? 'grayscale' : '' }}"
                         >
@@ -88,8 +88,15 @@
 
                     <form action="{{ route('cart.add', $product->produkt_id) }}" method="POST" class="flex flex-col items-end">
                         @csrf
-                        <div class="flex font-bold text-2xl px-4 py-2 rounded-xl border-gray-400 bg-white ">
-                            Cena: {{ number_format($product->cena, 2) }} €
+                        <div class="flex flex-col items-end px-4 py-2 rounded-xl border-gray-400 bg-white">
+                            @if(!is_null($product->original_price))
+                                <span class="line-through text-gray-600 text-lg">
+                                    {{ number_format($product->original_price, 2) }} €
+                                </span>
+                            @endif
+                            <span class="font-bold text-2xl">
+                                Cena: {{ number_format($product->final_price, 2) }} €
+                            </span>
                         </div>
 
                         <div class="flex items-center justify-end mt-5">
@@ -164,17 +171,17 @@
 
                         <div class="flex p-4 rounded-xl bg-gray-100">
                             <span class="font-bold px-2">Materiál</span>
-                            <span class="flex flex-1 justify-end pr-2">Bavlna / Polyester</span>
+                            <span class="flex flex-1 justify-end pr-2">{{ $product->material ?: 'Nezadané' }}</span>
                         </div>
 
                         <div class="flex p-4 rounded-xl bg-gray-100">
                             <span class="font-bold px-2">Farba</span>
-                            <span class="flex flex-1 justify-end pr-2">Rôzne</span>
+                            <span class="flex flex-1 justify-end pr-2">{{ $product->farba ?: 'Nezadaná' }}</span>
                         </div>
 
                         <div class="flex p-4 rounded-xl bg-gray-100">
                             <span class="font-bold px-2">Sezóna</span>
-                            <span class="flex flex-1 justify-end pr-2">Celoročné</span>
+                            <span class="flex flex-1 justify-end pr-2">{{ $product->sezona ?: 'Celoročné' }}</span>
                         </div>
                     </div>
 

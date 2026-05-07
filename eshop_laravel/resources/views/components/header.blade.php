@@ -1,5 +1,15 @@
+@php
+    $isAdmin = Auth::check() && Auth::user()->rola === 'admin';
+    $isAdminPage = request()->is('admin_dashboard')
+        || request()->is('admin_products_review')
+        || request()->is('add_product')
+        || request()->is('edit_product')
+        || request()->is('admin/products/*');
+    $brandHref = $isAdmin ? url('/admin_dashboard') : url('/');
+@endphp
+
 <header class="bg-black flex justify-between items-center flex-row text-md p-1 lg:pr-4">
-    <a href="/">
+    <a href="{{ $brandHref }}">
         <div class="hidden items-center justify-center bg-[#2D2D2D] text-white border border-gray-200 rounded-full font-bold
             md:flex md:ml-1 md:px-3 md:py-2 md:mr-1
             lg:ml-3 lg:px-10
@@ -8,7 +18,7 @@
         </div>
     </a>
     
-    <a href="/" class="flex md:hidden invert hover:opacity-80">
+    <a href="{{ $brandHref }}" class="flex md:hidden invert hover:opacity-80">
         <img src="{{ asset('images/home.png') }}" alt="Domov" class="w-10 p-1">
     </a>
 
@@ -57,12 +67,14 @@
         <a href="{{ Auth::check() ? (Auth::user()->rola === 'admin' ? url('/admin_dashboard') : url('/login')) : route('login') }}">
             <img src="{{ asset('images/user.png') }}" alt="profile" class="h-10 pr-2 invert hover:opacity-80">
         </a>
-        <a href="{{ route('cart.index') }}">
-            <img src="{{ asset('images/cart.png') }}" alt="cart" class="h-10 pr-2 invert hover:opacity-80">
-        </a>
-        
-        <span class="flex items-center pr-3 pl-1 text-white sm:text-lg lg:text-xl xl:text-2xl">
-            {{ number_format($cartTotal, 2) }} €
-        </span>
+        @if(!($isAdmin && $isAdminPage))
+            <a href="{{ route('cart.index') }}">
+                <img src="{{ asset('images/cart.png') }}" alt="cart" class="h-10 pr-2 invert hover:opacity-80">
+            </a>
+            
+            <span class="flex items-center pr-3 pl-1 text-white sm:text-lg lg:text-xl xl:text-2xl">
+                {{ number_format($cartTotal, 2) }} €
+            </span>
+        @endif
     </div>
 </header>
