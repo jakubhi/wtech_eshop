@@ -81,9 +81,9 @@
         
     </header>
 
-    <main class="items-start w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 mb-10 flex flex-col md:flex-row gap-8">
+    <main class="items-start md:items-stretch w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 py-8 mb-10 flex flex-col md:flex-row gap-8">
         <!-- Left main column-->
-        <div class="w-full md:w-1/2 flex flex-col bg-white rounded-xl shadow-sm p-6">
+        <div class="w-full md:w-1/2 self-stretch flex flex-col bg-white rounded-xl shadow-sm p-6">
             <form id="edit-form" action="/admin/products/{{ $product ? $product->produkt_id : '' }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -95,7 +95,7 @@
                 <input type="text" name="nazov" maxlength="25" value="{{ $product->nazov ?? '' }}" class="bg-gray-200 border border-gray-300 block w-full mb-6 rounded-xl px-3 py-2" required>
                 
                 <label class="text-2xl font-semibold">Detailný opis</label>
-                <textarea name="popis" maxlength="1000" class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5">{{ $product->popis ?? '' }}</textarea>
+                <textarea name="popis" maxlength="1000" class="bg-gray-200 border border-gray-300 w-full p-3 mb-4 rounded-xl" rows="5">{{ old('popis', $product->popis ?? '') }}</textarea>
                 
                 <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                     <!-- row1 -->
@@ -185,8 +185,11 @@
         </div>
 
         <!-- Right main column -->
-        <div class="w-full md:w-1/2 flex flex-col items-center self-stretch bg-white rounded-xl shadow-sm p-6">
-            <label class="text-lg flex mt-10 mb-10 justify-center">Obrázky produktu</label>
+        <div class="w-full md:w-1/2 self-stretch flex flex-col items-center bg-white rounded-xl shadow-sm p-6">
+            <div class="mt-6 mb-8 text-center">
+                <h2 class="text-2xl font-semibold text-gray-800">Obrázky produktu</h2>
+                <p class="text-sm text-gray-500 mt-1 mb-4">Vyberte, nahrajte alebo zmažte jednotlivé ikony produktu.</p>
+            </div>
 
             <div class="w-full gap-y-5 h-auto rounded-xl flex flex-col items-center justify-center gap-x-20">
                 <!-- First Image -->
@@ -194,11 +197,21 @@
                     <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
                         <img id="current-image-1" src="{{ $product->image_path }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 1" class="w-52 h-70 object-cover">
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-3 flex w-full flex-wrap items-center justify-center gap-2">
                         <input type="file" name="image1" id="image-upload-1" class="hidden" accept="image/*" form="edit-form" onchange="previewImage(1, this)">
-                        <button type="button" onclick="document.getElementById('image-upload-1').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
-                            Nahrať nový obrázok 1
+                        <button type="button" onclick="document.getElementById('image-upload-1').click()" class="bg-[#2D2D2D] text-white px-4 py-2 rounded-md hover:bg-[#3B3B3B] transition text-sm">
+                            Vybrať súbor
                         </button>
+                        <button type="submit" form="edit-form" class="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm">
+                            Nahrať
+                        </button>
+                        <form action="{{ route('admin.products.image.delete', ['id' => $product->produkt_id, 'slot' => 1]) }}" method="POST" onsubmit="return confirm('Naozaj chcete zmazať obrázok 1?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-sm">
+                                Zmazať
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -207,24 +220,29 @@
                     <div class="flex flex-col gap-4 justify-center overflow-hidden border rounded-lg"> 
                         <img id="current-image-2" src="{{ $product->second_image_path }}" alt="{{ $product->nazov ?? 'Produkt' }} - obrázok 2" class="w-52 h-70 object-cover">
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-3 flex w-full flex-wrap items-center justify-center gap-2">
                         <input type="file" name="image2" id="image-upload-2" class="hidden" accept="image/*" form="edit-form" onchange="previewImage(2, this)">
-                        <button type="button" onclick="document.getElementById('image-upload-2').click()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition text-sm">
-                            Nahrať nový obrázok 2
+                        <button type="button" onclick="document.getElementById('image-upload-2').click()" class="bg-[#2D2D2D] text-white px-4 py-2 rounded-md hover:bg-[#3B3B3B] transition text-sm">
+                            Vybrať súbor
                         </button>
+                        <button type="submit" form="edit-form" class="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm">
+                            Nahrať
+                        </button>
+                        <form action="{{ route('admin.products.image.delete', ['id' => $product->produkt_id, 'slot' => 2]) }}" method="POST" onsubmit="return confirm('Naozaj chcete zmazať obrázok 2?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition text-sm">
+                                Zmazať
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-10 flex justify-center gap-4">
-                <button type="submit" form="edit-form" class="border rounded-xl border-gray-200 bg-green-500 text-white p-3 px-6 hover:bg-green-600 transition font-semibold">
+            <div class="mt-10 flex w-full justify-center">
+                <button type="submit" form="edit-form" class="border rounded-xl border-gray-200 bg-gray-300 text-black p-3 px-6 hover:bg-gray-400 transition font-semibold w-full max-w-sm text-center">
                     Uložiť zmeny
                 </button>
-                <a href="/admin_products_review">
-                    <button type="button" class="border rounded-xl border-gray-200 bg-gray-300 p-3 px-6 hover:bg-gray-400 transition font-semibold">
-                        Späť
-                    </button>
-                </a>
             </div>
 
             <div class="flex-1"></div>

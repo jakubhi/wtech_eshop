@@ -7,6 +7,7 @@ use App\Models\Kategoria;
 use App\Models\Znacka;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -99,7 +100,7 @@ class ProductController extends Controller
             'cena_bez_zlavy' => ['nullable', 'numeric', 'gt:0', 'lt:cena', 'regex:/^\d{1,4}(\.\d{1,2})?$/'],
             'skladom' => 'required|integer|min:1',
             'znacka_id' => 'required|integer|min:1',
-            'material' => 'nullable|string|max:255',
+            'material' => 'required|string|max:255',
             'farba' => 'nullable|in:modra,cierna,biela,cervena,zelena',
             'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -118,6 +119,7 @@ class ProductController extends Controller
             'kategoria_id.integer' => 'ID kategórie musí byť číslo.',
             'znacka_id.required' => 'Značka je povinná.',
             'znacka_id.integer' => 'ID značky musí byť číslo.',
+            'material.required' => 'Materiál je povinný.',
             'farba.in' => 'Zvolte platnú farbu.',
             'image1.image' => 'Prvý súbor musí byť obrázok.',
             'image1.mimes' => 'Prvý obrázok musí byť formátu: jpeg, png, jpg, gif.',
@@ -127,8 +129,8 @@ class ProductController extends Controller
             'image2.max' => 'Maximálna veľkosť druhého obrázka je 2MB.'
         ]);
 
-        $imagePath1 = null;
-        $imagePath2 = null;
+        $imagePath1 = $this->fallbackPrimaryImagePath(0);
+        $imagePath2 = $this->fallbackSecondaryImagePath(0);
         $timestamp = time();
 
         if ($request->hasFile('image1')) {
@@ -158,13 +160,12 @@ class ProductController extends Controller
         $product->material = $validated['material'];
         $product->image_path1 = $imagePath1;
         $product->image_path2 = $imagePath2;
-        $product->obrazok_hlavny = $imagePath1 ?? $product->obrazok_hlavny;
-        $product->obrazok_druhy = $imagePath2 ?? $product->obrazok_druhy;
+        $product->obrazok_hlavny = $imagePath1;
+        $product->obrazok_druhy = $imagePath2;
         $product->kategoria_id = $validated['kategoria_id'];
         $product->znacka_id = $validated['znacka_id'];
-        
-        // Handle pouzivatel_id automatically
-        $product->pouzivatel_id = auth()->id() ?? 1; // Use logged-in user ID or default to 1
+
+        $product->pouzivatel_id = auth()->id() ?? 1;
         
         $product->save();
 
@@ -232,7 +233,6 @@ class ProductController extends Controller
             }
         }
 
-        // Update product data
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
         $product->cena = $validated['cena'];
@@ -246,6 +246,35 @@ class ProductController extends Controller
         $product->save();
 
         return redirect('/admin_products_review')->with('success', 'Produkt bol úspešne aktualizovaný!');
+    }
+
+    public function deleteImage(int $id, string $slot)
+    {
+        if (!in_array($slot, ['1', '2'], true)) {
+            abort(404);
+        }
+
+        $product = Produkt::findOrFail($id);
+
+        $field = $slot === '1' ? 'image_path1' : 'image_path2';
+        $legacyField = $slot === '1' ? 'obrazok_hlavny' : 'obrazok_druhy';
+
+        $path = (string) ($product->{$field} ?? '');
+
+        if ($path !== '' && str_starts_with($path, 'images/products/')) {
+            $fullPath = public_path($path);
+            if (File::exists($fullPath)) {
+                File::delete($fullPath);
+            }
+        }
+
+        $product->{$field} = null;
+        $product->{$legacyField} = $slot === '1'
+            ? $this->fallbackPrimaryImagePath($product->produkt_id)
+            : $this->fallbackSecondaryImagePath($product->produkt_id);
+        $product->save();
+
+        return redirect()->back()->with('success', 'Obrázok bol zmazaný.');
     }
 
     private function storeUploadedImage(UploadedFile $image, int $timestamp, string $suffix): string
@@ -303,7 +332,6 @@ class ProductController extends Controller
             $srcY = (int) floor(($sourceHeight - $cropHeight) / 2);
         }
 
-        // Slight zoom-in removes inner borders from screenshot-like uploads.
         $zoomedCropWidth = max(1, (int) floor($cropWidth / self::IMAGE_CROP_ZOOM));
         $zoomedCropHeight = max(1, (int) floor($cropHeight / self::IMAGE_CROP_ZOOM));
         $srcX += (int) floor(($cropWidth - $zoomedCropWidth) / 2);
@@ -345,5 +373,15 @@ class ProductController extends Controller
         if (!$saved) {
             throw new \RuntimeException('Nepodarilo sa uložiť upravený obrázok.');
         }
+    }
+
+    private function fallbackPrimaryImagePath(int $_productId): string
+    {
+        return 'images/empty.png';
+    }
+
+    private function fallbackSecondaryImagePath(int $_productId): string
+    {
+        return 'images/empty.png';
     }
 }

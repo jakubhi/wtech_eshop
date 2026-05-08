@@ -6,7 +6,6 @@
     <title>@yield('title', 'E-shop')</title>
     <link href="{{ asset('css/output.css') }}" rel="stylesheet">
     <style>
-        /* Skrytie predvolených posúvačov (šípok) z number inputov */
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -16,7 +15,6 @@
             -moz-appearance: textfield;
             appearance: textfield;
         }
-        /* Definitívne odstránenie outline pre tieto inputy zamerané na košík/množstvo */
         input[type="number"]:focus {
             outline: none !important;
             box-shadow: none !important;

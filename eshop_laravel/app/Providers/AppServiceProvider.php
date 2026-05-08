@@ -22,7 +22,11 @@ class AppServiceProvider extends ServiceProvider
                     ->with('produkt')
                     ->get();
                 foreach ($cartItems as $item) {
-                    $total += $item->produkt->cena * $item->mnozstvo;
+                    if (!$item->produkt) {
+                        continue;
+                    }
+
+                    $total += $item->produkt->final_price * $item->mnozstvo;
                     $count += $item->mnozstvo;
                 }
             } else {

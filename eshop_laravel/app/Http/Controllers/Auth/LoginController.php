@@ -37,9 +37,6 @@ class LoginController extends Controller
             else {
                 return redirect()->intended('/'); 
             }
-
-
-            
         }
 
         throw ValidationException::withMessages([

@@ -76,4 +76,5 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::get('/product_detail/{id}', [ProductController::class, 'show'])->name('products.show');
 Route::put('/admin/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
 Route::delete('/admin/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+Route::delete('/admin/products/{id}/image/{slot}', [ProductController::class, 'deleteImage'])->name('admin.products.image.delete');
 Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');

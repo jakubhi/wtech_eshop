@@ -55,7 +55,7 @@
                             </button>
                         </form>
 
-                        <form action="{{ route('cart.delete', $id) }}" method="POST" class="inline">
+                        <form action="{{ route('cart.delete', $id) }}" method="POST" id="delete_form_{{ $id }}" class="inline">
                             @csrf
                             <button type="submit" class="group flex items-center gap-2 text-red-500 hover:text-red-700 transition text-xs font-bold uppercase tracking-wider p-1">
                                 <img src="{{ asset('images/bin.png') }}" alt="" class="w-4 h-4 opacity-70 group-hover:opacity-100">
@@ -93,6 +93,8 @@
                 if (parseInt(input.value) > 1) {
                     input.value = parseInt(input.value) - 1;
                     document.getElementById('form_' + id).submit();
+                } else {
+                    document.getElementById('delete_form_' + id).submit();
                 }
             }
         </script>

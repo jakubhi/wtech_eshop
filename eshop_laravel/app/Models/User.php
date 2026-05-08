@@ -27,7 +27,7 @@ class User extends Authenticatable
         'login',
         'email',
         'rola',
-        'heslo', // Correcting to 'heslo' to match DB
+        'heslo',
     ];
 
     /**

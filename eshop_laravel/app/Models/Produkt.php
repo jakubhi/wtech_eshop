@@ -45,9 +45,6 @@ class Produkt extends Model
         return $this->belongsTo(User::class, 'pouzivatel_id');
     }
 
-    /**
-     * Get the image path based on product name/keywords.
-     */
     public function getImagePathAttribute(): string
     {
         return $this->product_gallery[0]['path'];
@@ -100,7 +97,6 @@ class Produkt extends Model
             ],
             [
                 'path' => $secondPath,
-                // Temporary visual difference until admin uploads a real second image.
                 'is_grayscale' => !$hasSecondImage && $secondPath === $primaryPath,
             ],
         ];
@@ -120,11 +116,9 @@ class Produkt extends Model
         if (str_contains($name, 'kraťasy') || str_contains($name, 'shorts') || $this->kategoria_id == 8) return asset('images/product9.png');
         if (str_contains($name, 'batoh') || str_contains($name, 'doplnky') || $this->kategoria_id == 15) return asset('images/product8.png');
         
-        // Tenisky, topánky, vysoké podpätky a iné, pre ktoré nemáme perfektnú zhodu
         if (in_array($this->kategoria_id, [4, 5, 6]) || str_contains($name, 'tenisky') || str_contains($name, 'nike') || str_contains($name, 'adidas') || str_contains($name, 'puma')) return asset('images/product5.png'); 
         if (in_array($this->kategoria_id, [9, 10, 11, 12])) return asset('images/product1.png'); // Spodné pr., polo, siltovky, tielka -> fallback tričko
 
-        // Default based on ID if no category or keyword match
         $productId = $this->produkt_id ?? 1;
         return asset('images/product' . (($productId - 1 + $offset) % 9 + 1) . '.png');
     }

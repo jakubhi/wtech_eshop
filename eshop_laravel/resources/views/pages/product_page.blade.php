@@ -42,8 +42,12 @@
                         </h1>
 
                         <p class="text-lg pt-3 text-gray-700">
-                            Tento produkt {{ $product->nazov }} je vysoko kvalitný kúsok od značky {{ $product->znacka->nazov }}. 
-                            Ideálny pre každodenné nosenie, vyrobený z príjemných materiálov, ktoré zaručujú pohodlie po celý deň.
+                            @if(!empty($product->popis))
+                                {{ $product->popis }}
+                            @else
+                                Tento produkt {{ $product->nazov }} je vysoko kvalitný kúsok od značky {{ $product->znacka->nazov }}.
+                                Ideálny pre každodenné nosenie, vyrobený z príjemných materiálov, ktoré zaručujú pohodlie po celý deň.
+                            @endif
                         </p>
                     </div>
 
@@ -59,18 +63,14 @@
 
                         @if($product->na_predajni)
                         <div class="flex items-center gap-x-3">
-                            <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center shrink-0">
-                                <span class="text-white text-[10px]">✓</span>
-                            </div>
+                            <img src="{{ asset('images/shop.png') }}" alt="Na predajni" class="w-5 h-5 object-contain shrink-0">
                             Na predajni (možný osobný odber)
                         </div>
                         @endif
 
                         @if($product->na_objednavku)
                         <div class="flex items-center gap-x-3">
-                            <div class="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center shrink-0">
-                                <span class="text-white text-[10px]">!</span>
-                            </div>
+                            <img src="{{ asset('images/objednavka.png') }}" alt="Na objednávku" class="w-5 h-5 object-contain shrink-0">
                             Na objednávku (dodanie do 7-14 dní)
                         </div>
                         @endif
@@ -86,7 +86,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('cart.add', $product->produkt_id) }}" method="POST" class="flex flex-col items-end">
+                    <form id="add-to-cart-form" action="{{ route('cart.add', $product->produkt_id) }}" method="POST" class="flex flex-col items-end">
                         @csrf
                         <div class="flex flex-col items-end px-4 py-2 rounded-xl border-gray-400 bg-white">
                             @if(!is_null($product->original_price))
@@ -115,10 +115,18 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="font-semibold py-2 px-15 border mt-2 mb-4 rounded-xl bg-white text-black hover:bg-gray-100">
+                    </form>
+                    <div class="flex justify-end items-center gap-3 mt-2 mb-4">
+                        <button type="submit" form="add-to-cart-form" class="font-semibold py-2 px-15 border rounded-xl bg-white text-black hover:bg-gray-100">
                             Pridať do košíka
                         </button>
-                    </form>
+                        <form action="{{ route('cart.remove', $product->produkt_id) }}" method="POST" class="m-0">
+                            @csrf
+                            <button type="submit" class="font-semibold py-2 px-4 border rounded-xl bg-gray-100 text-black hover:bg-gray-200">
+                                Odobrať z košíka
+                            </button>
+                        </form>
+                    </div>
                     <script>
                         function incrementQuantity() {
                             const input = document.getElementById('quantity_input');
@@ -154,55 +162,34 @@
                 </div>
             </div>
             
-            <div class="flex flex-col gap-6 mx-2 m-7 mb-10">                
-                <div class="flex flex-col px-4 gap-10 lg:flex-row lg:gap-20 items-center">
-                    <div class="flex flex-col w-full lg:w-1/2 gap-y-2 lg:gap-y-3 text-lg">
-                        <span class="flex font-semibold justify-center mb-2 items-center">Parametre produktu</span>
+            <div class="flex flex-col gap-6 mx-2 m-7 mb-10">
+                <div class="flex flex-col px-4 items-center">
+                    <div class="flex flex-col w-full max-w-3xl text-lg">
+                        <span class="flex font-semibold justify-center mb-5 items-center">Parametre produktu</span>
                     
-                        <div class="flex p-4 rounded-xl bg-gray-100">
+                        <div class="flex p-4 rounded-xl border border-gray-400 bg-gray-100">
                             <span class="font-bold px-2">Značka</span>
                             <span class="flex flex-1 justify-end pr-2">{{ $product->znacka->nazov }}</span>
                         </div>
 
-                        <div class="flex p-4 rounded-xl bg-gray-100">
+                        <div class="flex p-4 mt-2 rounded-xl border border-gray-400 bg-gray-100">
                             <span class="font-bold px-2">Kategória</span>
                             <span class="flex flex-1 justify-end pr-2">{{ $product->kategoria->nazov }}</span>
                         </div>
 
-                        <div class="flex p-4 rounded-xl bg-gray-100">
+                        <div class="flex p-4 mt-2 rounded-xl border border-gray-400 bg-gray-100">
                             <span class="font-bold px-2">Materiál</span>
                             <span class="flex flex-1 justify-end pr-2">{{ $product->material ?: 'Nezadané' }}</span>
                         </div>
 
-                        <div class="flex p-4 rounded-xl bg-gray-100">
+                        <div class="flex p-4 mt-2 rounded-xl border border-gray-400 bg-gray-100">
                             <span class="font-bold px-2">Farba</span>
                             <span class="flex flex-1 justify-end pr-2">{{ $product->farba ?: 'Nezadaná' }}</span>
                         </div>
 
-                        <div class="flex p-4 rounded-xl bg-gray-100">
+                        <div class="flex p-4 mt-2 rounded-xl border border-gray-400 bg-gray-100">
                             <span class="font-bold px-2">Sezóna</span>
                             <span class="flex flex-1 justify-end pr-2">{{ $product->sezona ?: 'Celoročné' }}</span>
-                        </div>
-                    </div>
-
-                    <div class="w-full mt-10 h-[0.5px] lg:hidden bg-gray-500"></div>
-
-                    <div class="flex flex-col w-full lg:w-1/2 lg:gap-y-3 text-lg">
-                        <span class="flex font-semibold justify-center mb-2 items-center">Čo hovoria na tento produkt ľudia?</span>
-                        <!-- Recenzie ostávajú statické podľa zadania zachovania dizajnu -->
-                        <div class="flex flex-col items-center gap-x-4 gap-y-6 p-2 rounded-xl">
-                            <div class="flex gap-x-4 w-full items-center">
-                                <div class="flex flex-col items-center mt-1">
-                                    <img src="{{ asset('images/star.png') }}" alt="ikona hodnotenia" class="w-7">
-                                    <span class="text-xs">4.5/5</span>
-                                </div>
-                                <div class="w-10 h-10 bg-gray-200 rounded-full"></div>
-                                <div class="flex flex-col flex-1">
-                                    <span class="text-sm font-bold">Jozef N.</span>
-                                    <div class="h-4 mt-1.5 rounded-xl mb-1 bg-gray-200 "></div>
-                                </div>
-                            </div>
-                            <!-- ... ďalšie recenzie ... -->
                         </div>
                     </div>
                 </div>

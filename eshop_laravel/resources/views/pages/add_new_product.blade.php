@@ -30,7 +30,7 @@
             <input type="text" name="nazov" maxlength="25" class="bg-gray-200 rounded-md border focus:ring-brand block w-full mb-6 pl-2 p-2" required>
             
             <label class="text-2xl font-semibold">Detailný opis</label>
-            <textarea name="popis" maxlength="1000" class="bg-gray-200 w-full p-2 mb-4 rounded-md" rows="5"></textarea>
+            <textarea name="popis" maxlength="1000" class="bg-gray-200 w-full p-2 mb-4 rounded-md" rows="5">{{ old('popis') }}</textarea>
             
             <div class="grid grid-cols-2 gap-y-4 gap-x-10 w-full mx-auto">
                 <div>
@@ -84,7 +84,7 @@
 
                 <div>
                     <label class="text-lg block mb-1">Materiál</label>
-                    <select name="material" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2">
+                    <select name="material" class="bg-gray-200 rounded-md border focus:ring-brand block w-full pl-2 p-2" required>
                         <option value="">Vyberte materiál</option>
                         <option value="Bavlna">Bavlna</option>
                         <option value="Polyester">Polyester</option>
@@ -109,13 +109,13 @@
                 </div>
             </div>
             
-            <div class="flex gap-x-4 mt-10">
-                <button type="submit" class="bg-black text-white px-8 py-3 rounded-md font-bold hover:bg-gray-800 transition">
-                    Uložiť produkt
-                </button>
-                <a href="/admin_dashboard" class="bg-gray-200 text-black px-8 py-3 rounded-md font-bold hover:bg-gray-300 transition text-center">
+            <div class="mt-6 flex w-full flex-col items-stretch gap-3">
+                <a href="/admin_dashboard" class="border border-gray-200 bg-gray-300 text-black px-8 py-2 rounded-xl font-semibold hover:bg-gray-400 transition text-center w-full">
                     Zrušiť
                 </a>
+                <button type="submit" class="border border-gray-200 bg-[#2D2D2D] text-white px-8 py-2 rounded-xl font-semibold hover:bg-[#3B3B3B] transition text-center w-full">
+                    Uložiť produkt
+                </button>
             </div>
         </form>
     </div>

@@ -36,11 +36,11 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-2 p-2 pt-3">
-                            <a href="/edit_product?id={{ $p->produkt_id }}" class="border rounded-xl border-gray-200 bg-gray-300 p-2 text-center hover:bg-gray-400 transition font-semibold block w-full">Upraviť</a>
+                            <a href="/edit_product?id={{ $p->produkt_id }}" class="border rounded-xl border-gray-500 bg-gray-300 p-2 text-center hover:bg-gray-400 transition font-semibold block w-full">Upraviť</a>
                             <form action="{{ route('admin.products.destroy', $p->produkt_id) }}" method="POST" onsubmit="return confirm('Naozaj chcete vymazať produkt?');" class="m-0">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="border rounded-xl border-gray-200 bg-red-500 text-white p-2 text-center hover:bg-red-600 transition font-semibold w-full">Vymazať</button>
+                                <button type="submit" class="border rounded-xl border-gray-200 bg-gray-500 text-white p-2 text-center hover:bg-gray-600 transition font-semibold w-full">Vymazať</button>
                             </form>
                         </div>
                     </div>

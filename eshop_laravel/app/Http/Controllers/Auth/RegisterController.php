@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\PolozkaKosika;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -32,13 +34,50 @@ class RegisterController extends Controller
             'heslo.min' => 'Heslo musí mať aspoň :min znakov.',
         ]);
 
-        User::create([
+        $user = User::create([
             'login' => $validated['login'],
             'email' => $validated['email'],
             'heslo' => Hash::make($validated['heslo']),
             'rola' => ($request->query('type') === 'admin') ? 'admin' : 'zakaznik',
         ]);
 
-        return redirect()->route('login')->with('status', 'Registrácia prebehla úspešne. Môžete sa prihlásiť.');
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        $sessionCart = session()->get('cart', []);
+        if (!empty($sessionCart)) {
+            $this->mergeSessionCartIntoUserCart($sessionCart, $user->pouzivatel_id);
+            session()->forget('cart');
+        }
+
+        return $user->rola === 'admin'
+            ? redirect()->intended('admin_dashboard')
+            : redirect()->intended('/');
+    }
+
+    private function mergeSessionCartIntoUserCart(array $sessionCart, int $userId): void
+    {
+        foreach ($sessionCart as $productId => $details) {
+            $quantity = max((int) ($details['quantity'] ?? 0), 0);
+            if ($quantity === 0) {
+                continue;
+            }
+
+            $cartItem = PolozkaKosika::where('pouzivatel_id', $userId)
+                ->where('produkt_id', $productId)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->mnozstvo += $quantity;
+                $cartItem->save();
+                continue;
+            }
+
+            PolozkaKosika::create([
+                'pouzivatel_id' => $userId,
+                'produkt_id' => $productId,
+                'mnozstvo' => $quantity,
+            ]);
+        }
     }
 }

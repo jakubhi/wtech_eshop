@@ -36,8 +36,8 @@
         <form id="delivery-payment-form" action="{{ route('delivery.continue') }}" method="POST" class="flex flex-col mr-5 ml-5">
             @csrf
             @if ($errors->any())
-                <div class="mb-4 mt-6 p-3 rounded-xl bg-red-100 text-red-700 border border-red-300">
-                    Prosím, opravte označené polia platby.
+                <div class="mb-4 mt-6 mx-auto w-full max-w-xl p-3 rounded-xl bg-red-100 text-red-700 border border-red-300 text-center font-medium">
+                    Pred pokračovaním prosím vyplňte platobné údaje.
                 </div>
             @endif
             <div class="flex flex-col md:flex-row w-full mt-10">
