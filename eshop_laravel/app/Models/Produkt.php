@@ -25,9 +25,7 @@ class Produkt extends Model
         'na_predajni',
         'na_objednavku',
         'image_path1',
-        'image_path2',
-        'obrazok_hlavny',
-        'obrazok_druhy'
+        'image_path2'
     ];
 
     public function kategoria(): BelongsTo
@@ -75,8 +73,8 @@ class Produkt extends Model
 
     public function getProductGalleryAttribute(): array
     {
-        $primarySource = $this->image_path1 ?: $this->obrazok_hlavny;
-        $secondarySource = $this->image_path2 ?: $this->obrazok_druhy;
+        $primarySource = $this->image_path1;
+        $secondarySource = $this->image_path2;
 
         $primaryPath = !empty($primarySource)
             ? asset($primarySource)
@@ -117,8 +115,7 @@ class Produkt extends Model
         if (str_contains($name, 'batoh') || str_contains($name, 'doplnky') || $this->kategoria_id == 15) return asset('images/product8.png');
         
         if (in_array($this->kategoria_id, [4, 5, 6]) || str_contains($name, 'tenisky') || str_contains($name, 'nike') || str_contains($name, 'adidas') || str_contains($name, 'puma')) return asset('images/product5.png'); 
-        if (in_array($this->kategoria_id, [9, 10, 11, 12])) return asset('images/product1.png'); // Spodné pr., polo, siltovky, tielka -> fallback tričko
-
+        if (in_array($this->kategoria_id, [9, 10, 11, 12])) return asset('images/product1.png');
         $productId = $this->produkt_id ?? 1;
         return asset('images/product' . (($productId - 1 + $offset) % 9 + 1) . '.png');
     }

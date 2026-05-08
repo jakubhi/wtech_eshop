@@ -149,7 +149,6 @@ class ProductController extends Controller
             }
         }
 
-        // Create new product
         $product = new Produkt();
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
@@ -160,8 +159,6 @@ class ProductController extends Controller
         $product->material = $validated['material'];
         $product->image_path1 = $imagePath1;
         $product->image_path2 = $imagePath2;
-        $product->obrazok_hlavny = $imagePath1;
-        $product->obrazok_druhy = $imagePath2;
         $product->kategoria_id = $validated['kategoria_id'];
         $product->znacka_id = $validated['znacka_id'];
 
@@ -218,7 +215,6 @@ class ProductController extends Controller
         if ($request->hasFile('image1')) {
             try {
                 $product->image_path1 = $this->storeUploadedImage($request->file('image1'), $timestamp, '1');
-                $product->obrazok_hlavny = $product->image_path1;
             } catch (\Exception $e) {
                 \Log::error('Image1 upload error: ' . $e->getMessage());
             }
@@ -227,7 +223,6 @@ class ProductController extends Controller
         if ($request->hasFile('image2')) {
             try {
                 $product->image_path2 = $this->storeUploadedImage($request->file('image2'), $timestamp + 1, '2');
-                $product->obrazok_druhy = $product->image_path2;
             } catch (\Exception $e) {
                 \Log::error('Image2 upload error: ' . $e->getMessage());
             }
@@ -257,7 +252,6 @@ class ProductController extends Controller
         $product = Produkt::findOrFail($id);
 
         $field = $slot === '1' ? 'image_path1' : 'image_path2';
-        $legacyField = $slot === '1' ? 'obrazok_hlavny' : 'obrazok_druhy';
 
         $path = (string) ($product->{$field} ?? '');
 
@@ -269,9 +263,6 @@ class ProductController extends Controller
         }
 
         $product->{$field} = null;
-        $product->{$legacyField} = $slot === '1'
-            ? $this->fallbackPrimaryImagePath($product->produkt_id)
-            : $this->fallbackSecondaryImagePath($product->produkt_id);
         $product->save();
 
         return redirect()->back()->with('success', 'Obrázok bol zmazaný.');
