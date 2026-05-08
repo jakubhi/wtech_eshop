@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\PolozkaKosika;
+use App\Services\CartSyncService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
+    public function __construct(private readonly CartSyncService $cartSyncService) {
+    
+    }
+
     public function showLoginForm()
     {
         return view('pages.login_page');
@@ -22,32 +26,22 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-
-            $sessionCart = session()->get('cart', []);
-            if (!empty($sessionCart)) {
-                $this->mergeSessionCartIntoUserCart($sessionCart, Auth::id());
-                session()->forget('cart');
-            }
-
-            if (Auth::user()->rola === 'admin') {
-                return redirect()->intended('admin_dashboard');
-            } 
-            else {
-                return redirect()->intended('/'); 
-            }
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+            throw ValidationException::withMessages([
+                'login' => [__('auth.failed')],
+            ]);
         }
 
-        throw ValidationException::withMessages([
-            'login' => [__('auth.failed')],
-        ]);
+        $request->session()->regenerate();
+        $this->cartSyncService->mergeCurrentSessionCart((int) Auth::id());
+
+        return $this->postLoginRedirect();
     }
 
     public function logout(Request $request)
     {
         if (Auth::check()) {
-            $request->session()->put('cart', $this->buildSessionCartFromUserCart(Auth::id()));
+            $request->session()->put('cart', $this->cartSyncService->buildSessionCartFromUserCart((int) Auth::id()));
         }
 
         Auth::logout();
@@ -56,53 +50,10 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    private function mergeSessionCartIntoUserCart(array $sessionCart, int $userId): void
+    private function postLoginRedirect()
     {
-        foreach ($sessionCart as $productId => $details) {
-            $quantity = max((int) ($details['quantity'] ?? 0), 0);
-            if ($quantity === 0) {
-                continue;
-            }
-
-            $cartItem = PolozkaKosika::where('pouzivatel_id', $userId)
-                ->where('produkt_id', $productId)
-                ->first();
-
-            if ($cartItem) {
-                $cartItem->mnozstvo += $quantity;
-                $cartItem->save();
-                continue;
-            }
-
-            PolozkaKosika::create([
-                'pouzivatel_id' => $userId,
-                'produkt_id' => $productId,
-                'mnozstvo' => $quantity,
-            ]);
-        }
-    }
-
-    private function buildSessionCartFromUserCart(int $userId): array
-    {
-        $dbItems = PolozkaKosika::where('pouzivatel_id', $userId)
-            ->with('produkt')
-            ->get();
-
-        $cart = [];
-        foreach ($dbItems as $item) {
-            if (!$item->produkt) {
-                continue;
-            }
-
-            $cart[$item->produkt_id] = [
-                'nazov' => $item->produkt->nazov,
-                'quantity' => $item->mnozstvo,
-                'cena' => $item->produkt->cena,
-                'produkt_id' => $item->produkt_id,
-                'image_path' => $item->produkt->image_path,
-            ];
-        }
-
-        return $cart;
+        return Auth::user()->rola === 'admin'
+            ? redirect()->intended('admin_dashboard')
+            : redirect()->intended('/');
     }
 }

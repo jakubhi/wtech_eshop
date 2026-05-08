@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Produkt extends Model
 {
+    private const CATEGORY_FALLBACKS = [
+        1 => 'images/product1.png',
+        2 => 'images/product2.png',
+        3 => 'images/product6.png',
+        7 => 'images/product3.png',
+        8 => 'images/product9.png',
+        13 => 'images/product5.png',
+        14 => 'images/product7.png',
+        15 => 'images/product8.png',
+        16 => 'images/product4.png',
+    ];
+
     protected $table = 'Produkt';
     protected $primaryKey = 'produkt_id';
     public $timestamps = false;
@@ -45,48 +57,31 @@ class Produkt extends Model
 
     public function getImagePathAttribute(): string
     {
-        return $this->product_gallery[0]['path'];
+        return $this->getProductGalleryAttribute()[0]['path'];
     }
 
     public function getSecondImagePathAttribute(): string
     {
-        return $this->product_gallery[1]['path'];
+        return $this->getProductGalleryAttribute()[1]['path'];
     }
 
     public function getFinalPriceAttribute(): float
     {
-        if (!is_null($this->cena_bez_zlavy) && $this->cena_bez_zlavy > 0 && $this->cena_bez_zlavy < $this->cena) {
-            return (float) $this->cena_bez_zlavy;
-        }
-
-        return (float) $this->cena;
+        return $this->hasDiscount()
+            ? (float) $this->cena_bez_zlavy
+            : (float) $this->cena;
     }
 
     public function getOriginalPriceAttribute(): ?float
     {
-        if (!is_null($this->cena_bez_zlavy) && $this->cena_bez_zlavy > 0 && $this->cena_bez_zlavy < $this->cena) {
-            return (float) $this->cena;
-        }
-
-        return null;
+        return $this->hasDiscount() ? (float) $this->cena : null;
     }
 
     public function getProductGalleryAttribute(): array
     {
-        $primarySource = $this->image_path1;
-        $secondarySource = $this->image_path2;
-
-        $primaryPath = !empty($primarySource)
-            ? asset($primarySource)
-            : $this->getFallbackImagePath();
-
-        $hasSecondImage = !empty($secondarySource);
-        $secondaryFallbackPath = str_ends_with($primaryPath, '/images/product1.png')
-            ? asset('images/product1_2.png')
-            : $primaryPath;
-        $secondPath = $hasSecondImage
-            ? asset($secondarySource)
-            : $secondaryFallbackPath;
+        $primaryPath = $this->resolvePrimaryImagePath();
+        $secondPath = $this->resolveSecondaryImagePath($primaryPath);
+        $hasSecondImage = !empty($this->image_path2);
 
         return [
             [
@@ -100,23 +95,51 @@ class Produkt extends Model
         ];
     }
 
-    private function getFallbackImagePath(int $offset = 0): string
+    private function hasDiscount(): bool
     {
-        $name = mb_strtolower($this->nazov);
-        
-        if (str_contains($name, 'tričko') || str_contains($name, 't-shirt') || $this->kategoria_id == 1) return asset('images/product1.png');
-        if (str_contains($name, 'mikina') || str_contains($name, 'hoodie') || $this->kategoria_id == 2) return asset('images/product2.png');
-        if (str_contains($name, 'rifle') || str_contains($name, 'jeans') || $this->kategoria_id == 7) return asset('images/product3.png');
-        if (str_contains($name, 'šaty') || $this->kategoria_id == 16) return asset('images/product4.png');
-        if (str_contains($name, 'bunda') || str_contains($name, 'jacket') || $this->kategoria_id == 13) return asset('images/product5.png');
-        if (str_contains($name, 'sukňa') || str_contains($name, 'skirt') || $this->kategoria_id == 3) return asset('images/product6.png');
-        if (str_contains($name, 'košeľa') || str_contains($name, 'shirt') || $this->kategoria_id == 14) return asset('images/product7.png');
-        if (str_contains($name, 'kraťasy') || str_contains($name, 'shorts') || $this->kategoria_id == 8) return asset('images/product9.png');
-        if (str_contains($name, 'batoh') || str_contains($name, 'doplnky') || $this->kategoria_id == 15) return asset('images/product8.png');
-        
-        if (in_array($this->kategoria_id, [4, 5, 6]) || str_contains($name, 'tenisky') || str_contains($name, 'nike') || str_contains($name, 'adidas') || str_contains($name, 'puma')) return asset('images/product5.png'); 
-        if (in_array($this->kategoria_id, [9, 10, 11, 12])) return asset('images/product1.png');
-        $productId = $this->produkt_id ?? 1;
-        return asset('images/product' . (($productId - 1 + $offset) % 9 + 1) . '.png');
+        return !is_null($this->cena_bez_zlavy)
+            && $this->cena_bez_zlavy > 0
+            && $this->cena_bez_zlavy < $this->cena;
+    }
+
+    private function resolvePrimaryImagePath(): string
+    {
+        if (!empty($this->image_path1)) {
+            return asset($this->image_path1);
+        }
+
+        return $this->getFallbackImagePath();
+    }
+
+    private function resolveSecondaryImagePath(string $primaryPath): string
+    {
+        if (!empty($this->image_path2)) {
+            return asset($this->image_path2);
+        }
+
+        if (str_ends_with($primaryPath, '/images/product1.png')) {
+            return asset('images/product1_2.png');
+        }
+
+        return $primaryPath;
+    }
+
+    private function getFallbackImagePath(): string
+    {
+        $categoryId = (int) $this->kategoria_id;
+
+        if (isset(self::CATEGORY_FALLBACKS[$categoryId])) {
+            return asset(self::CATEGORY_FALLBACKS[$categoryId]);
+        }
+
+        if (in_array($categoryId, [4, 5, 6], true)) {
+            return asset('images/product5.png');
+        }
+
+        if (in_array($categoryId, [9, 10, 11, 12], true)) {
+            return asset('images/product1.png');
+        }
+
+        return asset('images/empty.png');
     }
 }
