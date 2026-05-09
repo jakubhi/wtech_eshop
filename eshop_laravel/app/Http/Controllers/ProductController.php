@@ -153,16 +153,27 @@ class ProductController extends Controller
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
         $product->cena = $validated['cena'];
-        $product->cena_bez_zlavy = $validated['cena_bez_zlavy'] ?? null;
+        if (isset($validated['cena_bez_zlavy'])) {
+            $product->cena_bez_zlavy = $validated['cena_bez_zlavy'];
+        } else {
+            $product->cena_bez_zlavy = null;
+        }
         $product->skladom = $validated['skladom'];
-        $product->farba = $validated['farba'] ?? $product->farba;
+        if (isset($validated['farba'])) {
+            $product->farba = $validated['farba'];
+        }
         $product->material = $validated['material'];
         $product->image_path1 = $imagePath1;
         $product->image_path2 = $imagePath2;
         $product->kategoria_id = $validated['kategoria_id'];
         $product->znacka_id = $validated['znacka_id'];
 
-        $product->pouzivatel_id = auth()->id() ?? 1;
+        $authorId = auth()->id();
+        if (isset($authorId)) {
+            $product->pouzivatel_id = $authorId;
+        } else {
+            $product->pouzivatel_id = 1;
+        }
         
         $product->save();
 
@@ -231,7 +242,11 @@ class ProductController extends Controller
         $product->nazov = $validated['nazov'];
         $product->popis = $validated['popis'];
         $product->cena = $validated['cena'];
-        $product->cena_bez_zlavy = $validated['cena_bez_zlavy'] ?? null;
+        if (isset($validated['cena_bez_zlavy'])) {
+            $product->cena_bez_zlavy = $validated['cena_bez_zlavy'];
+        } else {
+            $product->cena_bez_zlavy = null;
+        }
         $product->skladom = $validated['skladom'];
         $product->farba = $validated['farba'];
         $product->material = $validated['material'];
@@ -251,9 +266,17 @@ class ProductController extends Controller
 
         $product = Produkt::findOrFail($id);
 
-        $field = $slot === '1' ? 'image_path1' : 'image_path2';
+        if ($slot === '1') {
+            $field = 'image_path1';
+        } else {
+            $field = 'image_path2';
+        }
 
-        $path = (string) ($product->{$field} ?? '');
+        if (isset($product->{$field})) {
+            $path = (string) $product->{$field};
+        } else {
+            $path = '';
+        }
 
         if ($path !== '' && str_starts_with($path, 'images/products/')) {
             $fullPath = public_path($path);

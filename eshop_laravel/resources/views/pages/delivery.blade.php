@@ -46,19 +46,19 @@
                     
                     <div class="flex flex-col gap-y-3">
                         <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
-                            <input type="radio" class="hidden peer" name="doprava">
+                            <input type="radio" class="hidden peer" name="delivery_method" value="posta" required @checked(old('delivery_method') === 'posta')>
                             <span class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300"></span>
                             <span class="text-lg ml-5">Doručiť do Eshop boxu</span>
                         </label>
 
                         <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
-                            <input type="radio" class="hidden peer" name="doprava">
+                            <input type="radio" class="hidden peer" name="delivery_method" value="kurier" required @checked(old('delivery_method') === 'kurier')>
                             <span class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300"></span>
                             <span class="text-lg ml-5">Doručenie domov</span>
                         </label>
 
                         <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
-                            <input type="radio" class="hidden peer" name="doprava">
+                            <input type="radio" class="hidden peer" name="delivery_method" value="osobny_odber" required @checked(old('delivery_method') === 'osobny_odber')>
                             <span class="w-7 h-7 rounded-xl peer-checked:bg-green-300 bg-gray-300"></span>
                             <span class="text-lg ml-5">Osobné vyzdvihnutie na pobočke</span>
                         </label>
@@ -70,7 +70,7 @@
                         <span class="font-bold text-xl py-5">Zvoľte spôsob platby</span>
                         
                         <div>
-                            <input type="radio" class="hidden peer" name="payment_method" id="payment-card" value="card" required {{ old('payment_method') === 'card' ? 'checked' : '' }}>
+                            <input type="radio" class="hidden peer" name="payment_method" id="payment-card" value="card" required @checked(old('payment_method') === 'card')>
                             <label for="payment-card" class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
                                 <span class="payment-indicator w-7 h-7 rounded-xl bg-gray-300"></span>
                                 <span class="text-lg ml-5">Kartou online</span>
@@ -98,13 +98,13 @@
                         </div>
                         
                         <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
-                            <input type="radio" class="hidden peer" name="payment_method" value="cash" required {{ old('payment_method') === 'cash' ? 'checked' : '' }}>
+                            <input type="radio" class="hidden peer" name="payment_method" value="cash" required @checked(old('payment_method') === 'cash')>
                             <span class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300"></span>
                             <span class="text-lg ml-5">Platba pri prevzatí</span>
                         </label>
 
                         <label class="flex items-center p-4 rounded-xl border border-[#D9D9D9] cursor-pointer">
-                            <input type="radio" class="hidden peer" name="payment_method" value="transfer" required {{ old('payment_method') === 'transfer' ? 'checked' : '' }}>
+                            <input type="radio" class="hidden peer" name="payment_method" value="transfer" required @checked(old('payment_method') === 'transfer')>
                             <span class="w-7 h-7 rounded-xl peer-checked:bg-blue-200 bg-gray-300"></span>
                             <span class="text-lg ml-5">Platba prevodom na účet</span>
                         </label>
