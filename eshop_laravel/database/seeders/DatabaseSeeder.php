@@ -44,156 +44,83 @@ class DatabaseSeeder extends Seeder
             'Bundy', 'Košele', 'Doplnky', 'Šaty'
         ];
         $categoryModels = [];
-        $categoryNameById = [];
         foreach ($categories as $catName) {
             $category = Kategoria::create(['nazov' => $catName]);
             $categoryModels[] = $category;
-            $categoryNameById[$category->id] = $category->nazov;
         }
 
-        $products = [
-            ['nazov' => 'Biele tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10, 'na_predajni' => true, 'na_objednavku' => false],
-            ['nazov' => 'Čierna mikina', 'cena' => 29.99, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 5, 'na_predajni' => true, 'na_objednavku' => false],
-            ['nazov' => 'Modré rifle', 'cena' => 39.99, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 15, 'na_predajni' => false, 'na_objednavku' => false],
-            ['nazov' => 'Letné šaty', 'cena' => 24.99, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 8, 'na_predajni' => true, 'na_objednavku' => true],
-            ['nazov' => 'Jesenná bunda', 'cena' => 59.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 3, 'na_predajni' => false, 'na_objednavku' => true],
-            ['nazov' => 'Rifľová sukňa', 'cena' => 14.99, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 12, 'na_predajni' => true, 'na_objednavku' => false],
-            ['nazov' => 'Biela košeľa', 'cena' => 19.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 20, 'na_predajni' => false, 'na_objednavku' => false],
-            ['nazov' => 'Károvaná košeľa', 'cena' => 34.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 7, 'na_predajni' => true, 'na_objednavku' => false],
-            ['nazov' => 'Hnedé kraťasy', 'cena' => 22.99, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 11, 'na_predajni' => true, 'na_objednavku' => true],
-            ['nazov' => 'Dámske tričko', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 9, 'na_predajni' => false, 'na_objednavku' => true],
-            
-            ['nazov' => 'Nike tričko', 'cena' => 25.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 15],
-            ['nazov' => 'Adidas mikina', 'cena' => 45.00, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8],
-            ['nazov' => 'Čierne tepláky', 'cena' => 30.00, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 20],
-            ['nazov' => 'Večerné šaty', 'cena' => 49.99, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 5],
-            ['nazov' => 'Levis 501', 'cena' => 89.99, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 12],
-            ['nazov' => 'Nike tenisky', 'cena' => 120.00, 'kategoria_id' => $categoryModels[4]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 6],
-            ['nazov' => 'Letná sukňa', 'cena' => 19.99, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 18],
-            ['nazov' => 'Zimná bunda', 'cena' => 75.50, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 4],
-            ['nazov' => 'Adidas šiltovka', 'cena' => 15.00, 'kategoria_id' => $categoryModels[10]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 25],
-            ['nazov' => 'Levis tričko', 'cena' => 22.00, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 30],
-            ['nazov' => 'Nike kraťasy', 'cena' => 28.00, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 14],
-            ['nazov' => 'Kožená bunda', 'cena' => 99.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 2],
-            ['nazov' => 'Ponožky 3ks', 'cena' => 5.99, 'kategoria_id' => $categoryModels[9]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 50],
-            ['nazov' => 'Tenisky Adidas', 'cena' => 65.00, 'kategoria_id' => $categoryModels[4]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 10],
-            ['nazov' => 'Nike tielko', 'cena' => 18.50, 'kategoria_id' => $categoryModels[11]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 22],
-            ['nazov' => 'Puma kraťasy', 'cena' => 24.00, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 16],
-            ['nazov' => 'Denimová bunda', 'cena' => 79.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 7],
-            ['nazov' => 'Topánky Zara', 'cena' => 45.50, 'kategoria_id' => $categoryModels[5]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 9],
-            ['nazov' => 'Boxerky 2ks', 'cena' => 12.99, 'kategoria_id' => $categoryModels[8]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 40],
-            ['nazov' => 'Nike batoh', 'cena' => 35.00, 'kategoria_id' => $categoryModels[14]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 12],
-            ['nazov' => 'Červené tričko', 'cena' => 21.00, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10],
-            ['nazov' => 'Modré tričko', 'cena' => 23.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8],
-            ['nazov' => 'Zelené tričko', 'cena' => 18.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 15],
-            ['nazov' => 'Žlté tričko', 'cena' => 16.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 12],
-            ['nazov' => 'Sivé tričko', 'cena' => 12.00, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 20],
-            ['nazov' => 'Čierne tričko', 'cena' => 25.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 5],
-            ['nazov' => 'Pruhované tričko', 'cena' => 27.00, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10],
-            ['nazov' => 'Vzorované tričko', 'cena' => 29.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8],
-            ['nazov' => 'Tričko Puma', 'cena' => 19.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 15],
-            ['nazov' => 'Tričko Zara', 'cena' => 22.50, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 12],
+        $categoryImageById = [
+            $categoryModels[0]->id => 'images/product1.png',
+            $categoryModels[1]->id => 'images/product2.png',
+            $categoryModels[2]->id => 'images/product6.png',
+            $categoryModels[6]->id => 'images/product3.png',
+            $categoryModels[7]->id => 'images/product9.png',
+            $categoryModels[11]->id => 'images/product1.png',
+            $categoryModels[12]->id => 'images/product5.png',
+            $categoryModels[13]->id => 'images/product7.png',
+            $categoryModels[15]->id => 'images/product4.png',
         ];
 
-        foreach ($products as $index => $p) {
-            $mainIconPath = 'images/product' . (($index % 9) + 1) . '.png';
-            $categoryName = $categoryNameById[$p['kategoria_id']] ?? '';
-            $material = $this->inferMaterial($p['nazov'], $categoryName);
-            $farba = $this->inferColor($p['nazov'], $categoryName);
-            $sezona = $this->inferSeason($p['nazov'], $categoryName);
+        $products = [
+            ['nazov' => 'Biele tričko', 'cena' => 19.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10, 'material' => 'Bavlna', 'farba' => 'biela', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product1.png', 'image_path2' => null],
+            ['nazov' => 'Čierna mikina', 'cena' => 29.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 5, 'material' => 'Polyester', 'farba' => 'cierna', 'sezona' => 'Jeseň/Zima', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product2.png', 'image_path2' => null],
+            ['nazov' => 'Modré rifle', 'cena' => 39.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 15, 'material' => 'Denim', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => false, 'image_path1' => 'images/product3.png', 'image_path2' => null],
+            ['nazov' => 'Letné šaty', 'cena' => 24.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 8, 'material' => 'Viskóza', 'farba' => 'cervena', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product4.png', 'image_path2' => 'images/product5.png'],
+            ['nazov' => 'Jesenná bunda', 'cena' => 59.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 3, 'material' => 'Polyester', 'farba' => 'cierna', 'sezona' => 'Jeseň/Zima', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product5.png', 'image_path2' => 'images/product6.png'],
+            ['nazov' => 'Rifľová sukňa', 'cena' => 14.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 12, 'material' => 'Denim', 'farba' => 'modra', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product6.png', 'image_path2' => 'images/product7.png'],
+            ['nazov' => 'Biela košeľa', 'cena' => 19.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 20, 'material' => 'Bavlna', 'farba' => 'biela', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => false, 'image_path1' => 'images/product7.png', 'image_path2' => 'images/product8.png'],
+            ['nazov' => 'Károvaná košeľa', 'cena' => 34.99, 'cena_bez_zlavy' => 31.99, 'kategoria_id' => $categoryModels[13]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 7, 'material' => 'Bavlna', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product8.png', 'image_path2' => 'images/product9.png'],
+            ['nazov' => 'Hnedé kraťasy', 'cena' => 22.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 11, 'material' => 'Bavlna', 'farba' => 'hneda', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product9.png', 'image_path2' => 'images/product1.png'],
+            ['nazov' => 'Dámske tričko', 'cena' => 19.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 9, 'material' => 'Bavlna', 'farba' => 'ruzova', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product1.png', 'image_path2' => 'images/product2.png'],
+            ['nazov' => 'Nike tričko', 'cena' => 25.50, 'cena_bez_zlavy' => 22.90, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 15, 'material' => 'Bavlna', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product2.png', 'image_path2' => 'images/product3.png'],
+            ['nazov' => 'Adidas mikina', 'cena' => 45.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[1]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8, 'material' => 'Polyester', 'farba' => 'siva', 'sezona' => 'Jeseň/Zima', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product3.png', 'image_path2' => 'images/product4.png'],
+            ['nazov' => 'Čierne tepláky', 'cena' => 30.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 20, 'material' => 'Bavlna', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => false, 'image_path1' => 'images/product4.png', 'image_path2' => 'images/product5.png'],
+            ['nazov' => 'Večerné šaty', 'cena' => 49.99, 'cena_bez_zlavy' => 44.99, 'kategoria_id' => $categoryModels[15]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 5, 'material' => 'Viskóza', 'farba' => 'cierna', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product5.png', 'image_path2' => 'images/product6.png'],
+            ['nazov' => 'Levis 501', 'cena' => 89.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[6]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 12, 'material' => 'Denim', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product6.png', 'image_path2' => 'images/product7.png'],
+            ['nazov' => 'Nike tenisky', 'cena' => 120.00, 'cena_bez_zlavy' => 99.99, 'kategoria_id' => $categoryModels[4]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 6, 'material' => 'Koža', 'farba' => 'biela', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product7.png', 'image_path2' => 'images/product8.png'],
+            ['nazov' => 'Letná sukňa', 'cena' => 19.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[2]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 18, 'material' => 'Viskóza', 'farba' => 'zlta', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product8.png', 'image_path2' => 'images/product9.png'],
+            ['nazov' => 'Zimná bunda', 'cena' => 75.50, 'cena_bez_zlavy' => 69.90, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 4, 'material' => 'Polyester', 'farba' => 'modra', 'sezona' => 'Jeseň/Zima', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product9.png', 'image_path2' => 'images/product1.png'],
+            ['nazov' => 'Adidas šiltovka', 'cena' => 15.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[10]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 25, 'material' => 'Bavlna', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product1.png', 'image_path2' => 'images/product2.png'],
+            ['nazov' => 'Levis tričko', 'cena' => 22.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 30, 'material' => 'Bavlna', 'farba' => 'siva', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product2.png', 'image_path2' => 'images/product3.png'],
+            ['nazov' => 'Nike kraťasy', 'cena' => 28.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 14, 'material' => 'Polyester', 'farba' => 'cierna', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product3.png', 'image_path2' => 'images/product4.png'],
+            ['nazov' => 'Kožená bunda', 'cena' => 99.99, 'cena_bez_zlavy' => 89.99, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 2, 'material' => 'Koža', 'farba' => 'hneda', 'sezona' => 'Jeseň/Zima', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product4.png', 'image_path2' => 'images/product5.png'],
+            ['nazov' => 'Ponožky 3ks', 'cena' => 5.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[9]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 50, 'material' => 'Bavlna', 'farba' => 'biela', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product5.png', 'image_path2' => 'images/product6.png'],
+            ['nazov' => 'Tenisky Adidas', 'cena' => 65.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[4]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 10, 'material' => 'Koža', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product6.png', 'image_path2' => 'images/product7.png'],
+            ['nazov' => 'Nike tielko', 'cena' => 18.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[11]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 22, 'material' => 'Bavlna', 'farba' => 'biela', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product7.png', 'image_path2' => 'images/product8.png'],
+            ['nazov' => 'Puma kraťasy', 'cena' => 24.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[7]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 16, 'material' => 'Polyester', 'farba' => 'cierna', 'sezona' => 'Jar/Leto', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product8.png', 'image_path2' => 'images/product9.png'],
+            ['nazov' => 'Denimová bunda', 'cena' => 79.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[12]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 7, 'material' => 'Denim', 'farba' => 'modra', 'sezona' => 'Jeseň/Zima', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product9.png', 'image_path2' => 'images/product1.png'],
+            ['nazov' => 'Topánky Zara', 'cena' => 45.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[5]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 9, 'material' => 'Koža', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => true, 'image_path1' => 'images/product1.png', 'image_path2' => 'images/product2.png'],
+            ['nazov' => 'Boxerky 2ks', 'cena' => 12.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[8]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 40, 'material' => 'Elastan', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product2.png', 'image_path2' => 'images/product3.png'],
+            ['nazov' => 'Nike batoh', 'cena' => 35.00, 'cena_bez_zlavy' => 29.99, 'kategoria_id' => $categoryModels[14]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 12, 'material' => 'Polyester', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product3.png', 'image_path2' => 'images/product4.png'],
+            ['nazov' => 'Červené tričko', 'cena' => 21.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10, 'material' => 'Bavlna', 'farba' => 'cervena', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product4.png', 'image_path2' => 'images/product5.png'],
+            ['nazov' => 'Modré tričko', 'cena' => 23.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8, 'material' => 'Bavlna', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product5.png', 'image_path2' => 'images/product6.png'],
+            ['nazov' => 'Zelené tričko', 'cena' => 18.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 15, 'material' => 'Bavlna', 'farba' => 'zelena', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product6.png', 'image_path2' => 'images/product7.png'],
+            ['nazov' => 'Žlté tričko', 'cena' => 16.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 12, 'material' => 'Bavlna', 'farba' => 'zlta', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product7.png', 'image_path2' => 'images/product8.png'],
+            ['nazov' => 'Sivé tričko', 'cena' => 12.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[4]->znacka_id, 'skladom' => 20, 'material' => 'Bavlna', 'farba' => 'siva', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product8.png', 'image_path2' => 'images/product9.png'],
+            ['nazov' => 'Čierne tričko', 'cena' => 25.99, 'cena_bez_zlavy' => 20.99, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[5]->znacka_id, 'skladom' => 5, 'material' => 'Bavlna', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => false, 'na_objednavku' => true, 'image_path1' => 'images/product9.png', 'image_path2' => 'images/product1.png'],
+            ['nazov' => 'Pruhované tričko', 'cena' => 27.00, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[0]->znacka_id, 'skladom' => 10, 'material' => 'Bavlna', 'farba' => 'modra', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product1.png', 'image_path2' => 'images/product2.png'],
+            ['nazov' => 'Vzorované tričko', 'cena' => 29.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[1]->znacka_id, 'skladom' => 8, 'material' => 'Bavlna', 'farba' => 'viacfarebna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product2.png', 'image_path2' => 'images/product3.png'],
+            ['nazov' => 'Tričko Puma', 'cena' => 19.99, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[2]->znacka_id, 'skladom' => 15, 'material' => 'Bavlna', 'farba' => 'cierna', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product3.png', 'image_path2' => 'images/product4.png'],
+            ['nazov' => 'Tričko Zara', 'cena' => 22.50, 'cena_bez_zlavy' => null, 'kategoria_id' => $categoryModels[0]->id, 'znacka_id' => $brandModels[3]->znacka_id, 'skladom' => 12, 'material' => 'Bavlna', 'farba' => 'biela', 'sezona' => 'Celoročné', 'na_predajni' => true, 'na_objednavku' => false, 'image_path1' => 'images/product4.png', 'image_path2' => 'images/product5.png'],
+        ];
 
+        foreach ($products as $p) {
             Produkt::create([
                 'nazov' => $p['nazov'],
                 'pouzivatel_id' => $admin->pouzivatel_id,
                 'cena' => $p['cena'],
-                'cena_bez_zlavy' => null,
+                'cena_bez_zlavy' => $p['cena_bez_zlavy'],
                 'kategoria_id' => $p['kategoria_id'],
                 'znacka_id' => $p['znacka_id'],
                 'skladom' => $p['skladom'],
-                'material' => $material,
-                'farba' => $farba,
-                'sezona' => $sezona,
-                'na_predajni' => $p['na_predajni'] ?? false,
-                'na_objednavku' => $p['na_objednavku'] ?? false,
-                // Keep seed icon deterministic across fresh migrations.
-                'image_path1' => $mainIconPath,
-                'obrazok_hlavny' => $mainIconPath,
+                'material' => $p['material'],
+                'farba' => $p['farba'],
+                'sezona' => $p['sezona'],
+                'na_predajni' => $p['na_predajni'],
+                'na_objednavku' => $p['na_objednavku'],
+                'image_path1' => $categoryImageById[$p['kategoria_id']] ?? 'images/empty.png',
+                'image_path2' => null,
             ]);
         }
-    }
-
-    private function inferColor(string $productName, string $categoryName): string
-    {
-        $name = mb_strtolower($productName);
-        $category = mb_strtolower($categoryName);
-
-        if (str_contains($name, 'biele') || str_contains($name, 'biela')) return 'biela';
-        if (str_contains($name, 'čierne') || str_contains($name, 'čierna')) return 'cierna';
-        if (str_contains($name, 'modré') || str_contains($name, 'modrá')) return 'modra';
-        if (str_contains($name, 'červené') || str_contains($name, 'červená')) return 'cervena';
-        if (str_contains($name, 'zelené') || str_contains($name, 'zelená')) return 'zelena';
-        if (str_contains($name, 'hnedé') || str_contains($name, 'hnedá')) return 'cervena';
-        if (str_contains($name, 'sivé') || str_contains($name, 'sivá')) return 'cierna';
-        if (str_contains($name, 'žlté') || str_contains($name, 'žltá')) return 'biela';
-
-        // Deterministic palette by category for realistic defaults.
-        if (str_contains($category, 'tričká') || str_contains($category, 'košele') || str_contains($category, 'mikiny')) {
-            $palette = ['cierna', 'biela', 'modra', 'cervena', 'zelena'];
-        } elseif (str_contains($category, 'šaty') || str_contains($category, 'sukne')) {
-            $palette = ['cierna', 'cervena', 'modra'];
-        } elseif (str_contains($category, 'nohavice') || str_contains($category, 'kraťasy')) {
-            $palette = ['cierna', 'modra', 'biela'];
-        } elseif (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) {
-            $palette = ['cierna', 'biela', 'cervena'];
-        } else {
-            $palette = ['cierna', 'biela', 'modra'];
-        }
-
-        return $palette[crc32($productName) % count($palette)];
-    }
-
-    private function inferMaterial(string $productName, string $categoryName): string
-    {
-        $name = mb_strtolower($productName);
-        $category = mb_strtolower($categoryName);
-
-        if (str_contains($name, 'rif') || str_contains($name, 'denim')) return 'Denim';
-        if (str_contains($name, 'kožen')) return 'Koža';
-
-        // Deterministic "random" material pools by category.
-        if (str_contains($category, 'tričká') || str_contains($category, 'košele') || str_contains($category, 'tielka')) {
-            $pool = ['Bavlna', 'Viskóza', 'Polyester'];
-        } elseif (str_contains($category, 'mikiny') || str_contains($category, 'bundy')) {
-            $pool = ['Polyester', 'Bavlna', 'Vlna'];
-        } elseif (str_contains($category, 'sukne') || str_contains($category, 'šaty')) {
-            $pool = ['Viskóza', 'Bavlna', 'Elastan'];
-        } elseif (str_contains($category, 'nohavice') || str_contains($category, 'kraťasy')) {
-            $pool = ['Denim', 'Bavlna', 'Elastan'];
-        } elseif (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) {
-            $pool = ['Koža', 'Polyester'];
-        } elseif (str_contains($category, 'spodné prádlo') || str_contains($category, 'ponožky')) {
-            $pool = ['Elastan', 'Bavlna'];
-        } elseif (str_contains($category, 'šiltovky') || str_contains($category, 'doplnky')) {
-            $pool = ['Polyester', 'Bavlna'];
-        } else {
-            $pool = ['Bavlna', 'Polyester'];
-        }
-
-        return $pool[crc32($productName . '|' . $categoryName) % count($pool)];
-    }
-
-    private function inferSeason(string $productName, string $categoryName): string
-    {
-        $name = mb_strtolower($productName);
-        $category = mb_strtolower($categoryName);
-
-        if (str_contains($name, 'zimná') || str_contains($name, 'jesenn')) return 'Jeseň/Zima';
-        if (str_contains($name, 'letn')) return 'Jar/Leto';
-
-        if (str_contains($category, 'bundy') || str_contains($category, 'mikiny')) return 'Jeseň/Zima';
-        if (str_contains($category, 'kraťasy') || str_contains($category, 'tielka') || str_contains($category, 'šaty') || str_contains($category, 'sukne')) return 'Jar/Leto';
-        if (str_contains($category, 'ponožky') || str_contains($category, 'spodné prádlo')) return 'Celoročné';
-        if (str_contains($category, 'topánky') || str_contains($category, 'tenisky') || str_contains($category, 'vysoké podpätky')) return 'Celoročné';
-        return 'Celoročné';
     }
 }

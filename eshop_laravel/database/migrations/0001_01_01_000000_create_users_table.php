@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
@@ -29,27 +27,34 @@ return new class extends Migration
             );
         ");
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
+        DB::statement('
+            CREATE TABLE IF NOT EXISTS "password_reset_tokens" (
+                email VARCHAR(255) PRIMARY KEY,
+                token VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP
+            );
+        ');
 
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
+        DB::statement('
+            CREATE TABLE IF NOT EXISTS "sessions" (
+                id VARCHAR(255) PRIMARY KEY,
+                user_id BIGINT,
+                ip_address VARCHAR(45),
+                user_agent TEXT,
+                payload TEXT NOT NULL,
+                last_activity INT NOT NULL
+            );
+        ');
+
+        DB::statement('CREATE INDEX IF NOT EXISTS sessions_user_id_index ON "sessions"(user_id);');
+        DB::statement('CREATE INDEX IF NOT EXISTS sessions_last_activity_index ON "sessions"(last_activity);');
     }
 
     public function down(): void
     {
         DB::statement('DROP TABLE IF EXISTS "Pouzivatel" CASCADE;');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
+        DB::statement('DROP TABLE IF EXISTS "password_reset_tokens" CASCADE;');
+        DB::statement('DROP TABLE IF EXISTS "sessions" CASCADE;');
 
         DB::statement("DROP TYPE IF EXISTS rola_enum CASCADE");
         DB::statement("DROP TYPE IF EXISTS stav_enum CASCADE");

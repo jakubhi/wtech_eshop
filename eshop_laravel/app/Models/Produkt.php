@@ -80,8 +80,8 @@ class Produkt extends Model
     public function getProductGalleryAttribute(): array
     {
         $primaryPath = $this->resolvePrimaryImagePath();
-        $secondPath = $this->resolveSecondaryImagePath($primaryPath);
-        $hasSecondImage = !empty($this->image_path2);
+        $secondPath = $this->resolveSecondaryImagePath();
+        $isEmptySecondImage = empty($this->image_path2);
 
         return [
             [
@@ -90,7 +90,7 @@ class Produkt extends Model
             ],
             [
                 'path' => $secondPath,
-                'is_grayscale' => !$hasSecondImage && $secondPath === $primaryPath,
+                'is_grayscale' => $isEmptySecondImage,
             ],
         ];
     }
@@ -111,17 +111,13 @@ class Produkt extends Model
         return $this->getFallbackImagePath();
     }
 
-    private function resolveSecondaryImagePath(string $primaryPath): string
+    private function resolveSecondaryImagePath(): string
     {
         if (!empty($this->image_path2)) {
             return asset($this->image_path2);
         }
 
-        if (str_ends_with($primaryPath, '/images/product1.png')) {
-            return asset('images/product1_2.png');
-        }
-
-        return $primaryPath;
+        return asset('images/empty.png');
     }
 
     private function getFallbackImagePath(): string

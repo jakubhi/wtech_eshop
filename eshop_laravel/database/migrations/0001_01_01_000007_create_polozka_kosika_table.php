@@ -5,9 +5,6 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         DB::statement('
@@ -22,9 +19,6 @@ return new class extends Migration
         ');
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         DB::statement('DROP TABLE IF EXISTS "Polozka_kosika" CASCADE;');
