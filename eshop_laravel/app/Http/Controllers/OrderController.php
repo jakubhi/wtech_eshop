@@ -90,7 +90,7 @@ class OrderController extends Controller
         }
 
         $normalizedCartItems = $this->resolveNormalizedCartItems();
-        if (count($normalizedCartItems) < 1) {
+        if ($normalizedCartItems === []) {
             return redirect()->route('cart.index')->withErrors([
                 'cart' => 'Košík je prázdny.',
             ]);
@@ -112,7 +112,7 @@ class OrderController extends Controller
             $orderId = DB::table('Objednavka')->insertGetId([
                 'pouzivatel_id' => $orderUserId,
                 'dodacie_udaje_id' => $deliveryDataId,
-                'stav' => 'nova',
+                'stav' => 'spracovava_sa',
             ], 'objednavka_id');
 
             $paymentTotal = 0.0;
@@ -122,7 +122,8 @@ class OrderController extends Controller
                     'produkt_id' => $item['produkt_id'],
                 ]);
 
-                $paymentTotal += $item['cena'] * $item['mnozstvo'];
+                $riadokSuma = $item['cena'] * $item['mnozstvo'];
+                $paymentTotal = $paymentTotal + $riadokSuma;
 
                 Produkt::where('produkt_id', $item['produkt_id'])
                     ->update([
@@ -130,14 +131,18 @@ class OrderController extends Controller
                     ]);
             }
 
+            $sposobPlatby = $this->mapPaymentMethodToEnum($checkoutPayment['payment_method']);
+            $stavPlatby = $this->mapPaymentMethodToPaymentState($checkoutPayment['payment_method']);
             DB::table('Platba')->insert([
                 'objednavka_id' => $orderId,
                 'suma' => $paymentTotal,
-                'sposob_platby' => $this->mapPaymentMethodToEnum($checkoutPayment['payment_method']),
+                'sposob_platby' => $sposobPlatby,
+                'stav_platby' => $stavPlatby,
             ]);
 
             if (Auth::check()) {
-                PolozkaKosika::where('pouzivatel_id', Auth::id())->delete();
+                $uid = Auth::id();
+                PolozkaKosika::where('pouzivatel_id', $uid)->delete();
             }
         });
 
@@ -152,7 +157,8 @@ class OrderController extends Controller
         $items = [];
 
         if (Auth::check()) {
-            $dbItems = PolozkaKosika::where('pouzivatel_id', Auth::id())
+            $userId = Auth::id();
+            $dbItems = PolozkaKosika::where('pouzivatel_id', $userId)
                 ->with('produkt')
                 ->get();
 
@@ -168,7 +174,7 @@ class OrderController extends Controller
                 }
 
                 if (isset($items[$productId])) {
-                    $items[$productId]['mnozstvo'] += $quantity;
+                    $items[$productId]['mnozstvo'] = $items[$productId]['mnozstvo'] + $quantity;
                 } else {
                     $items[$productId] = [
                         'produkt_id' => $productId,
@@ -203,7 +209,7 @@ class OrderController extends Controller
                 }
 
                 if (isset($items[$productId])) {
-                    $items[$productId]['mnozstvo'] += $quantity;
+                    $items[$productId]['mnozstvo'] = $items[$productId]['mnozstvo'] + $quantity;
                 } else {
                     $items[$productId] = [
                         'produkt_id' => $productId,
@@ -228,6 +234,15 @@ class OrderController extends Controller
         }
 
         return 'prevod';
+    }
+
+    private function mapPaymentMethodToPaymentState(string $paymentMethod): string
+    {
+        if ($paymentMethod === 'card') {
+            return 'zaplatena';
+        }
+
+        return 'nezaplatena';
     }
 
     private function resolveOrderUserId(): int

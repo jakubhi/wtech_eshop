@@ -6,7 +6,7 @@
 <main class="flex flex-col grow justify-center items-center py-20">
     <div class="flex flex-col items-center">
         <div class="flex justify-center w-fit mx-4 p-4 sm:px-10 lg:px-40 bg-gray-400 mb-2 sm:text-xl md:text-2xl lg:text-3xl font-bold rounded-lg text-center shadow-lg">
-            Platba prebehla úspešne. Ďakujeme za Váš nákup!
+            Objednávka prebehla úspešne. Ďakujeme za Váš nákup!
         </div>
         <section class="flex justify-center mt-10">
             <a href="/">

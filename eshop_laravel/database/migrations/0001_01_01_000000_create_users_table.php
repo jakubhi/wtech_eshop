@@ -11,11 +11,13 @@ return new class extends Migration
         DB::statement("DROP TYPE IF EXISTS stav_enum CASCADE");
         DB::statement("DROP TYPE IF EXISTS sposob_dorucenia_enum CASCADE");
         DB::statement("DROP TYPE IF EXISTS sposob_platby_enum CASCADE");
+        DB::statement("DROP TYPE IF EXISTS stav_platby_enum CASCADE");
 
         DB::statement("CREATE TYPE rola_enum AS ENUM ('admin', 'zakaznik')");
         DB::statement("CREATE TYPE stav_enum AS ENUM ('nova', 'spracovava_sa', 'odoslana', 'dorucena', 'stornovana')");
         DB::statement("CREATE TYPE sposob_dorucenia_enum AS ENUM ('kurier', 'posta', 'osobny_odber')");
         DB::statement("CREATE TYPE sposob_platby_enum AS ENUM ('karta', 'prevod', 'dobierka')");
+        DB::statement("CREATE TYPE stav_platby_enum AS ENUM ('nezaplatena', 'zaplatena')");
 
         DB::statement("
             CREATE TABLE \"Pouzivatel\" (
@@ -60,5 +62,6 @@ return new class extends Migration
         DB::statement("DROP TYPE IF EXISTS stav_enum CASCADE");
         DB::statement("DROP TYPE IF EXISTS sposob_dorucenia_enum CASCADE");
         DB::statement("DROP TYPE IF EXISTS sposob_platby_enum CASCADE");
+        DB::statement("DROP TYPE IF EXISTS stav_platby_enum CASCADE");
     }
 };

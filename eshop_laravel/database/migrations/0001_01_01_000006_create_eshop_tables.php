@@ -49,6 +49,7 @@ return new class extends Migration
                 objednavka_id INT NOT NULL,
                 suma NUMERIC NOT NULL,
                 sposob_platby sposob_platby_enum NOT NULL,
+                stav_platby stav_platby_enum NOT NULL,
                 CONSTRAINT fk_platba_objednavka FOREIGN KEY (objednavka_id) REFERENCES "Objednavka"(objednavka_id)
             );
         ');
